@@ -1,5 +1,6 @@
 #include "flashStore.h"
 #include "STM32_Flash.h"
+#include "includes.h"
 
 #define PARA_SIZE 256  //bytes
 #define TSC_SIGN  0x20190827 // DO NOT MODIFY
@@ -55,13 +56,16 @@ bool readStoredPara(void)
   }
   else
   {
-    infoSettings.baudrate         = byteToWord(data + (index += 4), 4);
+    infoSettings.baudrate         = R3D_BAUDRATE;
+	index += 4;                                        //byteToWord(data + (index += 4), 4);
     infoSettings.language         = byteToWord(data + (index += 4), 4);
     infoSettings.mode             = byteToWord(data + (index += 4), 4);
     infoSettings.runout           = byteToWord(data + (index += 4), 4);
     infoSettings.rotate_ui        = byteToWord(data + (index += 4), 4);
-    infoSettings.bg_color         = byteToWord(data + (index += 4), 4);
-    infoSettings.font_color       = byteToWord(data + (index += 4), 4);
+    infoSettings.bg_color         = ST7920_BKCOLOR;
+	index += 4;                                        //byteToWord(data + (index += 4), 4);
+    infoSettings.font_color       = ST7920_FNCOLOR;
+	index += 4;                                        //byteToWord(data + (index += 4), 4);
     infoSettings.silent           = byteToWord(data + (index += 4), 4);
     infoSettings.auto_off         = byteToWord(data + (index += 4), 4);
     infoSettings.terminalACK      = byteToWord(data + (index += 4), 4);

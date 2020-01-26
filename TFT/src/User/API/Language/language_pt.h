@@ -160,5 +160,17 @@
     #define PT_INVERT_YAXIS         "Invert Y Axis"
     #define PT_INVERT_ZAXIS         "Invert Z Axis"
     #define PT_MOVE_SPEED           "Move speed(X Y Z)"
-    
+    #define PT_NOTIFY_PAUSE			"Baskı duraklatıldı!"
+    #define PT_NOTIFY_RESUME		"Baskı sürdürülüyor!"
+    #define PT_NOTIFY_KILL			"Cihaz durduruldu!!!"
+    #define PT_NOTIFY_CANCEL		"Baskı iptal edildi!"
+	#define PT_PROMPT_FILAMENT_INSERT		"Filaman yükleyiniz!"
+	#define PT_PROMPT_HEATER_TIMEOUT		"Güvenlik için nozül soğutuldu. Isıtılsın mı?"
+	#define PT_PROMPT_REHEATING		"Isınıyor..."
+	#define PT_PROMPT_REHEAT_DONE	"Isınma tamamlandı."    
+    #define PT_FILAMENT_LOAD        "Yükle"                               //"Load"
+    #define PT_FILAMENT_UNLOAD      "Boşalt"  
+	#define PT_FILAMENT_CHANGE      "F. Değiş."
+	#define PT_PROMPT_FILAMENT_LOAD  "Filamanı ekstrudere yerleştiriniz."      
+	#define PT_PROMPT_FILAMENT_CONTINUE  "İşlem tamamlanacak."   
 #endif

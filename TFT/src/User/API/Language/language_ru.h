@@ -160,5 +160,17 @@
     #define RU_INVERT_YAXIS         "Инверсия оси Y"
     #define RU_INVERT_ZAXIS         "Инверсия оси Z"
     #define RU_MOVE_SPEED           "Скорость (X Y Z)"
-    
+    #define RU_NOTIFY_PAUSE			"Baskı duraklatıldı!"
+    #define RU_NOTIFY_RESUME		"Baskı sürdürülüyor!"
+    #define RU_NOTIFY_KILL			"Cihaz durduruldu!!!"
+    #define RU_NOTIFY_CANCEL		"Baskı iptal edildi!"
+	#define RU_PROMPT_FILAMENT_INSERT		"Filaman yükleyiniz!"
+	#define RU_PROMPT_HEATER_TIMEOUT		"Güvenlik için nozül soğutuldu. Isıtılsın mı?"
+	#define RU_PROMPT_REHEATING		"Isınıyor..."
+	#define RU_PROMPT_REHEAT_DONE	"Isınma tamamlandı." 
+    #define RU_FILAMENT_LOAD        "Yükle"                               //"Load"
+    #define RU_FILAMENT_UNLOAD      "Boşalt"  
+	#define RU_FILAMENT_CHANGE      "F. Değiş."
+	#define RU_PROMPT_FILAMENT_LOAD  "Filamanı ekstrudere yerleştiriniz."      
+	#define RU_PROMPT_FILAMENT_CONTINUE  "İşlem tamamlanacak."   	
 #endif

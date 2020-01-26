@@ -10,8 +10,8 @@ lABEL_UNIFIEDHEAT,
   {ICON_HEAT,                 LABEL_HEAT},
   {ICON_FAN,                  LABEL_FAN},
   {ICON_COOLDOWN,             LABEL_COOLDOWN},
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
+  {ICON_LOAD,                 LABEL_FILAMENT_LOAD},
+  {ICON_UNLOAD,               LABEL_FILAMENT_UNLOAD},
   {ICON_BACKGROUND,           LABEL_BACKGROUND},
   {ICON_BACK,                 LABEL_BACK},}
 };
@@ -34,7 +34,28 @@ void menuUnifiedHeat(void)
           heatSetTargetTemp(i, 0);
         }
         break;
-        
+      case KEY_ICON_4: 
+			infoMenu.cur--;
+			storeCmd("G28 O\n");
+			storeCmd("G1 Z50 F1200\n");
+			storeCmd("G1 X100 Y100 F6000\n"); 
+			storeCmd("M109 S220\n"); 
+			storeCmd("M701\n"); 
+			storeCmd("M400\n");
+			storeCmd("M104 S0\n");
+			storeCmd("M300 S880 P300\n");
+			break;
+      case KEY_ICON_5:	
+			infoMenu.cur--;
+			storeCmd("G28 O\n");
+			storeCmd("G1 Z50 F1200\n");
+			storeCmd("G1 X100 Y100 F6000\n");
+			storeCmd("M109 S220\n"); 
+			storeCmd("M702\n"); 
+			storeCmd("M400\n");
+			storeCmd("M104 S0\n");
+			storeCmd("M300 S880 P300\n");
+			break;	  
       case KEY_ICON_7: infoMenu.cur--;      break;
       default:break;            
     }

@@ -100,7 +100,7 @@ char * request_M33(char *filename)
   sprintf(requestCommandInfo.command, "M33 %s\n",filename);
   strcpy(requestCommandInfo.startMagic,"/"); //un caractere qui est dans la ligne a traiter
   strcpy(requestCommandInfo.stopMagic,"ok");
-  strcpy(requestCommandInfo.errorMagic,"Cannot open subdir");
+  strcpy(requestCommandInfo.errorMagic,"???\nok"); //"Cannot open subdir");
   resetRequestCommandInfo();
   mustStoreCmd(requestCommandInfo.command);
   // Wait for response
@@ -169,6 +169,31 @@ bool request_M524(void)
   mustStoreCmd("M524\n");
   return true;
 }
+
+/**
+ * Stop waiting
+ **/
+bool request_M108(void)
+{
+  setCurrentAckSrc(SERIAL_PORT);
+  Serial_Puts(SERIAL_PORT, "M108\n");
+  //mustStoreCmd("M108\n");
+  return true;
+}
+
+/**
+ * Host prompt
+ **/
+bool request_M876(int param)
+{
+  char command[10];
+  sprintf(command, "M876 S%d\n",param);
+  setCurrentAckSrc(SERIAL_PORT);
+  Serial_Puts(SERIAL_PORT, command);
+  //mustStoreCmd("M108\n");
+  return true;
+}
+
 /**
  * Pause print 
  **/

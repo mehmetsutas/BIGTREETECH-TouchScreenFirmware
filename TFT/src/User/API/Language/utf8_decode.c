@@ -21,7 +21,17 @@ static FONT_BITMAP font[] = {
     // the first character code point in this font bitmap file
     0x20, // the first character in BYTE_ASCII_ADDR is 0x20(' ')
   },
-  { // Czech(Latin 1 Supplement, Extended-A&B)
+  { // Turkish(Latin 5)
+    0x80,
+    0x1FF,
+    BYTE_HEIGHT,
+    BYTE_WIDTH,
+    WORD_UNICODE,
+    BYTE_HEIGHT,
+    BYTE_WIDTH * 2,
+    0x0,
+  },
+ /* { // Czech(Latin 1 Supplement, Extended-A&B)
     0x80,
     0x24F,
     BYTE_HEIGHT,
@@ -50,7 +60,7 @@ static FONT_BITMAP font[] = {
     BYTE_HEIGHT,
     BYTE_WIDTH * 2, // default word_unicode.fon dot matrix library font size is 24*24 / 16*16
     0,
-  },
+  },*/
   { // default font
     0x0,
     0xFFFF,

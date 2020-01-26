@@ -33,12 +33,30 @@ const ITEM itemIsPause[2] = {
 static PRINTING infoPrinting;
 static u32     update_time = M27_REFRESH * 100;
 
+static u32 gantry_nowTime = 0;
+static u32 gantry_update_time = 1000; // 1 seconds is 100
+
 #ifdef ONBOARD_SD_SUPPORT
 static bool    update_waiting = M27_WATCH_OTHER_SOURCES;
 #else
 static bool    update_waiting = false;
 #endif
 
+void printing_update_gantry(void)
+{
+  if (OS_GetTime() > gantry_nowTime + gantry_update_time)
+  {
+    if (infoHost.connected == true && infoHost.wait == false){
+      storeCmd("M114\n");
+    }
+    gantry_nowTime = OS_GetTime();
+  }
+}
+
+void setPrinting(bool param)
+{
+	infoPrinting.printing=param;
+}
 
 //
 bool isPrinting(void)
@@ -356,6 +374,7 @@ void menuPrinting(void)
 
   while(infoMenu.menu[infoMenu.cur] == menuPrinting)
   {		
+	printing_update_gantry();
 //    Scroll_DispString(&titleScroll, LEFT); //Scroll display file name will take too many CPU cycles
 
     if( infoPrinting.size != 0)
@@ -396,9 +415,10 @@ void menuPrinting(void)
       reDrawTime();
     }
     //Z_AXIS coordinate
-    static COORDINATE tmp;
-    coordinateGetAll(&tmp);
-    GUI_DispFloat(BED_X+BYTE_WIDTH*2,TIME_Y-BYTE_HEIGHT,tmp.axis[Z_AXIS],3,3,LEFT);
+//    static COORDINATE tmp;
+//    coordinateGetAll(&tmp);
+//    GUI_DispFloat(BED_X+BYTE_WIDTH*2,TIME_Y-BYTE_HEIGHT,tmp.axis[Z_AXIS],3,3,LEFT);
+    GUI_DispFloat(BED_X+BYTE_WIDTH*2,TIME_Y-BYTE_HEIGHT,coordinateGetAxisActual(Z_AXIS),3,3,LEFT);
     
     key_num = menuKeyGetValue();
     switch(key_num)
@@ -413,7 +433,7 @@ void menuPrinting(void)
         else
         {
           exitPrinting();
-          infoMenu.cur--;
+ //         infoMenu.cur--;
         }					
         break;
         
@@ -471,7 +491,7 @@ void completePrinting(void)
   if(infoSettings.auto_off) // Auto shut down after printing
   {
 		infoMenu.menu[++infoMenu.cur] = menuShutDown;
-  }
+  } else infoMenu.cur=0;
 }
 
 void abortPrinting(void)
@@ -479,6 +499,10 @@ void abortPrinting(void)
   switch (infoFile.source)
   {
     case BOARD_SD:
+	  request_M108();
+	  request_M108();
+	  request_M108();
+	  request_M108();
       request_M524();
       break;
   
@@ -486,12 +510,21 @@ void abortPrinting(void)
     case TFT_SD:
       clearCmdQueue();	
       break;
+	default:
+	  request_M108();
+	  request_M108();
+	  request_M108();
+	  request_M108();
+      request_M524();
+      break;
   }
 
   heatClearIsWaiting();
   
-  mustStoreCmd("G0 Z%d F3000\n", limitValue(0, (int)coordinateGetAxisTarget(Z_AXIS) + 10, Z_MAX_POS));
-  mustStoreCmd(CANCEL_PRINT_GCODE);
+  //mustStoreCmd("G0 Z%d F3000\n", limitValue(0, (int)coordinateGetAxisTarget(Z_AXIS) + 10, Z_MAX_POS));
+  #ifdef CANCEL_PRINT_GCODE
+	mustStoreCmd(CANCEL_PRINT_GCODE);
+  #endif
 
   endPrinting();
   exitPrinting();
@@ -510,7 +543,7 @@ void menuStopPrinting(void)
     {
       case KEY_POPUP_CONFIRM:
         abortPrinting();
-        infoMenu.cur-=2;
+        infoMenu.cur--;//-=2;
         break;
 
       case KEY_POPUP_CANCEL:

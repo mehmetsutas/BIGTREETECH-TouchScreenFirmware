@@ -3,16 +3,20 @@
 
 const MENUITEMS autoLevelingItems = {
 // title
-LABEL_ABL,
+{LABEL_ABL},
 // icon                        label
- {{ICON_LEVELING,              LABEL_ABL},
-  {ICON_BLTOUCH_DEPLOY,        LABEL_BLTOUCH_DEPLOY},
-  {ICON_BLTOUCH_STOW,          LABEL_BLTOUCH_STOW},
-  {ICON_BLTOUCH_TEST,          LABEL_BLTOUCH_TEST},
-  {ICON_BLTOUCH_REPEAT,        LABEL_BLTOUCH_REPEAT},
-  {ICON_PROBE_OFFSET,          LABEL_PROBE_OFFSET},
-  {ICON_BABYSTEP,              LABEL_BABYSTEP},
-  {ICON_BACK,                  LABEL_BACK},}
+ {{ICON_LEVELING,              {LABEL_ABL}},
+//  {ICON_BLTOUCH_DEPLOY,        {LABEL_BLTOUCH_DEPLOY}},
+//  {ICON_BLTOUCH_STOW,          {LABEL_BLTOUCH_STOW}},
+//  {ICON_BLTOUCH_TEST,          {LABEL_BLTOUCH_TEST}},
+//  {ICON_BLTOUCH_REPEAT,        {LABEL_BLTOUCH_REPEAT}},
+  {ICON_PROBE_OFFSET,          {LABEL_PROBE_OFFSET}},
+  {ICON_BABYSTEP,              {LABEL_BABYSTEP}},
+  {ICON_BACKGROUND,           {LABEL_BACKGROUND}},
+  {ICON_BACKGROUND,           {LABEL_BACKGROUND}},
+  {ICON_BACKGROUND,           {LABEL_BACKGROUND}},
+  {ICON_BACKGROUND,           {LABEL_BACKGROUND}},
+  {ICON_BACK,                  {LABEL_BACK}},}
 };
 
 void menuAutoLeveling(void)
@@ -31,7 +35,7 @@ void menuAutoLeveling(void)
           storeCmd("M500\n");
         #endif
         break;
-      case KEY_ICON_1:
+/*      case KEY_ICON_1:
         storeCmd("M280 P0 S10\n");
         break;
       case KEY_ICON_2:
@@ -42,12 +46,12 @@ void menuAutoLeveling(void)
         break;
       case KEY_ICON_4:
         storeCmd("M48\n");
-        break;
-      case KEY_ICON_5:
+        break;*/
+      case KEY_ICON_1:
         storeCmd("M851\n");
         infoMenu.menu[++infoMenu.cur] = menuProbeOffset;
         break;      
-      case KEY_ICON_6:
+      case KEY_ICON_2:
         infoMenu.menu[++infoMenu.cur] = menuBabyStep;
         break; 
       case KEY_ICON_7:
@@ -61,16 +65,16 @@ void menuAutoLeveling(void)
 
 const MENUITEMS manualLevelingItems = {
 // title
-LABEL_LEVELING,
+{LABEL_LEVELING},
 // icon                        label
- {{ICON_POINT_1,               LABEL_POINT_1},
-  {ICON_POINT_2,               LABEL_POINT_2},
-  {ICON_POINT_3,               LABEL_POINT_3},
-  {ICON_POINT_4,               LABEL_POINT_4},
-  {ICON_BACKGROUND,            LABEL_BACKGROUND},
-  {ICON_BACKGROUND,            LABEL_BACKGROUND},
-  {ICON_BACKGROUND,            LABEL_BACKGROUND},
-  {ICON_BACK,                  LABEL_BACK},}
+ {{ICON_POINT_1,               {LABEL_POINT_1}},
+  {ICON_POINT_2,               {LABEL_POINT_2}},
+  {ICON_POINT_3,               {LABEL_POINT_3}},
+  {ICON_POINT_4,               {LABEL_POINT_4}},
+  {ICON_BACKGROUND,            {LABEL_BACKGROUND}},
+  {ICON_BACKGROUND,            {LABEL_BACKGROUND}},
+  {ICON_BACKGROUND,            {LABEL_BACKGROUND}},
+  {ICON_BACK,                  {LABEL_BACK}},}
 };
 
 void moveToLevelingPoint(u8 point)

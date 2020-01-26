@@ -44,7 +44,7 @@ void infoMenuSelect(void)
         u32 startUpTime = OS_GetTime();
         heatSetUpdateTime(100);
         LOGO_ReadDisplay();
-        while(OS_GetTime() - startUpTime < 300)  //Display 3s logo
+        while(OS_GetTime() - startUpTime < 800)  //Display 3s logo
         {                                                                                                                     
           loopProcess();	
         }

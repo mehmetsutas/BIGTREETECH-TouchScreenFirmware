@@ -3,6 +3,8 @@
 #
 applet/
 *.DS_Store
+.pio/
+.vscode/
 
 #
 # Misc

@@ -4,23 +4,23 @@
 //1��title(����), ITEM_PER_PAGE��item(ͼ��+��ǩ) 
 MENUITEMS percentageItems = {
 //   title
-LABEL_PERCENTAGE_SPEED,
+{LABEL_PERCENTAGE_SPEED},
 // icon                       label
- {{ICON_DEC,                  LABEL_DEC},
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_INC,                  LABEL_INC},
-  {ICON_MOVE,                 LABEL_PERCENTAGE_SPEED},
-  {ICON_E_5_MM,               LABEL_5_PERCENT},
-  {ICON_NORMAL_SPEED,         LABEL_NORMAL_SPEED},
-  {ICON_BACK,                 LABEL_BACK},}
+ {{ICON_DEC,                  {LABEL_DEC}},
+  {ICON_BACKGROUND,           {LABEL_BACKGROUND}},
+  {ICON_BACKGROUND,           {LABEL_BACKGROUND}},
+  {ICON_INC,                  {LABEL_INC}},
+  {ICON_MOVE,                 {LABEL_PERCENTAGE_SPEED}},
+  {ICON_E_5_MM,               {LABEL_5_PERCENT}},
+  {ICON_NORMAL_SPEED,         {LABEL_NORMAL_SPEED}},
+  {ICON_BACK,                 {LABEL_BACK}},}
 };
 
 #define ITEM_PERCENTAGE_NUM 2
 const ITEM itemPercentage[ITEM_PERCENTAGE_NUM] = {
 // icon                       label
-  {ICON_MOVE,                 LABEL_PERCENTAGE_SPEED},
-  {ICON_EXTRUDE,              LABEL_PERCENTAGE_FLOW},
+  {ICON_MOVE,                 {LABEL_PERCENTAGE_SPEED}},
+  {ICON_EXTRUDE,              {LABEL_PERCENTAGE_FLOW}},
 };
 static int16_t itemPercentageTitle[ITEM_PERCENTAGE_NUM] = {
   LABEL_PERCENTAGE_SPEED,     LABEL_PERCENTAGE_FLOW
@@ -32,9 +32,9 @@ static u8 item_percentage_i = 0;
 #define ITEM_PERCENT_UNIT_NUM 3
 const ITEM itemPercentUnit[ITEM_PERCENT_UNIT_NUM] = {
 // icon                       label
-  {ICON_E_1_MM,               LABEL_1_PERCENT},
-  {ICON_E_5_MM,               LABEL_5_PERCENT},
-  {ICON_E_10_MM,              LABEL_10_PERCENT},
+  {ICON_E_1_MM,               {LABEL_1_PERCENT}},
+  {ICON_E_5_MM,               {LABEL_5_PERCENT}},
+  {ICON_E_10_MM,              {LABEL_10_PERCENT}},
 };
 const  u8 item_percent_unit[ITEM_PERCENT_UNIT_NUM] = {1, 5, 10};
 static u8 item_percent_unit_i = 1;

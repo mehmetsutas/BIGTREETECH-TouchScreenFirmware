@@ -4,7 +4,7 @@
 
 MENUITEMS preheatItems = {
 // title
-LABEL_PREHEAT,
+{LABEL_PREHEAT},
 // icon                       label
   {
     {ICON_PREHEAT_PLA,          LABEL_PREHEAT_PLA},
@@ -20,8 +20,7 @@ LABEL_PREHEAT,
     #else
     {ICON_HEAT,                 LABEL_HEAT},
     #endif
-    {ICON_BACK,                 LABEL_BACK},
-  }
+    {ICON_BACK,                 LABEL_BACK}}
 };
 
 const ITEM itemToolPreheat[] = {

@@ -104,17 +104,17 @@ void menuCustom(void)
 #else
     LISTITEMS customItems = {
     // title
-    LABEL_CUSTOM,
+    {LABEL_CUSTOM},
     // icon                 ItemType      Item Title        item value text(only for custom value)
     {
-      {ICONCHAR_BACKGROUND, LIST_LABEL,  LABEL_BACKGROUND, LABEL_BACKGROUND},
-      {ICONCHAR_BACKGROUND, LIST_LABEL,  LABEL_BACKGROUND, LABEL_BACKGROUND},
-      {ICONCHAR_BACKGROUND, LIST_LABEL,  LABEL_BACKGROUND, LABEL_BACKGROUND},
-      {ICONCHAR_BACKGROUND, LIST_LABEL,  LABEL_BACKGROUND, LABEL_BACKGROUND},
-      {ICONCHAR_BACKGROUND, LIST_LABEL,  LABEL_BACKGROUND, LABEL_BACKGROUND},
-      {ICONCHAR_PAGEUP,     LIST_LABEL,  LABEL_BACKGROUND, LABEL_BACKGROUND},
-      {ICONCHAR_PAGEDOWN,   LIST_LABEL,  LABEL_BACKGROUND, LABEL_BACKGROUND},
-      {ICONCHAR_BACK,       LIST_LABEL,  LABEL_BACKGROUND, LABEL_BACKGROUND},}
+      {ICONCHAR_BACKGROUND, LIST_LABEL,  {LABEL_BACKGROUND}, {LABEL_BACKGROUND}},
+      {ICONCHAR_BACKGROUND, LIST_LABEL,  {LABEL_BACKGROUND}, {LABEL_BACKGROUND}},
+      {ICONCHAR_BACKGROUND, LIST_LABEL,  {LABEL_BACKGROUND}, {LABEL_BACKGROUND}},
+      {ICONCHAR_BACKGROUND, LIST_LABEL,  {LABEL_BACKGROUND}, {LABEL_BACKGROUND}},
+      {ICONCHAR_BACKGROUND, LIST_LABEL,  {LABEL_BACKGROUND}, {LABEL_BACKGROUND}},
+      {ICONCHAR_PAGEUP,     LIST_LABEL,  {LABEL_BACKGROUND}, {LABEL_BACKGROUND}},
+      {ICONCHAR_PAGEDOWN,   LIST_LABEL,  {LABEL_BACKGROUND}, {LABEL_BACKGROUND}},
+      {ICONCHAR_BACK,       LIST_LABEL,  {LABEL_BACKGROUND}, {LABEL_BACKGROUND}},}
     };
 
 //
@@ -323,16 +323,16 @@ void menuCustom(void)
 
 MENUITEMS RGBItems = {
 // title
-LABEL_RGB_SETTINGS,
+{LABEL_RGB_SETTINGS},
 // icon                       label
- {{ICON_RGB_RED,              LABEL_RGB_RED},
-  {ICON_RGB_GREEN,            LABEL_RGB_GREEN},
-  {ICON_RGB_BLUE,             LABEL_RGB_BLUE},
-  {ICON_RGB_WHITE,            LABEL_RGB_WHITE},
-  {ICON_RGB_OFF,              LABEL_RGB_OFF},
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_BACK,                 LABEL_BACK},}
+ {{ICON_RGB_RED,              {LABEL_RGB_RED}},
+  {ICON_RGB_GREEN,            {LABEL_RGB_GREEN}},
+  {ICON_RGB_BLUE,             {LABEL_RGB_BLUE}},
+  {ICON_RGB_WHITE,            {LABEL_RGB_WHITE}},
+  {ICON_RGB_OFF,              {LABEL_RGB_OFF}},
+  {ICON_BACKGROUND,           {LABEL_BACKGROUND}},
+  {ICON_BACKGROUND,           {LABEL_BACKGROUND}},
+  {ICON_BACK,                 {LABEL_BACK}},}
 };
 
 void menuRGBSettings(void)
@@ -380,16 +380,16 @@ void menuRGBSettings(void)
 
 MENUITEMS machineSettingsItems = {
 // title
-LABEL_MACHINE_SETTINGS,
+{LABEL_MACHINE_SETTINGS},
 // icon                       label
- {{ICON_CUSTOM,               LABEL_CUSTOM},
-  {ICON_RGB_SETTINGS,         LABEL_RGB_SETTINGS},
-  {ICON_GCODE,                LABEL_GCODE},
-  {ICON_SHUT_DOWN,            LABEL_SHUT_DOWN},
-  {ICON_PARAMETER,            LABEL_SETTING_PARAMETER},
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_BACK,                 LABEL_BACK},}
+ {{ICON_CUSTOM,               {LABEL_CUSTOM}},
+//  {ICON_RGB_SETTINGS,         LABEL_RGB_SETTINGS},
+  {ICON_GCODE,                {LABEL_GCODE}},
+  {ICON_SHUT_DOWN,            {LABEL_SHUT_DOWN}},
+  {ICON_PARAMETER,            {LABEL_SETTING_PARAMETER}},
+  {ICON_BACKGROUND,           {LABEL_BACKGROUND}},
+  {ICON_BACKGROUND,           {LABEL_BACKGROUND}},
+  {ICON_BACK,                 {LABEL_BACK}},}
 };
 
 void menuMachineSettings(void)
@@ -407,10 +407,10 @@ void menuMachineSettings(void)
         infoMenu.menu[++infoMenu.cur] =  menuCustom;
         break;
       
-      case KEY_ICON_1:
+/*      case KEY_ICON_1:
         infoMenu.menu[++infoMenu.cur] = menuRGBSettings;
         break;
-      
+  */    
       case KEY_ICON_2:
         infoMenu.menu[++infoMenu.cur] = menuSendGcode;
         break;

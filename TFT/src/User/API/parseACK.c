@@ -9,6 +9,9 @@ int MODEselect;
 const char *const ignoreEcho[] = {
   "Now fresh file:",
   "Probe Z Offset:",
+  "busy: processing",
+  "busy: paused for user",
+  "busy: paused for input",
 };
 
 void setCurrentAckSrc(uint8_t src)
@@ -77,6 +80,11 @@ void ackPopupInfo(const char *info)
   popupReminder((u8* )info, (u8 *)dmaL2Cache + ack_index);
 }
 
+void ackPopupKill()
+{
+  popupKill((u8* )"KILLED", textSelect(LABEL_NOTIFY_KILL));
+}
+
 void syncL2CacheFromL1(uint8_t port)
 {
   uint16_t i = 0;
@@ -101,7 +109,11 @@ void parseACK(void)
     if((!ack_seen("T:") && !ack_seen("T0:")) || !ack_seen("ok"))  goto parse_end;  //the first response should be such as "T:25/50 ok\n"
     infoHost.connected = true;
     #ifdef AUTO_SAVE_LOAD_LEVELING_VALUE
-      storeCmd("M420 S1\n");
+ //     storeCmd("M420 S1\n");
+    #endif
+	storeCmd("M155 S5\n");
+	#ifdef M27_AUTOREPORT
+        request_M27(M27_REFRESH); 
     #endif
   }    
 
@@ -150,18 +162,59 @@ void parseACK(void)
     {
       infoHost.wait = false;
     }
-    if(ack_seen("X:"))
+	if(ack_seen(promptbeginmagic))
+	{
+		if(ack_seen("Paused"))
+		{
+			popupContinue(textSelect(LABEL_WARNING), textSelect(LABEL_PROMPT_FILAMENT_CONTINUE)); 
+		} else if(ack_seen("Pause SD"))
+		{
+			reminderMessage(LABEL_NOTIFY_PAUSE, STATUS_NORMAL);
+		}else if(ack_seen("Nozzle Parked"))
+		{
+			popupContinue(textSelect(LABEL_WARNING), textSelect(LABEL_PROMPT_NOZZLE_PARKED));
+		} else if(ack_seen("HeaterTimeout"))
+		{
+			popupContinue(textSelect(LABEL_WARNING), textSelect(LABEL_PROMPT_HEATER_TIMEOUT)); 
+		} else if(ack_seen("Reheating"))
+		{
+			if ((infoMenu.menu[infoMenu.cur] == menuPopup) || (infoMenu.menu[infoMenu.cur] == menucontPopup)) 
+			{
+				--infoMenu.cur;
+			}
+			reminderMessage(LABEL_PROMPT_REHEATING, STATUS_NORMAL);
+		} else if(ack_seen("Reheat Done")) 
+		{
+			popupContinue(textSelect(LABEL_WARNING), textSelect(LABEL_PROMPT_REHEAT_DONE)); 
+		} else if(ack_seen("Resuming")) 
+		{
+			reminderMessage(LABEL_NOTIFY_RESUME, STATUS_NORMAL);
+		} else if(ack_seen("Load Filament T"))
+		{
+			popupContinue(textSelect(LABEL_WARNING), textSelect(LABEL_PROMPT_FILAMENT_LOAD)); 
+		} else if(ack_seen("Pause"))
+		{
+			reminderMessage(LABEL_NOTIFY_PAUSE, STATUS_NORMAL);
+		} else if(ack_seen("M0/1 Break Called"))
+		{
+			popupContinue(textSelect(LABEL_WARNING), textSelect(LABEL_PROMPT_M0_M1));
+		}
+	}
+    else if(ack_seen("X:"))
     {
       storegantry(0, ack_value());
+	  coordinateSetAxisActual(X_AXIS, ack_value());
       //storeCmd("M118 %d\n", ack_value());
       if (ack_seen("Y:"))
       {
         storegantry(1, ack_value());
+		coordinateSetAxisActual(Y_AXIS, ack_value());
         //storeCmd("M118 %d\n", ack_value());
         if (ack_seen("Z:"))
         {
           //storeCmd("M118 %d\n", ack_value());
           storegantry(2, ack_value());
+		  coordinateSetAxisActual(Z_AXIS, ack_value());
         }
       }
     }					
@@ -199,17 +252,45 @@ void parseACK(void)
       if(ack_seen("Z"))
       {
         setCurrentOffset(ack_value());
+		setBabyOffset(ack_value());
       }
     }
+	else if (ack_seen("File opened:"))
+	{
+		char *ptr1;
+		setPrintSize(strtol(strstr(dmaL2Cache, "byte ")+6, &ptr1, 10));
+	}		
     else if(ack_seen("Count E:")) // parse actual position, response of "M114"
     {
       coordinateSetAxisActualSteps(E_AXIS, ack_value());
-    }
-    else if(ack_seen(echomagic) && ack_seen(busymagic) && ack_seen("processing"))
+    } else if(ack_seen(promptendmagic))
+	{
+		if ((infoMenu.menu[infoMenu.cur] == menuPopup) || (infoMenu.menu[infoMenu.cur] == menucontPopup)) 
+		{
+			--infoMenu.cur;
+		}
+	} else if(ack_seen(actionmagic) && (ack_seen("pause") || ack_seen("paused")))
+	{
+		reminderMessage(LABEL_NOTIFY_PAUSE, STATUS_NORMAL);
+	} else if(ack_seen(actionmagic) && (ack_seen("resume") || ack_seen("resumed") || ack_seen("Resuming SD")))
+	{
+		reminderMessage(LABEL_NOTIFY_RESUME, STATUS_NORMAL);
+	} else if(ack_seen(actionmagic) && ack_seen("cancel"))
+	{
+		reminderMessage(LABEL_NOTIFY_CANCEL, STATUS_NORMAL);
+	} else if(ack_seen(actionmagic) && ack_seen("poweroff"))
+	{
+		ackPopupKill();
+	} else if(ack_seen(actionmagic) && ack_seen("FilamentRunout"))
+	{
+		popupReminder(textSelect(LABEL_WARNING), textSelect(LABEL_FILAMENT_RUNOUT));
+	} else if(ack_seen(actionmagic) && ack_seen("notification "))
+	{
+		ackPopupInfo(echomagic);
+	} else if(ack_seen(echomagic) && ack_seen(busymagic) && ack_seen("processing"))
     {
       busyIndicator(STATUS_BUSY);
-    }
-    else if(ack_seen("X driver current: "))
+    } else if(ack_seen("X driver current: "))
     {
       Get_parameter_value[0] = ack_value();
 
@@ -236,17 +317,32 @@ void parseACK(void)
       Get_parameter_value[7] = ack_value();
     }
 #ifdef ONBOARD_SD_SUPPORT     
-    else if(ack_seen(bsdnoprintingmagic) && infoMenu.menu[infoMenu.cur] == menuPrinting)
+/*    else if((ack_seen(bsdnoprintingmagic)) && 
+	        ((infoMenu.menu[infoMenu.cur] == menuPrinting) ||
+		    (infoMenu.menu[infoMenu.cur] == menuStopPrinting)))	*/
+	else if(ack_seen(bsdnoprintingmagic) && infoMenu.menu[infoMenu.cur] == menuPrinting && isPause()==false)			
     {
       infoHost.printing = false;
       completePrinting();
     }
     else if(ack_seen(bsdprintingmagic))
     {
-      if(infoMenu.menu[infoMenu.cur] != menuPrinting && !infoHost.printing) {
+      if((infoMenu.menu[infoMenu.cur] != menuPrinting) && 
+		 (infoMenu.menu[infoMenu.cur] != menuStopPrinting) &&
+		 (infoMenu.menu[infoMenu.cur] != menuHeat) &&
+		 (infoMenu.menu[infoMenu.cur] != menuSpeed) &&
+		 (infoMenu.menu[infoMenu.cur] != menuBabyStep) &&
+		 (infoMenu.menu[infoMenu.cur] != menuMore) &&
+		 (infoMenu.menu[infoMenu.cur] != menuPopup) &&
+		 (infoMenu.menu[infoMenu.cur] != menucontPopup) &&
+		 (infoMenu.menu[infoMenu.cur] != menuFan) &&
+		 (infoMenu.menu[infoMenu.cur] != menuIsPause) &&
+		 (infoMenu.menu[infoMenu.cur] != menuExtrude))
+	  {
         infoMenu.menu[++infoMenu.cur] = menuPrinting;
-        infoHost.printing=true;
       }
+        infoHost.printing=true;
+		setPrinting(true);
       // Parsing printing data
       // Example: SD printing byte 123/12345
       char *ptr;
@@ -268,7 +364,7 @@ void parseACK(void)
       ackPopupInfo(echomagic);
     }
   }
-  if (ack_seen(" F0:"))
+  if (ack_seen("Fan Speed: "))
   {
       fanSetSpeed(0, ack_value());
   }

@@ -160,5 +160,17 @@
     #define SK_INVERT_YAXIS         "Invert Y Axis"
     #define SK_INVERT_ZAXIS         "Invert Z Axis"
     #define SK_MOVE_SPEED           "Move speed(X Y Z)"
-
+    #define SK_NOTIFY_PAUSE			"Baskı duraklatıldı!"
+    #define SK_NOTIFY_RESUME		"Baskı sürdürülüyor!"
+    #define SK_NOTIFY_KILL			"Cihaz durduruldu!!!"
+    #define SK_NOTIFY_CANCEL		"Baskı iptal edildi!"
+	#define SK_PROMPT_FILAMENT_INSERT		"Filaman yükleyiniz!"
+	#define SK_PROMPT_HEATER_TIMEOUT		"Güvenlik için nozül soğutuldu. Isıtılsın mı?"
+	#define SK_PROMPT_REHEATING		"Isınıyor..."
+	#define SK_PROMPT_REHEAT_DONE	"Isınma tamamlandı."
+    #define SK_FILAMENT_LOAD        "Yükle"                               //"Load"
+    #define SK_FILAMENT_UNLOAD      "Boşalt"  
+	#define SK_FILAMENT_CHANGE      "F. Değiş."
+	#define SK_PROMPT_FILAMENT_LOAD  "Filamanı ekstrudere yerleştiriniz."      
+	#define SK_PROMPT_FILAMENT_CONTINUE  "İşlem tamamlanacak."   
 #endif

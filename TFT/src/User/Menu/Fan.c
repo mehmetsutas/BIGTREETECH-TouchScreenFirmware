@@ -99,26 +99,26 @@ void menuFan(void)
       case KEY_ICON_0:
         if (fanSpeed[curIndex] > 0)
             #ifdef SHOW_FAN_PERCENTAGE
-              if ((fanSpeed[curIndex]-2) > 0) {
-                fanSpeed[curIndex]-=2; //2.55 is 1 percent, rounding down
+              if ((fanSpeed[curIndex]-64) > 0) {
+                fanSpeed[curIndex]-=64; //2.55 is 1 percent, rounding down
               } else {
                 fanSpeed[curIndex]=0;
               }
             #else
-              fanSpeed[curIndex]--;
+              fanSpeed[curIndex]-=64;
             #endif   
         break;
         
       case KEY_ICON_3:
         if (fanSpeed[curIndex] < fanMaxPWM[curIndex]){
             #ifdef SHOW_FAN_PERCENTAGE
-              if (fanSpeed[curIndex]+2 <= fanMaxPWM[curIndex]){
-                fanSpeed[curIndex]+=2; //2.55 is 1 percent, rounding down
+              if (fanSpeed[curIndex]+64 <= fanMaxPWM[curIndex]){
+                fanSpeed[curIndex]+=64; //2.55 is 1 percent, rounding down
               } else {
                 fanSpeed[curIndex]=fanMaxPWM[curIndex];
               }
             #else
-              fanSpeed[curIndex]++;
+              fanSpeed[curIndex]+=64;
             #endif   
         }
         break;

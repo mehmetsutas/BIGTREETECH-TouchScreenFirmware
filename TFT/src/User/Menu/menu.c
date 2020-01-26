@@ -176,7 +176,7 @@ void loopReminderClear(void)
       break;
       
     case STATUS_NORMAL:
-      if(OS_GetTime()<reminder.time+200)
+      if(OS_GetTime()<reminder.time+500)
         return;
       break;
     default:

@@ -160,5 +160,17 @@
     #define JP_INVERT_YAXIS         "Invert Y Axis"
     #define JP_INVERT_ZAXIS         "Invert Z Axis"
     #define JP_MOVE_SPEED           "Move speed(X Y Z)"
-    
+    #define JP_NOTIFY_PAUSE			"Baskı duraklatıldı!"
+    #define JP_NOTIFY_RESUME		"Baskı sürdürülüyor!"
+    #define JP_NOTIFY_KILL			"Cihaz durduruldu!!!"
+    #define JP_NOTIFY_CANCEL		"Baskı iptal edildi!"
+	#define JP_PROMPT_FILAMENT_INSERT		"Filaman yükleyiniz!"
+	#define JP_PROMPT_HEATER_TIMEOUT		"Güvenlik için nozül soğutuldu. Isıtılsın mı?"
+	#define JP_PROMPT_REHEATING		"Isınıyor..."
+	#define JP_PROMPT_REHEAT_DONE	"Isınma tamamlandı." 
+    #define JP_FILAMENT_LOAD        "Yükle"                               //"Load"
+    #define JP_FILAMENT_UNLOAD      "Boşalt"  
+	#define JP_FILAMENT_CHANGE      "F. Değiş."
+	#define JP_PROMPT_FILAMENT_LOAD  "Filamanı ekstrudere yerleştiriniz."      
+	#define JP_PROMPT_FILAMENT_CONTINUE  "İşlem tamamlanacak."   	
 #endif

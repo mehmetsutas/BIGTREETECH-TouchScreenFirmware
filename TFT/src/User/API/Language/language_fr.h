@@ -161,5 +161,17 @@
     #define FR_INVERT_YAXIS         "Inverser Axe Y"
     #define FR_INVERT_ZAXIS         "Inverser Axe Z"
     #define FR_MOVE_SPEED           "Vitesse de déplacement (X Y Z)"
-
+    #define FR_NOTIFY_PAUSE			"Baskı duraklatıldı!"
+    #define FR_NOTIFY_RESUME		"Baskı sürdürülüyor!"
+    #define FR_NOTIFY_KILL			"Cihaz durduruldu!!!"
+    #define FR_NOTIFY_CANCEL		"Baskı iptal edildi!"
+	#define FR_PROMPT_FILAMENT_INSERT		"Filaman yükleyiniz!"
+	#define FR_PROMPT_HEATER_TIMEOUT		"Güvenlik için nozül soğutuldu. Isıtılsın mı?"
+	#define FR_PROMPT_REHEATING		"Isınıyor..."
+	#define FR_PROMPT_REHEAT_DONE	"Isınma tamamlandı."
+    #define FR_FILAMENT_LOAD        "Yükle"                               //"Load"
+    #define FR_FILAMENT_UNLOAD      "Boşalt"  
+	#define FR_FILAMENT_CHANGE      "F. Değiş."
+	#define FR_PROMPT_FILAMENT_LOAD  "Filamanı ekstrudere yerleştiriniz."      
+	#define FR_PROMPT_FILAMENT_CONTINUE  "İşlem tamamlanacak."   
 #endif

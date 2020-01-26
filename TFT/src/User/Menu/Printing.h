@@ -23,6 +23,7 @@ void abortPrinting(void);
 
 bool setPrintPause(bool is_pause);
 
+void setPrinting(bool param);
 bool isPrinting(void);	
 bool isPause(void);
 void setPrintingTime(u32 RTtime);

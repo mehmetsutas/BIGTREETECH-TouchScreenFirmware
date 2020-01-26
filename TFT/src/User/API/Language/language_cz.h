@@ -161,5 +161,17 @@
     #define CZ_INVERT_YAXIS         "Invert Y Axis"
     #define CZ_INVERT_ZAXIS         "Invert Z Axis"
     #define CZ_MOVE_SPEED           "Move speed(X Y Z)"
-
+    #define CZ_NOTIFY_PAUSE			"Baskı duraklatıldı!"
+    #define CZ_NOTIFY_RESUME		"Baskı sürdürülüyor!"
+    #define CZ_NOTIFY_KILL			"Cihaz durduruldu!!!"
+    #define CZ_NOTIFY_CANCEL		"Baskı iptal edildi!"
+	#define CZ_PROMPT_FILAMENT_INSERT		"Filaman yükleyiniz!"
+	#define CZ_PROMPT_HEATER_TIMEOUT		"Güvenlik için nozül soğutuldu. Isıtılsın mı?"
+	#define CZ_PROMPT_REHEATING		"Isınıyor..."
+	#define CZ_PROMPT_REHEAT_DONE	"Isınma tamamlandı."
+    #define CZ_FILAMENT_LOAD        "Yükle"                               //"Load"
+    #define CZ_FILAMENT_UNLOAD      "Boşalt"  
+	#define CZ_FILAMENT_CHANGE      "F. Değiş."
+	#define CZ_PROMPT_FILAMENT_LOAD  "Filamanı ekstrudere yerleştiriniz."      
+	#define CZ_PROMPT_FILAMENT_CONTINUE  "İşlem tamamlanacak."   
 #endif

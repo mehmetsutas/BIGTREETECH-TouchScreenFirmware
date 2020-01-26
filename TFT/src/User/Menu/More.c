@@ -30,9 +30,11 @@ MENUITEMS moreItems = {
 LABEL_MORE,
 // icon                       label
  {{ICON_FAN,                  LABEL_FAN},
-  {ICON_RGB_SETTINGS,         LABEL_RGB_SETTINGS},
+//  {ICON_RGB_SETTINGS,         LABEL_RGB_SETTINGS},
   {ICON_EXTRUDE,              LABEL_EXTRUDE},
-  {ICON_FEATURE_SETTINGS,     LABEL_FEATURE_SETTINGS},
+//  {ICON_FEATURE_SETTINGS,     LABEL_FEATURE_SETTINGS},
+  {ICON_FILAMENT,             LABEL_FILAMENT_CHANGE},
+  {ICON_BACKGROUND,           LABEL_BACKGROUND},
   {ICON_BACKGROUND,           LABEL_BACKGROUND},
   {ICON_BACKGROUND,           LABEL_BACKGROUND},
   {ICON_BACKGROUND,           LABEL_BACKGROUND},
@@ -53,21 +55,28 @@ void menuMore(void)
         infoMenu.menu[++infoMenu.cur] = menuFan;
         break;
       
-      case KEY_ICON_1:
+/*      case KEY_ICON_1:
         infoMenu.menu[++infoMenu.cur] = menuRGBSettings;
         break;
-      
-      case KEY_ICON_2:
+  */    
+      case KEY_ICON_1:
 				if (isPrinting() && !isPause()) // need paused before extrude
 				  infoMenu.menu[++infoMenu.cur] = menuIsPause;
 				else
 				  infoMenu.menu[++infoMenu.cur] = menuExtrude; 
         break;
-      
+      case KEY_ICON_2:
+				if (isPrinting() && !isPause()) // need paused before extrude
+				{
+					storeCmd("M600\n");
+					infoMenu.cur--;
+				}
+        break;
+/*      
       case KEY_ICON_3:
         infoMenu.menu[++infoMenu.cur] = menuFeatureSettings;
         break;
-      
+  */    
       case KEY_ICON_7:
         infoMenu.cur--;
         break;

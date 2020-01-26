@@ -34,4 +34,6 @@ extern SETTINGS infoSettings;
 void infoSettingsReset(void);
 void menuSettings(void);
 
+void menuDisconnect(void);
+
 #endif

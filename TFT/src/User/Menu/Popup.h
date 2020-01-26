@@ -42,5 +42,10 @@ void windowSetButton(const BUTTON *btn);
 void windowReDrawButton(uint8_t positon, uint8_t is_press);
 void popupDrawPage(BUTTON *btn, const uint8_t *title, const uint8_t *context, const uint8_t *yes, const uint8_t *no);
 void popupReminder(u8* info, u8* context);
+void popupKill(u8* info, u8* context);
+void popupContinue(u8* info, u8* context);
+
+void menucontPopup(void);
+void menuPopup(void);
 
 #endif

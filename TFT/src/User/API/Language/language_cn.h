@@ -160,5 +160,18 @@
     #define CN_INVERT_YAXIS         "Invert Y Axis"
     #define CN_INVERT_ZAXIS         "Invert Z Axis"
     #define CN_MOVE_SPEED           "Move speed(X Y Z)"
+    #define CN_NOTIFY_PAUSE			"Baskı duraklatıldı!"
+    #define CN_NOTIFY_RESUME		"Baskı sürdürülüyor!"
+    #define CN_NOTIFY_KILL			"Cihaz durduruldu!!!"
+    #define CN_NOTIFY_CANCEL		"Baskı iptal edildi!"
+	#define CN_PROMPT_FILAMENT_INSERT		"Filaman yükleyiniz!"
+	#define CN_PROMPT_HEATER_TIMEOUT		"Güvenlik için nozül soğutuldu. Isıtılsın mı?"
+	#define CN_PROMPT_REHEATING		"Isınıyor..."
+	#define CN_PROMPT_REHEAT_DONE	"Isınma tamamlandı."
+    #define CN_FILAMENT_LOAD        "Yükle"                               //"Load"
+    #define CN_FILAMENT_UNLOAD      "Boşalt"  
+	#define CN_FILAMENT_CHANGE      "F. Değiş."
+	#define CN_PROMPT_FILAMENT_LOAD  "Filamanı ekstrudere yerleştiriniz."      
+	#define CN_PROMPT_FILAMENT_CONTINUE  "İşlem tamamlanacak."   
 
 #endif

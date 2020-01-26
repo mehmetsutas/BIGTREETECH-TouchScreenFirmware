@@ -87,6 +87,11 @@ void coordinateSetAxisActualSteps(AXIS axis, int steps)
   curPosition.axis[axis] = steps / EXTRUDE_STEPS; // TODO: NEED fix, M92 auto get
 }
 
+void coordinateSetAxisActual(AXIS axis, float position)
+{ 
+  curPosition.axis[axis] = position; 
+}
+
 float coordinateGetAxisActual(AXIS axis)
 {
   return curPosition.axis[axis];

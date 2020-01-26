@@ -6,7 +6,7 @@ SETTINGS infoSettings;
 // Reset settings data
 void infoSettingsReset(void)
 {
-  infoSettings.baudrate = 115200;
+  infoSettings.baudrate = R3D_BAUDRATE; //115200;
   infoSettings.language = ENGLISH;
   infoSettings.mode = SERIAL_TSC;
   infoSettings.runout = 0;
@@ -65,12 +65,20 @@ MENUITEMS settingsItems = {
 // title
 LABEL_SETTINGS,
 // icon                       label
- {{ICON_SCREEN_SETTINGS,      LABEL_SCREEN_SETTINGS},
+/* {{ICON_SCREEN_SETTINGS,      LABEL_SCREEN_SETTINGS},
   {ICON_MACHINE_SETTINGS,     LABEL_MACHINE_SETTINGS},
   {ICON_FEATURE_SETTINGS,     LABEL_FEATURE_SETTINGS},
   {ICON_SCREEN_INFO,          LABEL_SCREEN_INFO},
   {ICON_DISCONNECT,           LABEL_DISCONNECT},
   {ICON_BAUDRATE,             LABEL_BAUDRATE_115200},
+  {ICON_BACKGROUND,           LABEL_BACKGROUND},
+  {ICON_BACK,                 LABEL_BACK},} */
+ {{ICON_SCREEN_SETTINGS,      LABEL_SCREEN_SETTINGS},
+  {ICON_MACHINE_SETTINGS,     LABEL_MACHINE_SETTINGS},
+  {ICON_FEATURE_SETTINGS,     LABEL_FEATURE_SETTINGS},
+  {ICON_SCREEN_INFO,          LABEL_SCREEN_INFO},
+  {ICON_DISCONNECT,           LABEL_DISCONNECT},
+  {ICON_BACKGROUND,           LABEL_BACKGROUND},
   {ICON_BACKGROUND,           LABEL_BACKGROUND},
   {ICON_BACK,                 LABEL_BACK},}
 };
@@ -89,14 +97,14 @@ void menuSettings(void)
   KEY_VALUES key_num = KEY_IDLE;
   SETTINGS now = infoSettings;
 
-  for(u8 i=0; i<ITEM_BAUDRATE_NUM; i++)
+/*  for(u8 i=0; i<ITEM_BAUDRATE_NUM; i++)
   {
     if(infoSettings.baudrate == item_baudrate[i])
     {
       item_baudrate_i = i;
       settingsItems.items[KEY_ICON_5] = itemBaudrate[item_baudrate_i];
     }
-  }
+  }*/
 
   menuDrawPage(&settingsItems);
 
@@ -125,14 +133,14 @@ void menuSettings(void)
         infoMenu.menu[++infoMenu.cur] = menuDisconnect;
         break;
       
-      case KEY_ICON_5:
+/*      case KEY_ICON_5:
         item_baudrate_i = (item_baudrate_i + 1) % ITEM_BAUDRATE_NUM;                
         settingsItems.items[key_num] = itemBaudrate[item_baudrate_i];
         menuDrawItem(&settingsItems.items[key_num], key_num);
         infoSettings.baudrate = item_baudrate[item_baudrate_i];
         Serial_DeInit(); // Serial_Init() will malloc a dynamic memory, so Serial_DeInit() first to free, then malloc again.
         Serial_Init(infoSettings.baudrate);
-        break;
+        break;*/
 
       case KEY_ICON_7:
         infoMenu.cur--;

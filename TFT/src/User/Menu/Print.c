@@ -4,17 +4,17 @@
 #ifdef MENU_LIST_MODE
   LISTITEMS printItems = {
   // title
-  LABEL_BACKGROUND,
+  {LABEL_BACKGROUND},
   // icon                 ItemType      Item Title        item value text(only for custom value)
   {
-    {ICONCHAR_BACKGROUND, LIST_LABEL, LABEL_BACKGROUND, LABEL_BACKGROUND},
-    {ICONCHAR_BACKGROUND, LIST_LABEL, LABEL_BACKGROUND, LABEL_BACKGROUND},
-    {ICONCHAR_BACKGROUND, LIST_LABEL, LABEL_BACKGROUND, LABEL_BACKGROUND},
-    {ICONCHAR_BACKGROUND, LIST_LABEL, LABEL_BACKGROUND, LABEL_BACKGROUND},
-    {ICONCHAR_BACKGROUND, LIST_LABEL, LABEL_BACKGROUND, LABEL_BACKGROUND},
-    {ICONCHAR_BACKGROUND, LIST_LABEL, LABEL_BACKGROUND, LABEL_BACKGROUND},
-    {ICONCHAR_BACKGROUND, LIST_LABEL, LABEL_BACKGROUND, LABEL_BACKGROUND},
-    {ICONCHAR_BACK,       LIST_LABEL, LABEL_BACKGROUND, LABEL_BACKGROUND},}
+    {ICONCHAR_BACKGROUND, LIST_LABEL, {LABEL_BACKGROUND}, {LABEL_BACKGROUND}},
+    {ICONCHAR_BACKGROUND, LIST_LABEL, {LABEL_BACKGROUND}, {LABEL_BACKGROUND}},
+    {ICONCHAR_BACKGROUND, LIST_LABEL, {LABEL_BACKGROUND}, {LABEL_BACKGROUND}},
+    {ICONCHAR_BACKGROUND, LIST_LABEL, {LABEL_BACKGROUND}, {LABEL_BACKGROUND}},
+    {ICONCHAR_BACKGROUND, LIST_LABEL, {LABEL_BACKGROUND}, {LABEL_BACKGROUND}},
+    {ICONCHAR_BACKGROUND, LIST_LABEL, {LABEL_BACKGROUND}, {LABEL_BACKGROUND}},
+    {ICONCHAR_BACKGROUND, LIST_LABEL, {LABEL_BACKGROUND}, {LABEL_BACKGROUND}},
+    {ICONCHAR_BACK,       LIST_LABEL, {LABEL_BACKGROUND}, {LABEL_BACKGROUND}},}
   };
 
 #else
@@ -380,25 +380,26 @@ void menuPrintFromSource(void)
 
 MENUITEMS sourceSelItems = {
 //  title
-LABEL_PRINT,
+{LABEL_PRINT},
 // icon                       label
- {{ICON_SD_SOURCE,            LABEL_TFTSD},
+ {
  #ifdef ONBOARD_SD_SUPPORT
-  {ICON_BSD_SOURCE,           LABEL_ONBOARDSD},
+  {ICON_BSD_SOURCE,           {LABEL_ONBOARDSD}},
  #endif
  #ifdef U_DISK_SUPPROT
-  {ICON_U_DISK,               LABEL_U_DISK},
+  {ICON_U_DISK,               {LABEL_U_DISK}},
  #else
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
+  {ICON_BACKGROUND,           {LABEL_BACKGROUND}},
  #endif
  #ifndef ONBOARD_SD_SUPPORT
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
+  {ICON_BACKGROUND,           {LABEL_BACKGROUND}},
  #endif
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_BACK,                 LABEL_BACK},}
+  {ICON_BACKGROUND,           {LABEL_BACKGROUND}},  //{ICON_SD_SOURCE,            LABEL_TFTSD},
+  {ICON_BACKGROUND,           {LABEL_BACKGROUND}},
+  {ICON_BACKGROUND,           {LABEL_BACKGROUND}},
+  {ICON_BACKGROUND,           {LABEL_BACKGROUND}},
+  {ICON_BACKGROUND,           {LABEL_BACKGROUND}},
+  {ICON_BACK,                 {LABEL_BACK}},}
 };
 
 void menuPrint(void)
@@ -411,14 +412,14 @@ void menuPrint(void)
     key_num = menuKeyGetValue();
     switch(key_num)
     {
-      case KEY_ICON_0:
+/*      case KEY_ICON_0:
         infoFile.source = TFT_SD;
         infoMenu.menu[++infoMenu.cur] = menuPrintFromSource;
         infoMenu.menu[++infoMenu.cur] = menuPowerOff;
-        goto selectEnd;
+        goto selectEnd;*/
       
       #ifdef ONBOARD_SD_SUPPORT
-      case KEY_ICON_1:
+      case KEY_ICON_0:
         infoFile.source = BOARD_SD;
         infoMenu.menu[++infoMenu.cur] = menuPrintFromSource;   //TODO: fix here,  onboard sd card PLR feature
         goto selectEnd;
@@ -426,9 +427,9 @@ void menuPrint(void)
       
       #ifdef U_DISK_SUPPROT
       #ifdef ONBOARD_SD_SUPPORT
-      case KEY_ICON_2:
-      #else
       case KEY_ICON_1:
+      #else
+      case KEY_ICON_0:
       #endif
         infoFile.source = TFT_UDISK;
         infoMenu.menu[++infoMenu.cur] = menuPrintFromSource;

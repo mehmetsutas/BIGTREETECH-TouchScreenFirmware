@@ -11,7 +11,7 @@
 #define ICON_ADDR(num)          ((num)*0x5000+0x4B000)
 
 //
-#define WORD_UNICODE            0x280000 // unicode (+0x480000 4.5M)
+#define WORD_UNICODE            0x300000 //0x280000 // unicode (+0x480000 4.5M)
 #define BYTE_ASCII_ADDR         0x700000 // ascii (+0x1000 4K)
 //#define BYTE_RESERVE_ADDR      0x710000
 
@@ -107,7 +107,7 @@ enum
   ICON_EEPROM_SAVE,
   ICON_SILENT_ON,
   ICON_SHUT_DOWN,
-  ICON_RGB_SETTINGS,
+//  ICON_RGB_SETTINGS,
   ICON_RGB_RED,
   ICON_RGB_GREEN,
   ICON_RGB_BLUE,
@@ -141,6 +141,7 @@ enum
   ICON_GLOBAL_NOZZLE0,
   ICON_GLOBAL_BED,
   ICON_LEDCOLOR,
+  ICON_FILAMENT,
   
 //  ICON_RESERVE
 // Back ground sign

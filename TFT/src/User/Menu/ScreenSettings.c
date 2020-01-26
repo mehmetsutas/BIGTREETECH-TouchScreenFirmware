@@ -3,16 +3,16 @@
 
 MENUITEMS screenSettingsItems = {
 // title
-LABEL_SCREEN_SETTINGS,
+{LABEL_SCREEN_SETTINGS},
 // icon                       label
- {{ICON_ROTATE_UI,            LABEL_ROTATE_UI},
-  {ICON_TOUCHSCREEN_ADJUST,   LABEL_TOUCHSCREEN_ADJUST},
-  {ICON_LANGUAGE,             LABEL_LANGUAGE}, 
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_BACKGROUND,           LABEL_BACKGROUND},
-  {ICON_BACK,                 LABEL_BACK},}
+ {{ICON_ROTATE_UI,            {LABEL_ROTATE_UI}},
+  {ICON_TOUCHSCREEN_ADJUST,   {LABEL_TOUCHSCREEN_ADJUST}},
+  {ICON_LANGUAGE,             {LABEL_LANGUAGE}}, 
+  {ICON_BACKGROUND,           {LABEL_BACKGROUND}},
+  {ICON_BACKGROUND,           {LABEL_BACKGROUND}},
+  {ICON_BACKGROUND,           {LABEL_BACKGROUND}},
+  {ICON_BACKGROUND,           {LABEL_BACKGROUND}},
+  {ICON_BACK,                 {LABEL_BACK}}}
 };
 
 #ifdef BUZZER_PIN // Speaker
@@ -21,14 +21,14 @@ LABEL_SCREEN_SETTINGS,
   #define ITEM_SILENT_NUM 2
   const ITEM itemSilent[ITEM_SILENT_NUM] = {
   // icon                       label
-    {ICON_SILENT_OFF,           LABEL_SILENT_OFF},
-    {ICON_SILENT_ON,            LABEL_SILENT_ON},
+    {ICON_SILENT_OFF,           {LABEL_SILENT_OFF}},
+    {ICON_SILENT_ON,            {LABEL_SILENT_ON}}
   };
   const  u8 item_silent[ITEM_SILENT_NUM] = {0, 1};
   static u8 item_silent_i = 0;
 #endif
 
-
+/*
 #ifdef ST7920_SPI // LCD12864 color settings
   #ifdef BUZZER_PIN
     #define LCD12864_BG_INDEX KEY_ICON_4
@@ -40,34 +40,34 @@ LABEL_SCREEN_SETTINGS,
   #define ITEM_COLOR_NUM 9
   const ITEM itemBGcolor[ITEM_COLOR_NUM] = {
   // icon                      label
-    {ICON_BKCOLOR,             LABEL_WHITE},
-    {ICON_BKCOLOR,             LABEL_BLACK},
-    {ICON_BKCOLOR,             LABEL_BLUE},
-    {ICON_BKCOLOR,             LABEL_RED},
-    {ICON_BKCOLOR,             LABEL_GREEN},
-    {ICON_BKCOLOR,             LABEL_CYAN},
-    {ICON_BKCOLOR,             LABEL_YELLOW},
-    {ICON_BKCOLOR,             LABEL_BROWN},
-    {ICON_BKCOLOR,             LABEL_GRAY},
+    {ICON_BKCOLOR,             {LABEL_WHITE}},
+    {ICON_BKCOLOR,             {LABEL_BLACK}},
+    {ICON_BKCOLOR,             {LABEL_BLUE}},
+    {ICON_BKCOLOR,             {LABEL_RED}},
+    {ICON_BKCOLOR,             {LABEL_GREEN}},
+    {ICON_BKCOLOR,             {LABEL_CYAN}},
+    {ICON_BKCOLOR,             {LABEL_YELLOW}},
+    {ICON_BKCOLOR,             {LABEL_BROWN}},
+    {ICON_BKCOLOR,             {LABEL_GRAY}}
   };
 
   const ITEM itemFontcolor[ITEM_COLOR_NUM] = {
   // icon                      label
-    {ICON_FONTCOLOR,           LABEL_WHITE},
-    {ICON_FONTCOLOR,           LABEL_BLACK},
-    {ICON_FONTCOLOR,           LABEL_BLUE},
-    {ICON_FONTCOLOR,           LABEL_RED},
-    {ICON_FONTCOLOR,           LABEL_GREEN},
-    {ICON_FONTCOLOR,           LABEL_CYAN},
-    {ICON_FONTCOLOR,           LABEL_YELLOW},
-    {ICON_FONTCOLOR,           LABEL_BROWN},
-    {ICON_FONTCOLOR,           LABEL_GRAY},
+    {ICON_FONTCOLOR,           {LABEL_WHITE}},
+    {ICON_FONTCOLOR,           {LABEL_BLACK}},
+    {ICON_FONTCOLOR,           {LABEL_BLUE}},
+    {ICON_FONTCOLOR,           {LABEL_RED}},
+    {ICON_FONTCOLOR,           {LABEL_GREEN}},
+    {ICON_FONTCOLOR,           {LABEL_CYAN}},
+    {ICON_FONTCOLOR,           {LABEL_YELLOW}},
+    {ICON_FONTCOLOR,           {LABEL_BROWN}},
+    {ICON_FONTCOLOR,           {LABEL_GRAY}}
   };
   const  u32 item_color[ITEM_COLOR_NUM] = {WHITE, BLACK, BLUE, RED, GREEN, CYAN, YELLOW, BROWN, GRAY};
   static u8  item_bgcolor_i = 0;
   static u8  item_fontcolor_i = 0;
 #endif
-  
+  */
 void menuScreenSettings(void)
 { 
   KEY_VALUES key_num = KEY_IDLE;
@@ -83,7 +83,7 @@ void menuScreenSettings(void)
       }
     }
   #endif
-  
+/*  
   #ifdef ST7920_SPI
     for(u8 i=0; i<ITEM_COLOR_NUM; i++) // LCD12864 background color
     {
@@ -102,7 +102,7 @@ void menuScreenSettings(void)
       }
     }
   #endif
-
+*/
   menuDrawPage(&screenSettingsItems);
 
   while(infoMenu.menu[infoMenu.cur] == menuScreenSettings)
@@ -135,7 +135,7 @@ void menuScreenSettings(void)
         infoSettings.silent = item_silent[item_silent_i];
         break;
       #endif
-      
+ /*     
       #ifdef ST7920_SPI
       case LCD12864_BG_INDEX:
         item_bgcolor_i = (item_bgcolor_i + 1) % ITEM_COLOR_NUM;                
@@ -151,7 +151,7 @@ void menuScreenSettings(void)
         infoSettings.font_color = item_color[item_fontcolor_i];
         break;
       #endif
-      
+ */     
       case KEY_ICON_7:
         infoMenu.cur--;
         break;

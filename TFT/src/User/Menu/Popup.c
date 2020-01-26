@@ -27,6 +27,16 @@ WINDOW window = {
   {WHITE, GRAY,  POPUP_BOTTOM_HEIGHT},  //底部 (字体色)/背景色/(高度)
 };
 
+WINDOW fullwindow = {
+  {0, BYTE_HEIGHT*1.5, LCD_WIDTH, LCD_HEIGHT},
+  10,                      //四角圆弧的半径
+  3,                       //外边的线宽
+  0x5D7B,                  //外边和标题栏的背景色
+  {MAGENTA, 0x5D7B, POPUP_TITLE_HEIGHT},   //标题栏 字体色/背景色/高度
+  {WHITE, BLACK, POPUP_TEXT_HEIGHT},    //文本栏 字体色/背景色/高度
+  {WHITE, BLACK,  POPUP_BOTTOM_HEIGHT},  //底部 (字体色)/背景色/(高度)
+};
+
 static BUTTON *windowButton =  NULL;
 static u16 buttonNum = 0;
 
@@ -83,9 +93,53 @@ void menuPopup(void)
   }
 }
 
+void menucontPopup(void)
+{
+  u16 key_num = IDLE_TOUCH;    
+
+  while(infoMenu.menu[infoMenu.cur] == menucontPopup)
+  {
+    key_num = KEY_GetValue(BUTTON_NUM, &popupMenuRect);
+    switch(key_num)
+    {            
+      case KEY_POPUP_CONFIRM: 
+        infoMenu.cur--; 
+		request_M876(0);
+        break;
+      
+      default:
+        break;            
+    }    
+    loopProcess();
+  }
+}
+
 void popupReminder(u8* info, u8* context)
 {
   popupDrawPage(&bottomSingleBtn , info, context, textSelect(LABEL_CONFIRM), NULL);    
+  if(infoMenu.menu[infoMenu.cur] != menuPopup)
+  {
+    infoMenu.menu[++infoMenu.cur] = menuPopup;
+  }
+}
+
+void popupContinue(u8* info, u8* context)
+{
+  popupDrawPage(&bottomSingleBtn , info, context, textSelect(LABEL_CONFIRM), NULL);    
+  if(infoMenu.menu[infoMenu.cur] != menucontPopup)
+  { 
+	if(infoMenu.menu[infoMenu.cur] == menuPopup) infoMenu.menu[infoMenu.cur] = menucontPopup;
+		else infoMenu.menu[++infoMenu.cur] = menucontPopup;
+  }
+}
+
+
+
+void popupKill(u8* info, u8* context)
+{
+  GUI_SetColor(BLACK);
+  GUI_FillRect(0,0,LCD_WIDTH,LCD_HEIGHT);
+  GUI_DrawWindow(&fullwindow, info, context); 
   if(infoMenu.menu[infoMenu.cur] != menuPopup)
   {
     infoMenu.menu[++infoMenu.cur] = menuPopup;

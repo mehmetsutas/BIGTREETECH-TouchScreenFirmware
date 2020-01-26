@@ -30,4 +30,7 @@ bool request_M524(void);
 bool request_M24(int pos);
 long request_M23(char *filename);
 
+bool request_M108(void);
+bool request_M876(int param);
+
 #endif
