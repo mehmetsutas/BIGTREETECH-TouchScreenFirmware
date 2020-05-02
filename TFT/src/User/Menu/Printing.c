@@ -180,7 +180,7 @@ void menuBeforePrinting(void)
       #endif
 
       infoHost.printing=true; // Global lock info on printer is busy in printing.
-
+	  
       break;
       
     case TFT_UDISK:
@@ -204,6 +204,7 @@ void menuBeforePrinting(void)
       break;
   }
   infoPrinting.printing = true;
+  infoPrinting.time=0;
   infoMenu.menu[infoMenu.cur] = menuPrinting;
   printingItems.title.address = getCurGcodeName(infoFile.title);
 }
