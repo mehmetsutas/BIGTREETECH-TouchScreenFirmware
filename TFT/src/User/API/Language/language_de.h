@@ -249,5 +249,8 @@
     #define DE_PID_START_INFO_3       "DO NOT touch the screen until completed (green LED on)!"
     #define DE_EXTRUDE_100            "Ext. 100mm"
     #define DE_CONNECTION_SETTINGS    "Connection"
-
+	#define DE_NOTIFY_KILL			  "Printer Killed!"
+	#define DE_NOTIFY_CANCEL		  "Print Job Cancelled!"
+	#define DE_NOTIFY_RESUME		  "Print Job Resumed!"
+	#define DE_NOTIFY_PAUSE			  "Print Job Paused!"
 #endif

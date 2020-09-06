@@ -31,6 +31,7 @@ void menuAutoLeveling(void)
       case KEY_ICON_0:
         storeCmd("G28\n");
         storeCmd("G29\n");
+		storeCmd("M500\n");
         leveled = true;
         break;
 

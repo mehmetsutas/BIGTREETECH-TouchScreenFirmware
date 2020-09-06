@@ -249,5 +249,8 @@
     #define SK_PID_START_INFO_3       "DO NOT touch the screen until completed (green LED on)!"
     #define SK_EXTRUDE_100            "Ext. 100mm"
     #define SK_CONNECTION_SETTINGS    "Connection"
-
+	#define SK_NOTIFY_KILL			  "Printer Killed!"
+	#define SK_NOTIFY_CANCEL		  "Print Job Cancelled!"
+	#define SK_NOTIFY_RESUME		  "Print Job Resumed!"
+	#define SK_NOTIFY_PAUSE			  "Print Job Paused!"
 #endif

@@ -249,5 +249,8 @@
     #define GR_PID_START_INFO_3       "DO NOT touch the screen until completed (green LED on)!"
     #define GR_EXTRUDE_100            "Ext. 100mm"
     #define GR_CONNECTION_SETTINGS    "Connection"
-
+	#define GR_NOTIFY_KILL			  "Printer Killed!"
+	#define GR_NOTIFY_CANCEL		  "Print Job Cancelled!"
+	#define GR_NOTIFY_RESUME		  "Print Job Resumed!"
+	#define GR_NOTIFY_PAUSE			  "Print Job Paused!"
 #endif

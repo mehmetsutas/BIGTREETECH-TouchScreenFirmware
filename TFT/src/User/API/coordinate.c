@@ -92,3 +92,8 @@ float coordinateGetAxisActual(AXIS axis)
 {
   return curPosition.axis[axis];
 }
+
+void coordinateSetAxisActual(AXIS axis, float position) //Keep track of the printer positions in order to report correct positions when printing from board sd
+{ 
+  curPosition.axis[axis] = position; 
+}

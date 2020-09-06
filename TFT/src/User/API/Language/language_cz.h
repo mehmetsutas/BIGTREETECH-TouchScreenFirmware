@@ -249,5 +249,8 @@
     #define CZ_PID_START_INFO_3       "NEDOTÝKEJ se displeje dokud není dokončeno\n (Zelená LED svítí)!"
     #define CZ_EXTRUDE_100            "100mm Vysunutí"
     #define CZ_CONNECTION_SETTINGS    "Připojení"
-
+	#define CZ_NOTIFY_KILL			  "Printer Killed!"
+	#define CZ_NOTIFY_CANCEL		  "Print Job Cancelled!"
+	#define CZ_NOTIFY_RESUME		  "Print Job Resumed!"
+	#define CZ_NOTIFY_PAUSE			  "Print Job Paused!"
 #endif

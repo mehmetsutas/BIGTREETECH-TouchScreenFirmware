@@ -249,5 +249,8 @@
     #define CN_PID_START_INFO_3       "不要操作触控屏直到整定完成!"
     #define CN_EXTRUDE_100            "挤出100mm"
     #define CN_CONNECTION_SETTINGS    "连接"
-
+	#define CN_NOTIFY_KILL			  "Printer Killed!"
+	#define CN_NOTIFY_CANCEL		  "Print Job Cancelled!"
+	#define CN_NOTIFY_RESUME		  "Print Job Resumed!"
+	#define CN_NOTIFY_PAUSE			  "Print Job Paused!"
 #endif

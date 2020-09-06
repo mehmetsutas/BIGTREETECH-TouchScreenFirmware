@@ -249,5 +249,8 @@
     #define FR_PID_START_INFO_3       "NE touchez PAS l'écran avant la fin (LED verte allumée) !"
     #define FR_EXTRUDE_100            "Ext. 100mm"
     #define FR_CONNECTION_SETTINGS    "Connexion"
-
+	#define FR_NOTIFY_KILL			  "Printer Killed!"
+	#define FR_NOTIFY_CANCEL		  "Print Job Cancelled!"
+	#define FR_NOTIFY_RESUME		  "Print Job Resumed!"
+	#define FR_NOTIFY_PAUSE			  "Print Job Paused!"
 #endif

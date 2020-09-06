@@ -249,5 +249,8 @@
     #define PT_PID_START_INFO_3       "DO NOT touch the screen until completed (green LED on)!"
     #define PT_EXTRUDE_100            "Ext. 100mm"
     #define PT_CONNECTION_SETTINGS    "Connection"
-
+	#define PT_NOTIFY_KILL			  "Printer Killed!"
+	#define PT_NOTIFY_CANCEL		  "Print Job Cancelled!"
+	#define PT_NOTIFY_RESUME		  "Print Job Resumed!"
+	#define PT_NOTIFY_PAUSE			  "Print Job Paused!"
 #endif

@@ -249,5 +249,8 @@
     #define SL_PID_START_INFO_3       "DO NOT touch the screen until completed (green LED on)!"
     #define SL_EXTRUDE_100            "Ext. 100mm"
     #define SL_CONNECTION_SETTINGS    "Connection"
-
+	#define SL_NOTIFY_KILL			  "Printer Killed!"
+	#define SL_NOTIFY_CANCEL		  "Print Job Cancelled!"
+	#define SL_NOTIFY_RESUME		  "Print Job Resumed!"
+	#define SL_NOTIFY_PAUSE			  "Print Job Paused!"
 #endif

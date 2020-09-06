@@ -249,5 +249,8 @@
     #define PL_PID_START_INFO_3       "DO NOT touch the screen until completed (green LED on)!"
     #define PL_EXTRUDE_100            "Ext. 100mm"
     #define PL_CONNECTION_SETTINGS    "Connection"
-
+	#define PL_NOTIFY_KILL			  "Printer Killed!"
+	#define PL_NOTIFY_CANCEL		  "Print Job Cancelled!"
+	#define PL_NOTIFY_RESUME		  "Print Job Resumed!"
+	#define PL_NOTIFY_PAUSE			  "Print Job Paused!"
 #endif

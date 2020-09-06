@@ -44,6 +44,9 @@ bool isM0_Pause(void);
 void breakAndContinue(void);
 void setPrintingTime(uint32_t RTtime);
 
+void select0AndContinue(void);		//HOST_PROMPT_SUPPORT
+void select1AndContinue(void);		//HOST_PROMPT_SUPPORT
+
 void exitPrinting(void);
 void endPrinting(void);
 void completePrinting(void);

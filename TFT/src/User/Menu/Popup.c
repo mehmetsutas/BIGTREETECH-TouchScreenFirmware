@@ -198,3 +198,14 @@ void showDialog(DIALOG_TYPE type, u8 * title, u8 * msg, u8 *ok_txt, u8* cancel_t
     infoMenu.menu[++infoMenu.cur] = menuDialog;
   }
 }
+
+void popupKill(u8* info, u8* context)
+{
+  GUI_SetColor(BLACK);
+  GUI_FillRect(0,0,LCD_WIDTH,LCD_HEIGHT);
+  GUI_DrawWindow(&window, (u8*) "Cihaz Durduruldu!", context, false);
+  if(infoMenu.menu[infoMenu.cur] != menuDialog)
+  {
+    infoMenu.menu[++infoMenu.cur] = menuDialog;
+  }
+}

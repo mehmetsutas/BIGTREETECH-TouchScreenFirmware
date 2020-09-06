@@ -249,5 +249,8 @@
     #define RU_PID_START_INFO_3       "Не трогайте экран до\nокончания настройки\n(загориться зелёным LED)!"
     #define RU_EXTRUDE_100            "100mm экст."
     #define RU_CONNECTION_SETTINGS    "Соединение"
-
+	#define RU_NOTIFY_KILL			  "Printer Killed!"
+	#define RU_NOTIFY_CANCEL		  "Print Job Cancelled!"
+	#define RU_NOTIFY_RESUME		  "Print Job Resumed!"
+	#define RU_NOTIFY_PAUSE			  "Print Job Paused!"
 #endif

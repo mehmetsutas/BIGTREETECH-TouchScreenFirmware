@@ -31,6 +31,13 @@ ECHO knownEcho[] = {            // notify or discard (don't display in popup men
   {ECHO_ID_BED_LEVELING,         ECHO_POPUP_NOTIFICATION,      false,    "echo:Bed Leveling"},         //M420
   {ECHO_ID_FADE_HEIGHT,          ECHO_POPUP_NOTIFICATION,      false,    "echo:Fade Height"},          //M420
 };
+  
+static void (*host_button_0)() = NULL;
+static void (*host_button_1)() = NULL;
+static char host_button0_label[] = {'\0'};
+static char host_button1_label[] = {'\0'};
+static char prompttitle[] = "Yazıcı Mesaj";
+static char promptmsg[] = {'\0'};
 
 void setCurrentAckSrc(uint8_t src)
 {
@@ -226,6 +233,11 @@ bool processKnownEcho(void)
   return isKnown;
 }
 
+void ackPopupKill()
+{
+  popupKill((u8* )"KILLED", textSelect(LABEL_NOTIFY_KILL));
+}
+
 bool dmaL1NotEmpty(uint8_t port)
 {
   return dmaL1Data[port].rIndex != dmaL1Data[port].wIndex;
@@ -353,12 +365,15 @@ void parseACK(void)
       else if((ack_seen("X:") && ack_index == 2) || ack_seen("C: X:")) // Smoothieware axis position starts with "C: X:"
       {
         storegantry(0, ack_value());
+		coordinateSetAxisActual(X_AXIS, ack_value()); //Keep track of the printer positions in order to report correct positions when printing from board sd
         if (ack_seen("Y:"))
         {
           storegantry(1, ack_value());
+		  coordinateSetAxisActual(Y_AXIS, ack_value());//Keep track of the printer positions in order to report correct positions when printing from board sd
           if (ack_seen("Z:"))
           {
             storegantry(2, ack_value());
+			coordinateSetAxisActual(Z_AXIS, ack_value());//Keep track of the printer positions in order to report correct positions when printing from board sd
           }
         }
       }
@@ -367,14 +382,24 @@ void parseACK(void)
         coordinateSetAxisActualSteps(E_AXIS, ack_value());
       }
 
-      else if(ack_seen(bsdnoprintingmagic) && infoMenu.menu[infoMenu.cur] == menuPrinting && infoMachineSettings.onboard_sd_support == ENABLED)
+      else if(ack_seen(bsdnoprintingmagic) && infoMenu.menu[infoMenu.cur] == menuPrinting && infoMachineSettings.onboard_sd_support == ENABLED && isPause()==false)
       {
         infoHost.printing = false;
         completePrinting();
       }
       else if(ack_seen(bsdprintingmagic) && infoMachineSettings.onboard_sd_support == ENABLED)
       {
-        if(infoMenu.menu[infoMenu.cur] != menuPrinting && !infoHost.printing) {
+        if((infoMenu.menu[infoMenu.cur] != menuPrinting) && 
+		   (infoMenu.menu[infoMenu.cur] != menuStopPrinting) &&
+		   (infoMenu.menu[infoMenu.cur] != menuHeat) &&
+		   (infoMenu.menu[infoMenu.cur] != menuSpeed) &&
+		   (infoMenu.menu[infoMenu.cur] != menuBabyStep) &&
+		   (infoMenu.menu[infoMenu.cur] != menuMore) &&
+//		   (infoMenu.menu[infoMenu.cur] != menuPopup) &&
+		   (infoMenu.menu[infoMenu.cur] != menuDialog) &&
+		   (infoMenu.menu[infoMenu.cur] != menuFan) &&
+		   (infoMenu.menu[infoMenu.cur] != menuIsPause) &&
+		   (infoMenu.menu[infoMenu.cur] != menuExtrude)) {
           infoMenu.menu[++infoMenu.cur] = menuPrinting;
           infoHost.printing=true;
         }
@@ -632,6 +657,61 @@ void parseACK(void)
       {
         pidUpdateStatus(false);
       }
+	// HOST PROMPT
+	  else if(ack_seen(promptendmagic))
+	  {
+		host_button_0=NULL;
+		host_button_1=NULL;
+		host_button0_label[0] = '\0';
+	    host_button1_label[0] = '\0';
+//		prompttitle[0] = '\0';
+		promptmsg[0] = '\0';
+		if (infoMenu.menu[infoMenu.cur] == menuDialog)
+			--infoMenu.cur;
+	  }
+	  else if(ack_seen(promptbeginmagic))
+	  {
+//		strcpy((char *) prompttitle,"Yazıcı Mesaj");
+		strcpy((char *) promptmsg,(char *)dmaL2Cache + ack_index);
+	  }
+	  else if(ack_seen(promptbuttonmagic))
+	  {
+		if(host_button0_label[0]=='\0') 
+		{
+			strcpy(host_button0_label,(char *)dmaL2Cache + ack_index);
+			host_button_0=select0AndContinue;
+		} else
+		{
+			strcpy(host_button1_label,(char *)dmaL2Cache + ack_index);
+			host_button_1=select1AndContinue;
+		}
+	  }
+	  else if(ack_seen(promptshowmagic))
+	  {
+		BUZZER_PLAY(sound_notify);  
+		if(host_button1_label=='\0') 
+			showDialog(DIALOG_TYPE_INFO,(u8 *)prompttitle,(u8 *)promptmsg,
+                (u8 *)host_button0_label,(u8 *)host_button1_label, host_button_0, host_button_1,NULL);
+		else
+			showDialog(DIALOG_TYPE_QUESTION,(u8 *)prompttitle,(u8 *)promptmsg,
+                (u8 *)host_button0_label,(u8 *)host_button1_label, host_button_0, host_button_1,NULL);
+	  }
+	// HOST ACTIONS	  
+	  else if(ack_seen(actionmagic))
+	  {
+		  if(ack_seen("pause"))
+			reminderMessage(LABEL_NOTIFY_PAUSE, STATUS_NORMAL);
+		  else if(ack_seen("resume"))
+	  		reminderMessage(LABEL_NOTIFY_RESUME, STATUS_NORMAL);
+	  	  else if(ack_seen("cancel"))
+	  		reminderMessage(LABEL_NOTIFY_CANCEL, STATUS_NORMAL);
+	  	  else if(ack_seen("poweroff"))
+	  		ackPopupKill();
+	  	  else if(ack_seen("filament_runout"))
+			popupReminder(DIALOG_TYPE_ALERT,textSelect(LABEL_WARNING), textSelect(LABEL_FILAMENT_RUNOUT));
+		  else if(ack_seen("notification "))
+			ackPopupInfo(echomagic);
+	  }
     //Parse error messages & Echo messages
       else if(ack_seen(errormagic))
       {

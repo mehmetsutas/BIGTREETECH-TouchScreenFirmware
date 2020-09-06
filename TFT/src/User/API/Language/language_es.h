@@ -249,5 +249,8 @@
     #define ES_PID_START_INFO_3       "DO NOT touch the screen until completed (green LED on)!"
     #define ES_EXTRUDE_100            "Ext. 100mm"
     #define ES_CONNECTION_SETTINGS    "Connection"
-
+	#define ES_NOTIFY_KILL			  "Printer Killed!"
+	#define ES_NOTIFY_CANCEL		  "Print Job Cancelled!"
+	#define ES_NOTIFY_RESUME		  "Print Job Resumed!"
+	#define ES_NOTIFY_PAUSE			  "Print Job Paused!"
 #endif

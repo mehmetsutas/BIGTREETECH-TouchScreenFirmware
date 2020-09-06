@@ -4,11 +4,16 @@
 #include "stdint.h"
 #include "Configuration.h"
 
-static const char errormagic[]         = "Error:";
-static const char echomagic[]          = "echo:";
-static const char unknowmagic[]        = "Unknown command:";
+static const char errormagic[]        = "Error:";
+static const char echomagic[]         = "echo:";
+static const char unknowmagic[]       = "Unknown command:";
 static const char bsdprintingmagic[]   = "SD printing byte";
 static const char bsdnoprintingmagic[] = "Not SD printing";
+static const char actionmagic[]       = "//action:";				//HOST_PROMPT_SUPPORT
+static const char promptendmagic[]    = "//action:prompt_end";		//HOST_PROMPT_SUPPORT
+static const char promptbeginmagic[]  = "//action:prompt_begin";	//HOST_PROMPT_SUPPORT
+static const char promptshowmagic[]  = "//action:prompt_show";		//HOST_PROMPT_SUPPORT
+static const char promptbuttonmagic[]  = "//action:prompt_button";		//HOST_PROMPT_SUPPORT
 
 #define ACK_MAX_SIZE 2048
 
@@ -61,6 +66,7 @@ bool getKnownEchoParam(_ECHO_MSG_ID msgId, _ECHO_POPUP_TYPE *curPopupType, bool 
            false, otherwise
 */
 bool setKnownEchoParam(_ECHO_MSG_ID msgId, _ECHO_POPUP_TYPE newPopupType, bool newBuzzerEnabled);
+
 
 void setCurrentAckSrc(uint8_t src);
 void parseACK(void);

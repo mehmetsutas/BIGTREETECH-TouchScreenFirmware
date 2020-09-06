@@ -276,6 +276,10 @@ void abortPrinting(void)
   switch (infoFile.source)
   {
     case BOARD_SD:
+	  breakAndContinue();
+	  breakAndContinue();
+	  breakAndContinue();
+	  breakAndContinue();
       request_M524();
       break;
 
@@ -284,6 +288,13 @@ void abortPrinting(void)
       clearCmdQueue();
       if (infoSettings.send_cancel_gcode == 1)
         sendPrintCodes(2);
+      break;
+	default:
+	  breakAndContinue();
+	  breakAndContinue();
+	  breakAndContinue();
+	  breakAndContinue();
+      breakAndContinue();
       break;
   }
   heatClearIsWaiting();
@@ -391,6 +402,17 @@ void getGcodeFromFile(void)
     printingFinished();
   }
 }
+
+void select0AndContinue(void)			//HOST_PROMPT_SUPPORT
+{
+   Serial_Puts(SERIAL_PORT, "M876 S0\n");
+}
+
+void select1AndContinue(void)			//HOST_PROMPT_SUPPORT
+{
+   Serial_Puts(SERIAL_PORT, "M876 S1\n");
+}
+
 
 void breakAndContinue(void)
 {

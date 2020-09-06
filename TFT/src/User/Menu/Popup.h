@@ -23,4 +23,10 @@ void popupReminder(DIALOG_TYPE type, u8* info, u8* context);
 void popupPauseForUser(void);
 void showDialog(DIALOG_TYPE type, u8 * title, u8 * msg, u8 *ok_txt, u8* cancel_txt, void (*ok_action)(), void (*cancel_action)(), void (*loop_action)());
 
+void menuDialog(void);
+
+void popupReminder(DIALOG_TYPE type, u8* info, u8* context);
+
+void popupKill(u8* info, u8* context);
+
 #endif

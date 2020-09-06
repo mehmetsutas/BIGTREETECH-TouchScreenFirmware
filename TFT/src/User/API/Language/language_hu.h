@@ -249,5 +249,8 @@
     #define HU_PID_START_INFO_3       "NE ÉRINTSD meg a kijelzőt míg nincs kész! (zöld LED jelzi)!"
     #define HU_EXTRUDE_100            "Kiad 100mm"
     #define HU_CONNECTION_SETTINGS    "Kapcsolat"
-
+	#define HU_NOTIFY_KILL			  "Printer Killed!"
+	#define HU_NOTIFY_CANCEL		  "Print Job Cancelled!"
+	#define HU_NOTIFY_RESUME		  "Print Job Resumed!"
+	#define HU_NOTIFY_PAUSE			  "Print Job Paused!"
 #endif

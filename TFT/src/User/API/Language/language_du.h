@@ -249,5 +249,8 @@
     #define DU_PID_START_INFO_3       "Raak het scherm NIET aan totdat deze klaar is (groene LED aan)!"
     #define DU_EXTRUDE_100            "Ext. 100mm"
     #define DU_CONNECTION_SETTINGS    "Connecties"
-
+	#define DU_NOTIFY_KILL			  "Printer Killed!"
+	#define DU_NOTIFY_CANCEL		  "Print Job Cancelled!"
+	#define DU_NOTIFY_RESUME		  "Print Job Resumed!"
+	#define DU_NOTIFY_PAUSE			  "Print Job Paused!"
 #endif
