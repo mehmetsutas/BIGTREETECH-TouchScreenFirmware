@@ -45,7 +45,7 @@
  *
  */
 #define DEFAULT_LCD_BRIGHTNESS      11  // 11: LCD_100_PERCENT - Brightness value from list
-#define DEFAULT_LCD_IDLE_BRIGHTNESS 3   // 3: LCD_10_PERCENT - Brightness value from list
+#define DEFAULT_LCD_IDLE_BRIGHTNESS 2   // 3: LCD_10_PERCENT - Brightness value from list
 #define DEFAULT_LCD_IDLE_TIMER      0   // 0: LCD_DIM_OFF
 #define LCD_DIM_CUSTOM_SECONDS      600 // Custom value in seconds. Will be used if LCD_DIM_CUSTOM_SECONDS is set as idle timer.
 
@@ -68,12 +68,12 @@
 /**
  * Text displayed at the top of the TFT in Marlin Mode.
  */
-#define MARLIN_BANNER_TEXT "LCD12864 Simulator"
+#define MARLIN_BANNER_TEXT "Text Menu"
 
 /**
  * show banner text at the top of the TFT in Marlin Mode.
  */
-#define MARLIN_SHOW_BANNER  true //to enabled: true | to disabled: false
+#define MARLIN_SHOW_BANNER  false //to enabled: true | to disabled: false
 /**
  * Run Marlin Mode in Fullscreen
  *
@@ -91,7 +91,7 @@
  *
  * Options:  0: Disabled    1: Enabled
  */
-#define SERIAL_ALWAYS_ON 0  // Default: 0 (Disabled)
+#define SERIAL_ALWAYS_ON 1  // Default: 0 (Disabled)
 
 //===========================================================================
 //========================== Touch Mode Settings ============================
@@ -112,7 +112,7 @@
  * Select the language to display on the LCD while in Touch Mode.
  * Options: ARMENIAN, CHINESE, CZECH, DUTCH, ENGLISH, FRENCH, GERMAN, HUNGARIAN, ITALIAN, JAPANESE, POLISH, PORTUGUESE, RUSSIAN, SLOVAK, SPAIN, CATALAN
  */
-#define DEFAULT_LANGUAGE ENGLISH
+#define DEFAULT_LANGUAGE TURKISH
 
 /**
  * Show bootscreen when starting up
@@ -173,10 +173,10 @@
 #define FAN_CTRL_NUM 0    // set in 1~2
 
 #define PREHEAT_LABELS   {"PLA", "PETG", "ABS", "WOOD", "TPU", "NYLON"}
-#define PREHEAT_HOTEND   {200,   240,    230,   170,    220,   250}
-#define PREHEAT_BED      {60,    70,     90,    50,     50,    90}
+#define PREHEAT_HOTEND   {205,   245,    235,   205,    245,   250}
+#define PREHEAT_BED      {60,    70,     100,    60,     75,   100}
 
-#define HEAT_MAX_TEMP    {275,       275,       275,       275,       275,       275,       150,    60}   //max temperature can be set
+#define HEAT_MAX_TEMP    {260,       260,       260,       260,       260,       260,       110,    60}   //max temperature can be set
 #define HEAT_SIGN_ID     {"T0:",     "T1:",     "T2:",     "T3:",     "T4:",     "T5:",     "B:",   "C:"}
 #define HEAT_DISPLAY_ID  {"T0",      "T1",      "T2",      "T3",      "T4",      "T5",      "Bed",  "Chamber"}
 #define HEAT_CMD         {"M104 T0", "M104 T1", "M104 T2", "M104 T3", "M104 T4", "M104 T5", "M140", "M141"};
@@ -199,43 +199,43 @@
 #define FAN_CMD          { "M106 P0", "M106 P1", "M106 P2", "M106 P3", "M106 P4", "M106 P5",    "M710",    "M710" };
 #define FAN_TYPE         {         0,         0,         0,         0,         0,         0,         1,         2 };
 
-#define SPEED_ID         {"Sp.", "Fr."}
+#define SPEED_ID         {"Hız", "Akş"}
 
 #define AXIS_DISPLAY_ID  {"X",  "Y",  "Z",   "E",  "E2"}
 
 // Default move speed mm/min
 #define DEFAULT_SPEED_MOVE   3000
 #define SPEED_MOVE_SLOW      1000
-#define SPEED_MOVE_FAST      5000
+#define SPEED_MOVE_FAST      6000
 
 // Extrude speed mm/min
 #define EXTRUDE_SLOW_SPEED   60
-#define EXTRUDE_NORMAL_SPEED 600
-#define EXTRUDE_FAST_SPEED   1200
+#define EXTRUDE_NORMAL_SPEED 300
+#define EXTRUDE_FAST_SPEED   600
 
 // Size of machine
 #define X_MIN_POS 0
 #define Y_MIN_POS 0
 #define Z_MIN_POS 0
-#define X_MAX_POS 235
-#define Y_MAX_POS 235
-#define Z_MAX_POS 250
+#define X_MAX_POS 150
+#define Y_MAX_POS 150
+#define Z_MAX_POS 150
 
 // Specify a pause position as { X, Y, Z_raise }
-#define NOZZLE_PAUSE_RETRACT_LENGTH 15   // (mm)
-#define NOZZLE_RESUME_PURGE_LENGTH  16   // (mm)
-#define NOZZLE_PAUSE_X_POSITION     (X_MIN_POS + 10)  // (mm) Must be an integer
-#define NOZZLE_PAUSE_Y_POSITION     (Y_MIN_POS + 10)  // (mm) Must be an integer
+#define NOZZLE_PAUSE_RETRACT_LENGTH 2   // (mm)
+#define NOZZLE_RESUME_PURGE_LENGTH  3   // (mm)
+#define NOZZLE_PAUSE_X_POSITION     120 //(X_MIN_POS + 10)  // (mm) Must be an integer
+#define NOZZLE_PAUSE_Y_POSITION     120 //(Y_MIN_POS + 10)  // (mm) Must be an integer
 #define NOZZLE_PAUSE_Z_RAISE        20   // (mm)
-#define NOZZLE_PAUSE_E_FEEDRATE     6000 // (mm/min) retract & purge feedrate
+#define NOZZLE_PAUSE_E_FEEDRATE     600  // (mm/min) retract & purge feedrate
 #define NOZZLE_PAUSE_XY_FEEDRATE    6000 // (mm/min) X and Y axes feedrate
-#define NOZZLE_PAUSE_Z_FEEDRATE     600  // (mm/min) Z axis feedrate
+#define NOZZLE_PAUSE_Z_FEEDRATE     300  // (mm/min) Z axis feedrate
 
 /* M600, M601 ; pause print
  * PrusaSlicer can add M601 on certain height.
  * Acts here like manual pause
  */
-#define NOZZLE_PAUSE_M600_M601
+//#define NOZZLE_PAUSE_M600_M601
 
 /**
  * Auto Save Load Leveling Data
@@ -255,7 +255,7 @@
  * Options:  0: Disabled    1: Enabled    2: Auto-detect [default]
  *
  */
-#define ENABLE_UBL_VALUE 2
+#define ENABLE_UBL_VALUE 0
 
 /**
  * Enable friendly probe offset language.
@@ -282,14 +282,14 @@
  * Move to four corner points to Leveling manually (Point 1, Point 2, Point 3, Point 4)
  */
 #define LEVELING_EDGE_DISTANCE     20    // Inset distance from bed's edge for calculating leveling point location.
-#define LEVELING_POINT_Z           0.2f  // Z-axis position when nozzle stays for leveling
+#define LEVELING_POINT_Z           0.0f  // Z-axis position when nozzle stays for leveling
 #define LEVELING_POINT_MOVE_Z      10.0f // Z-axis position when nozzle move to next point
 #define LEVELING_POINT_XY_FEEDRATE 6000  // (mm/min) X and Y axes move feedrate
 #define LEVELING_POINT_Z_FEEDRATE  600   // (mm/min) Z axis move feedrate
 
 #define LEVELING_EDGE_DISTANCE_DISPLAY_ID   "X/Y"
 #define LEVELING_EDGE_DISTANCE_MIN          0
-#define LEVELING_EDGE_DISTANCE_MAX          100
+#define LEVELING_EDGE_DISTANCE_MAX          50
 #define LEVELING_EDGE_DISTANCE_DEFAULT      LEVELING_EDGE_DISTANCE
 
 /**
@@ -343,7 +343,7 @@
 
 // Enable alternative Move Menu Buttons Layout matching the direction of actual printer axis.
 // update the icons from alternate icon folder
-#define ALTERNATIVE_MOVE_MENU
+//#define ALTERNATIVE_MOVE_MENU
 
 // Enable Unified Move Menu
 // Move, Home, Extrude, ABL at one Place and bring G-code Menu on Home Menu
@@ -441,12 +441,12 @@
  * Enable Start & End G-code in SETTINGS -> FEATURE menu.
  */
 // Start G-code - run this G-code before starting print
-#define PRINT_START_GCODE "G28 XY R10\n" // Raise Z 10mm before homing X & Y
+#define PRINT_START_GCODE "G28 R20\nM420 S1\nM107\nG90\nM82\nG92 E0\n" //"G28 XY R10\n" // Raise Z 10mm before homing X & Y
 
 // End G-code - run this G-code after finishing print
-#define PRINT_END_GCODE "G90\nG1 E-4\nG92 E0\nM18\n" // Switch to absolute positioning, reduce filament pressure by performing small retract, reset extruder position, disable steppers
+#define PRINT_END_GCODE "G27 P2\nM107\nM104 S0\nM140 S0\nM18\n" //"G90\nG1 E-4\nG92 E0\nM18\n" // Switch to absolute positioning, reduce filament pressure by performing small retract, reset extruder position, disable steppers
 
 // Cancel G-code - run this G-code after canceling print
-#define PRINT_CANCEL_GCODE "G28 XY R10\n" // Home XY and raise Z 10mm
+#define PRINT_CANCEL_GCODE "G27 P2\nM107\nM104 S0\nM140 S0\nM18\n" //"G28 XY R10\n" // Home XY and raise Z 10mm
 
 #endif
