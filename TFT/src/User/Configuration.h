@@ -158,7 +158,7 @@
  *  TOAST: A Toast notification is displayed for few seconds. No user interaction is needed
  *
  */
-#define ACK_NOTIFICATION_STYLE 1
+#define ACK_NOTIFICATION_STYLE 2
 
 /**
  * Default Touch Mode Color Options
@@ -254,7 +254,7 @@
  *
  * Options:  0: Disabled    1: Enabled
  */
-#define AUTO_SAVE_LOAD_BL_VALUE 1
+#define AUTO_SAVE_LOAD_BL_VALUE 0
 
 /**
  * Enable Bed Leveling options
@@ -266,7 +266,7 @@
  * Options:  0: Disabled    1: Auto-detect [default]    2: ABL    3: BBL    4: UBL    5: MBL
  *
  */
-#define ENABLE_BL_VALUE 1
+#define ENABLE_BL_VALUE 0
 
 /**
  * Enable friendly probe offset language
