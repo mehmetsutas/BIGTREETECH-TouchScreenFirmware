@@ -187,7 +187,7 @@
 
 #define HEAT_MAX_TEMP    {260,       275,       275,       275,       275,       275,       110,    60}   //max temperature can be set
 #define HEAT_SIGN_ID     {"T0:",     "T1:",     "T2:",     "T3:",     "T4:",     "T5:",     "B:",   "C:"}
-#define HEAT_DISPLAY_ID  {"T0",      "T1",      "T2",      "T3",      "T4",      "T5",      "Bed",  "Chamber"}
+#define HEAT_DISPLAY_ID  {"T0",      "T1",      "T2",      "T3",      "T4",      "T5",      "Tab.",  "Kabin"}
 #define HEAT_CMD         {"M104 T0", "M104 T1", "M104 T2", "M104 T3", "M104 T4", "M104 T5", "M140", "M141"};
 #define HEAT_WAIT_CMD    {"M109 T0", "M109 T1", "M109 T2", "M109 T3", "M109 T4", "M109 T5", "M190", "M191"};
 
@@ -245,6 +245,12 @@
  * Acts here like manual pause
  */
 #define NOZZLE_PAUSE_M600_M601
+
+/* M701, M702 ; Marlin filament load unload gcodes support
+ * FILAMENT_LOAD_UNLOAD_GCODES option on Marlin configuration_adv.h need to be uncommented
+ * Adds a submenu to the preheat menu for selecting load and unload actions
+ */
+#define LOAD_UNLOAD_M701_M702
 
 /**
  * Auto save/load Bed Leveling data
@@ -469,20 +475,20 @@
  *
  * CUSTOM_X_LABEL is the name of the custom button, CUSTOM_X_GCODE is the G-code to be sent by the custom button, this should always end with a New-Line character '\n'
  */
-#define CUSTOM_0_LABEL "Disable Steppers"
-#define CUSTOM_0_GCODE "M84\n"
-#define CUSTOM_1_LABEL "Init SD Card"
-#define CUSTOM_1_GCODE "M21\n"
-#define CUSTOM_2_LABEL "Release SD Card"
-#define CUSTOM_2_GCODE "M22\n"
-#define CUSTOM_3_LABEL "Enable Leveling State"
-#define CUSTOM_3_GCODE "M420 S1\n"
-#define CUSTOM_4_LABEL "Save to EEPROM"
-#define CUSTOM_4_GCODE "M500\n"
-#define CUSTOM_5_LABEL "Restore from EEPROM"
-#define CUSTOM_5_GCODE "M501\n"
-#define CUSTOM_6_LABEL "EEPROM Defaults"
-#define CUSTOM_6_GCODE "M502\n"
+//#define CUSTOM_0_LABEL "Disable Steppers"
+//#define CUSTOM_0_GCODE "M84\n"
+//#define CUSTOM_1_LABEL "Init SD Card"
+//#define CUSTOM_1_GCODE "M21\n"
+//#define CUSTOM_2_LABEL "Release SD Card"
+//#define CUSTOM_2_GCODE "M22\n"
+//#define CUSTOM_3_LABEL "Enable Leveling State"
+//#define CUSTOM_3_GCODE "M420 S1\n"
+//#define CUSTOM_4_LABEL "Save to EEPROM"
+//#define CUSTOM_4_GCODE "M500\n"
+//#define CUSTOM_5_LABEL "Restore from EEPROM"
+//#define CUSTOM_5_GCODE "M501\n"
+//#define CUSTOM_6_LABEL "EEPROM Defaults"
+//#define CUSTOM_6_GCODE "M502\n"
 //#define CUSTOM_7_LABEL "Custom7"
 //#define CUSTOM_7_GCODE "M105\n"
 //#define CUSTOM_8_LABEL "Custom8"
