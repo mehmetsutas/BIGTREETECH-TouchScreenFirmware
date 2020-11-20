@@ -35,10 +35,10 @@ static uint32_t toggle_time = 2000; // 1 seconds is 1000
 static uint8_t c_Tool = NOZZLE0;
 static int c_fan = 0;
 static int c_speedID = 0;
-const char* Speed_ID[2] = {"Speed","Flow"};
+const char* Speed_ID[2] = {"Hız","Akış"};
 
 
-#define LAYER_TITLE "Layer"
+#define LAYER_TITLE "Katman"
 #define EXT_ICON_POS  0
 #define BED_ICON_POS  1
 #define FAN_ICON_POS  2
@@ -91,7 +91,7 @@ void menuBeforePrinting(void)
       //    }
 
       if (infoMachineSettings.autoReportSDStatus ==1){
-        request_M27(infoSettings.m27_refresh_time*1000);                //Check if there is a SD or USB print running.
+        request_M27(infoSettings.m27_refresh_time);                //Check if there is a SD or USB print running.
       }
       else{
         request_M27(0);
@@ -232,7 +232,7 @@ void reDrawProgress(int icon_pos)
 void reDrawLayer(int icon_pos)
 {
   char tempstr[10];
-  sprintf(tempstr, "%.2fmm",coordinateGetAxisTarget(Z_AXIS));
+  sprintf(tempstr, "%.2fmm",coordinateGetAxisActual(Z_AXIS));
 
   GUI_SetTextMode(GUI_TEXTMODE_TRANS);
 
@@ -266,6 +266,7 @@ void toggleinfo(void)
     rapid_serial_loop();   //perform backend printing loop before drawing to avoid printer idling
     reDrawSpeed(SPD_ICON_POS);
     speedQuery();
+	coordinateQuery();
   }
 }
 
@@ -285,7 +286,7 @@ void printingDrawPage(void)
 void stopConfirm(void)
 {
   abortPrinting();
-  infoMenu.cur--;
+  infoMenu.cur = 0;  //infoMenu.cur--;
 }
 
 void menuPrinting(void)
@@ -375,8 +376,8 @@ void menuPrinting(void)
     }
 
     //Z_AXIS coordinate
-    if(curLayer != coordinateGetAxisTarget(Z_AXIS)){
-      curLayer = coordinateGetAxisTarget(Z_AXIS);
+    if(curLayer != coordinateGetAxisActual(Z_AXIS)){
+      curLayer = coordinateGetAxisActual(Z_AXIS);
       rapid_serial_loop();  //perform backend printing loop before drawing to avoid printer idling
       reDrawLayer(Z_ICON_POS);
     }
