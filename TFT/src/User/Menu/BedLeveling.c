@@ -5,15 +5,15 @@ void blUpdateState(MENUITEMS *menu)
 {
   if (getParameter(P_ABL_STATE, 0) == ENABLED)
   {
-    menu->items[6].icon = ICON_LEVELING_ON;
-    menu->items[6].label.index = LABEL_BL_ENABLE;
+    menu->items[2].icon = ICON_LEVELING_ON;
+    menu->items[2].label.index = LABEL_BL_ENABLE;
   }
   else
   {
-    menu->items[6].icon = ICON_LEVELING_OFF;
-    menu->items[6].label.index = LABEL_BL_DISABLE;
+    menu->items[2].icon = ICON_LEVELING_OFF;
+    menu->items[2].label.index = LABEL_BL_DISABLE;
   }
-  menuDrawItem(&menu->items[6], 6);
+  menuDrawItem(&menu->items[2], 2);
 }
 
 void menuBedLeveling(void)
@@ -23,17 +23,17 @@ void menuBedLeveling(void)
     LABEL_ABL_SETTINGS,
     // icon                         label
     {{ICON_LEVELING,                LABEL_ABL},
-     {ICON_LEVELING,                LABEL_MESH_EDITOR},
-     {ICON_BACKGROUND,              LABEL_BACKGROUND},
-     {ICON_BACKGROUND,              LABEL_BACKGROUND},
      {ICON_PROBE_OFFSET,            LABEL_Z_OFFSET},
-     {ICON_Z_FADE,                  LABEL_ABL_Z},
+     {ICON_BACKGROUND,              LABEL_BACKGROUND},
+     {ICON_BACKGROUND,              LABEL_BACKGROUND},
+     {ICON_BACKGROUND,              LABEL_BACKGROUND},
+     {ICON_BACKGROUND,              LABEL_BACKGROUND},
      {ICON_BACKGROUND,              LABEL_BACKGROUND},
      {ICON_BACK,                    LABEL_BACK},}
   };
 
   KEY_VALUES key_num = KEY_IDLE;
-  void (*menuBL)(void) = menuABL;
+//  void (*menuBL)(void) = menuABL;
   int8_t levelStateOld = -1;
 
   switch (infoMachineSettings.leveling)
@@ -52,7 +52,7 @@ void menuBedLeveling(void)
       bedLevelingItems.title.index = LABEL_MBL_SETTINGS;
       bedLevelingItems.items[0].label.index = LABEL_MBL;
 
-      menuBL = menuMBL;
+//      menuBL = menuMBL;
       break;
 
     default:
@@ -61,13 +61,13 @@ void menuBedLeveling(void)
 
   if (getParameter(P_ABL_STATE, 0) == ENABLED)
   {
-    bedLevelingItems.items[6].icon = ICON_LEVELING_ON;
-    bedLevelingItems.items[6].label.index = LABEL_BL_ENABLE;
+    bedLevelingItems.items[2].icon = ICON_LEVELING_ON;
+    bedLevelingItems.items[2].label.index = LABEL_BL_ENABLE;
   }
   else
   {
-    bedLevelingItems.items[6].icon = ICON_LEVELING_OFF;
-    bedLevelingItems.items[6].label.index = LABEL_BL_DISABLE;
+    bedLevelingItems.items[2].icon = ICON_LEVELING_OFF;
+    bedLevelingItems.items[2].label.index = LABEL_BL_DISABLE;
   }
 
   menuDrawPage(&bedLevelingItems);
@@ -78,33 +78,28 @@ void menuBedLeveling(void)
     switch (key_num)
     {
       case KEY_ICON_0:
-        infoMenu.menu[++infoMenu.cur] = menuBL;
+             infoMenu.cur = 0;
+			 storeCmd("G92 E0\n");
+			 storeCmd("M109 S235 T0\n");
+			 storeCmd("G1 E6 F60\n");
+			 storeCmd("G1 E0 F4800\n");
+			 storeCmd("G1 E-100 F4800\n");
+			 storeCmd("G92 E0\n");
+			 storeCmd("G4 S5\n");
+			 storeCmd("G28\n");
+			 storeCmd("G29\n");
+			 storeCmd("G4 S5\n");
+			 storeCmd("M104 S0 T0\n");
+			 storeCmd("M140 S0\n");
+			 storeCmd("M500\n");
         break;
 
       case KEY_ICON_1:
-        infoMenu.menu[++infoMenu.cur] = menuMeshEditor;
-        break;
-
-      case KEY_ICON_4:
         storeCmd("M851\n");
         infoMenu.menu[++infoMenu.cur] = menuProbeOffset;
         break;
 
-      case KEY_ICON_5:
-        {
-          char tempstr[30];
-
-          sprintf(tempstr, "%Min:%.2f | Max:%.2f", Z_FADE_MIN_VALUE, Z_FADE_MAX_VALUE);
-
-          float val = numPadFloat((u8 *) tempstr, getParameter(P_ABL_STATE, 1), 0.0f, false);
-
-          storeCmd("M420 Z%.2f\n", NOBEYOND(Z_FADE_MIN_VALUE, val, Z_FADE_MAX_VALUE));
-
-          menuDrawPage(&bedLevelingItems);
-        }
-        break;
-
-      case KEY_ICON_6:
+      case KEY_ICON_2:
         if (getParameter(P_ABL_STATE, 0) == ENABLED)
         {
           storeCmd("M420 S0\n");

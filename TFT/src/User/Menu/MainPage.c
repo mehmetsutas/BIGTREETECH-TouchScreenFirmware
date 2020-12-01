@@ -13,7 +13,7 @@ void unifiedMenu(void)
      {ICON_EXTRUDE,                 LABEL_EXTRUDE},
      {ICON_STOP,                    LABEL_EMERGENCYSTOP},
      {ICON_GCODE,                   LABEL_TERMINAL},
-     {ICON_CUSTOM,                  LABEL_CUSTOM},
+     {ICON_CASE_LIGHT,              LABEL_CASE_LIGHT},
      {ICON_SETTINGS,                LABEL_SETTINGS},
      {ICON_BACK,                    LABEL_BACK},}
   };
@@ -55,7 +55,7 @@ void unifiedMenu(void)
         break;
 
       case KEY_ICON_5:
-        infoMenu.menu[++infoMenu.cur] = menuCustom;
+        caseLightToggleState();
         break;
 
       case KEY_ICON_6:

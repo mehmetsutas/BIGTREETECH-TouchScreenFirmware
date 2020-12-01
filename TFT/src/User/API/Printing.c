@@ -430,7 +430,7 @@ void loopCheckPrinting(void)
   static uint32_t  nextTime=0;
   uint32_t update_time = infoSettings.m27_refresh_time * 1000;
   do
-  {  /* WAIT FOR M27  */
+  {  // WAIT FOR M27  
     if(update_waiting == true) {nextTime = OS_GetTimeMs() + update_time; break;}
     if(OS_GetTimeMs() < nextTime) break;
 

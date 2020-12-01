@@ -779,7 +779,10 @@ void loopBackEnd(void)
   if(infoMachineSettings.caseLightsBrightness == ENABLED)
   {
     loopCaseLight();
-  }
+  } else if(infoMachineSettings.toggleLights == ENABLED)
+	{
+	  loopCaseLightToggle();
+	}		
 } //loopBackEnd
 
 void loopFrontEnd(void)

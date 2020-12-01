@@ -13,6 +13,7 @@ static int16_t itemPercentageTitle[SPEED_NUM] = {
 };
 
 static u8 item_percentage_i = 0;
+static u16 now;
 
 #define ITEM_PERCENT_UNIT_NUM 3
 
@@ -37,7 +38,7 @@ void percentageReDraw(char * title)
 
   GUI_DispString(exhibitRect.x0, exhibitRect.y0, (u8 *)title);
 
-  sprintf(tempstr, "  %d%%  ", speedGetPercent(item_percentage_i));
+  sprintf(tempstr, "  %d%%  ", now);
   setLargeFont(true);
   GUI_DispStringInPrect(&exhibitRect,(u8*)tempstr);
   setLargeFont(false);
@@ -64,7 +65,7 @@ void menuSpeed(void)
   storeCmd("M220\nM221\n");
   KEY_VALUES key_num;
 
-  u16 now = speedGetPercent(item_percentage_i);
+  now = speedGetPercent(item_percentage_i);
 
   for(u8 i=0; i<SPEED_NUM; i++)
 
@@ -80,12 +81,12 @@ void menuSpeed(void)
   while(infoMenu.menu[infoMenu.cur] == menuSpeed)
   {
     key_num = menuKeyGetValue();
-    now = speedGetPercent(item_percentage_i);
     switch(key_num)
     {
       case KEY_ICON_0:
-        if(now > SPEED_MIN)
-          speedSetPercent(item_percentage_i, now - item_percent_unit[item_percent_unit_i]);
+        if (now > SPEED_MIN)
+		  now = MAX(now - item_percent_unit[item_percent_unit_i], SPEED_MIN);
+		percentageReDraw((char*)textSelect(percentageItems.title.index));
         break;
       case KEY_INFOBOX:
       {
@@ -96,6 +97,7 @@ void menuSpeed(void)
         val = NOBEYOND(SPEED_MIN,val,SPEED_MAX);
         if (val != now)
         {
+	      now = val;
           speedSetPercent(item_percentage_i, val);
         }
         menuDrawPage(&percentageItems);
@@ -103,12 +105,15 @@ void menuSpeed(void)
         break;
       }
       case KEY_ICON_3:
-        if(now < SPEED_MAX)
-          speedSetPercent(item_percentage_i, now + item_percent_unit[item_percent_unit_i]);
+        if (now < SPEED_MAX)
+	      now = MIN(now + item_percent_unit[item_percent_unit_i],SPEED_MAX);
+		percentageReDraw((char*)textSelect(percentageItems.title.index));
         break;
 
       case KEY_ICON_4:
+	    speedSetPercent(item_percentage_i, now);
         item_percentage_i = (item_percentage_i+1) % SPEED_NUM;
+		now = speedGetPercent(item_percentage_i);
         percentageItems.items[key_num] = itemPercentage[item_percentage_i];
         menuDrawItem(&percentageItems.items[key_num], key_num);
         percentageItems.title.index = itemPercentageTitle[item_percentage_i];
@@ -124,8 +129,11 @@ void menuSpeed(void)
         break;
       case KEY_ICON_6:
         speedSetPercent(item_percentage_i, 100);
+		now = 100;
+		percentageReDraw((char*)textSelect(percentageItems.title.index));
         break;
       case KEY_ICON_7:
+	    speedSetPercent(item_percentage_i, now);
         infoMenu.cur--;
         break;
       default:
@@ -134,11 +142,13 @@ void menuSpeed(void)
           {
             if (now < SPEED_MAX && encoderPosition > 0)
             {
-              speedSetPercent(item_percentage_i, now + item_percent_unit[item_percent_unit_i]);
+			  now = MIN(now + item_percent_unit[item_percent_unit_i],SPEED_MAX);
+			  percentageReDraw((char*)textSelect(percentageItems.title.index));
             }
             if (now > SPEED_MIN && encoderPosition < 0)
             {
-              speedSetPercent(item_percentage_i, now - item_percent_unit[item_percent_unit_i]);
+			  now = MAX(now - item_percent_unit[item_percent_unit_i], SPEED_MIN);
+			  percentageReDraw((char*)textSelect(percentageItems.title.index));
             }
             encoderPosition = 0;
           }

@@ -18,8 +18,8 @@ void menuMore(void)
      {ICON_FAN,                     LABEL_FAN},
      {ICON_EXTRUDE,                 LABEL_EXTRUDE},
      {ICON_PERCENTAGE,              LABEL_PERCENTAGE},
-     {ICON_FEATURE_SETTINGS,        LABEL_FEATURE_SETTINGS},
-     {ICON_MACHINE_SETTINGS,        LABEL_MACHINE_SETTINGS},
+     {ICON_PARAMETER,               LABEL_PARAMETER_SETTING},
+     {ICON_CASE_LIGHT,              LABEL_CASE_LIGHT},
      {ICON_GCODE,                   LABEL_TERMINAL},
      {ICON_BACK,                    LABEL_BACK},}
   };
@@ -42,17 +42,8 @@ void menuMore(void)
         break;
 
       case KEY_ICON_2:
-        if (isPrinting() && !isPause()) // need paused before extrude
-        {
-          setDialogText(LABEL_WARNING, LABEL_IS_PAUSE, LABEL_CONFIRM, LABEL_CANCEL);
-          showDialog(DIALOG_TYPE_ALERT, isPauseConfirm, NULL, NULL);
-        }
-        else
-          #ifdef LOAD_UNLOAD_M701_M702
-			 infoMenu.menu[++infoMenu.cur] = menuPreheat;
-		  #else
-             infoMenu.menu[++infoMenu.cur] = menuExtrude;
-          #endif
+        mustStoreCmd("M600\n");
+		infoMenu.cur--;
         break;
 
       case KEY_ICON_3:
@@ -60,11 +51,12 @@ void menuMore(void)
         break;
 
       case KEY_ICON_4:
-        infoMenu.menu[++infoMenu.cur] = menuFeatureSettings;
+	    mustStoreCmd("M503 S0\n");
+        infoMenu.menu[++infoMenu.cur] = menuParameterSettings;
         break;
 
       case KEY_ICON_5:
-        infoMenu.menu[++infoMenu.cur] = menuMachineSettings;
+        caseLightToggleState();
         break;
 
       case KEY_ICON_6:

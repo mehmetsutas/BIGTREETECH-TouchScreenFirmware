@@ -185,7 +185,7 @@ void menuRGBSettings(void)
   }
 }
 
-#if QUICK_EEPROM_BUTTON == 1
+//#if QUICK_EEPROM_BUTTON == 1
 void menuEepromSettings(void)
 {
   // 1 title, ITEM_PER_PAGE items (icon + label)
@@ -250,7 +250,7 @@ void menuEepromSettings(void)
     loopProcess();
   }
 }
-#endif
+//#endif
 
 void menuMachineSettings(void)
 {
@@ -274,7 +274,7 @@ void menuMachineSettings(void)
   };
 
   const ITEM itemCaseLight = {ICON_CASE_LIGHT, LABEL_CASE_LIGHT};
-  if (infoMachineSettings.caseLightsBrightness == ENABLED)
+  if (infoMachineSettings.toggleLights == ENABLED)
   {
     machineSettingsItems.items[KEY_ICON_6] = itemCaseLight;
   }
@@ -314,8 +314,8 @@ void menuMachineSettings(void)
         break;
 #endif
       case KEY_ICON_6:
-        if (infoMachineSettings.caseLightsBrightness == ENABLED){
-          infoMenu.menu[++infoMenu.cur] = menuCaseLight;
+        if (infoMachineSettings.toggleLights == ENABLED){
+          caseLightToggleState();
         }
         break;
 

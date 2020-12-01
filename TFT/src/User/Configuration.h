@@ -244,7 +244,7 @@
  * PrusaSlicer can add M601 on certain height.
  * Acts here like manual pause
  */
-#define NOZZLE_PAUSE_M600_M601
+//#define NOZZLE_PAUSE_M600_M601
 
 /* M701, M702 ; Marlin filament load unload gcodes support
  * FILAMENT_LOAD_UNLOAD_GCODES option on Marlin configuration_adv.h need to be uncommented
@@ -428,7 +428,7 @@
  * On-Board SD Card and auto-configure M27 AutoReport with M115 command
  * Set the time interval to poll SD Printing status if Marlin reports M27 AutoReport as disabled.
  */
-#define M27_REFRESH                3        // Time in sec for M27 command
+#define M27_REFRESH                5        // Time in sec for M27 command
 #define M27_WATCH_OTHER_SOURCES    true     // if true the polling on M27 report is always active. Case: SD print started not from TFT35
 
 /**

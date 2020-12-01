@@ -358,14 +358,15 @@ void menuPrint(void)
   //  title
   LABEL_PRINT,
   // icon                       label
-  {{ICON_ONTFT_SD,            LABEL_TFTSD},
+  {//{ICON_ONTFT_SD,            LABEL_TFTSD},
   #ifdef U_DISK_SUPPORT
     {ICON_U_DISK,               LABEL_U_DISK},
-    #define ONBOARD_SD_INDEX 2
-  #else
     #define ONBOARD_SD_INDEX 1
+  #else
+    #define ONBOARD_SD_INDEX 0
     {ICON_BACKGROUND,           LABEL_BACKGROUND},
   #endif
+    {ICON_BACKGROUND,           LABEL_BACKGROUND},
     {ICON_BACKGROUND,           LABEL_BACKGROUND},
     {ICON_BACKGROUND,           LABEL_BACKGROUND},
     {ICON_BACKGROUND,           LABEL_BACKGROUND},
@@ -382,24 +383,24 @@ void menuPrint(void)
   {
     key_num = menuKeyGetValue();
     switch(key_num)
-    {
+    {/*
       case KEY_ICON_0:
         list_mode = infoSettings.file_listmode; //follow list mode setting in TFT sd card
         infoFile.source = TFT_SD;
         infoMenu.menu[++infoMenu.cur] = menuPrintFromSource;
         infoMenu.menu[++infoMenu.cur] = menuPowerOff;
         goto selectEnd;
-
+*/
       #ifdef U_DISK_SUPPORT
-          case KEY_ICON_1:
+          case KEY_ICON_0:
             list_mode = infoSettings.file_listmode; //follow list mode setting in usb disk
             infoFile.source = TFT_UDISK;
             infoMenu.menu[++infoMenu.cur] = menuPrintFromSource;
             infoMenu.menu[++infoMenu.cur] = menuPowerOff;
             goto selectEnd;
-          case KEY_ICON_2:
-      #else
           case KEY_ICON_1:
+      #else
+          case KEY_ICON_0:
       #endif
           if(infoMachineSettings.onboard_sd_support == ENABLED)
           {
