@@ -48,6 +48,7 @@ void menuUnifiedMove(void)
       case KEY_ICON_3:
         if (infoMachineSettings.leveling != BL_DISABLED)
           infoMenu.cur = 0;
+		  popupReminder(DIALOG_TYPE_INFO, LABEL_BUSY, LABEL_LEVELLING_STARTED);
 		  storeCmd("G92 E0\n");
 		  storeCmd("M109 S235 T0\n");
 		  storeCmd("G1 E6 F60\n");

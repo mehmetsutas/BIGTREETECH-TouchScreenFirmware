@@ -46,11 +46,13 @@ void menuLoadUnload(void)
     {
       case KEY_ICON_0:
         mustStoreCmd("M702 T%d\n",item_extruder_i);
+		popupReminder(DIALOG_TYPE_INFO, LABEL_BUSY, LABEL_UNLOAD_STARTED);
 		infoMenu.cur = 0;
         break;
 
       case KEY_ICON_3:
         mustStoreCmd("M701 T%d\n",item_extruder_i);
+		popupReminder(DIALOG_TYPE_INFO, LABEL_BUSY, LABEL_LOAD_STARTED);
 		infoMenu.cur = 0;
         break;
 

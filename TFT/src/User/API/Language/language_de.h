@@ -277,5 +277,7 @@
     #define STRING_MESH_EDITOR            "Mesh edit."
     #define STRING_MESH_TUNER             "Mesh anp."
     #define STRING_CASE_LIGHT             "Case light"
-
+    #define STRING_LOAD_STARTED           "Filament load in progress.\nNo further actions possible\nuntil it's done.\nPlease stand by."  // translation needed
+    #define STRING_UNLOAD_STARTED         "Filament unload in progress.\nNo further actions possible\nuntil it's done.\nPlease stand by."  // translation needed
+	#define STRING_LEVELLING_STARTED      "Levelling started. Heating.\nDo not start another operation\nuntil it's done."  // translation needed
 #endif

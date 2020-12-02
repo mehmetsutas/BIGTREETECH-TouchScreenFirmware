@@ -284,7 +284,9 @@ extern "C" {
 #define LANG_KEY_MESH_EDITOR                  "label_mesh_editor:"
 #define LANG_KEY_MESH_TUNER                   "label_mesh_tuner:"
 #define LANG_KEY_CASE_LIGHT                   "label_case_light:"
-
+#define LANG_KEY_LOAD_STARTED				  "label_load_started:"
+#define LANG_KEY_UNLOAD_STARTED				  "label_unload_started:"
+#define LANG_KEY_LEVELLING_STARTED			  "label_levelling_started:"
 #ifdef __cplusplus
 }
 #endif

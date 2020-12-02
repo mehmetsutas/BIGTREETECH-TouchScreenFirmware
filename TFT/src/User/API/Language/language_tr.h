@@ -147,7 +147,7 @@
     #define STRING_10_PERCENT             "%10"
     #define STRING_PERCENT_VALUE          "%%%d"
     #define STRING_READY                  "Hazır"
-    #define STRING_BUSY                   "İşlem devam ediyor, lütfen bekleyiniz..."
+    #define STRING_BUSY                   "İşlem sürdürülüyor, bekleyiniz..."
     #define STRING_UNCONNECTED            "Yazıcı bağlı değil!"
     #define STRING_DISCONNECT_INFO        "Artık yazıcıyı\nbilgisayarınızdan kontrol\nedebilirsiniz!"
     #define STRING_LOADING                "Yükleniyor..."
@@ -277,5 +277,7 @@
     #define STRING_MESH_EDITOR            "Mesh düzenle"
     #define STRING_MESH_TUNER             "Mesh ayarlayıcı"
     #define STRING_CASE_LIGHT             "Aydınlatma"
-
+    #define STRING_LOAD_STARTED           "Filaman yüklenecek.\nİşlem tamamlanana kadar\nbaşka işlem başlatmayınız."  // translation needed
+    #define STRING_UNLOAD_STARTED         "Filaman çıkartılacak.\nİşlem tamamlanana kadar\nbaşka işlem başlatmayınız."  // translation needed
+	#define STRING_LEVELLING_STARTED      "Seviyeleme başlatıldı. Isınıyor.\nİşlem tamamlanana kadar\nbaşka işlem başlatmayınız."  // translation needed
 #endif

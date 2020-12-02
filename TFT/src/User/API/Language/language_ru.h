@@ -277,5 +277,7 @@
     #define STRING_MESH_EDITOR            "Сетка ред."
     #define STRING_MESH_TUNER             "Сетка настр."
     #define STRING_CASE_LIGHT             "Подсветка"
-
+    #define STRING_LOAD_STARTED           "Filament load in progress.\nNo further actions possible\nuntil it's done.\nPlease stand by."  // translation needed
+    #define STRING_UNLOAD_STARTED         "Filament unload in progress.\nNo further actions possible\nuntil it's done.\nPlease stand by."  // translation needed
+	#define STRING_LEVELLING_STARTED      "Levelling started. Heating.\nDo not start another operation\nuntil it's done."  // translation needed
 #endif
