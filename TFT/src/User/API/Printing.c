@@ -240,11 +240,25 @@ void endPrinting(void)
       break;
   }
   infoPrinting.printing = infoPrinting.pause = false;
+  request_M27(0);
   powerFailedClose();
   powerFailedDelete();
   if(infoSettings.send_end_gcode == 1){
     sendPrintCodes(1);
   }
+  char tempstr1[140];
+  char tempstr2[70];
+  u8  hour = infoPrinting.time/3600,
+      min = infoPrinting.time%3600/60,
+      sec = infoPrinting.time%60;
+  u16 meter = ((infoFile.source == BOARD_SD) ? coordinateGetAxisActual(E_AXIS) : coordinateGetAxisTarget(E_AXIS)) / 1000;
+  sprintf(tempstr1, (char *)textSelect(LABEL_PRINT_TOTAL_TIME), hour,min,sec);
+  if (meter >0 )
+  {
+    sprintf(tempstr2,(char *)textSelect(LABEL_PRINT_FILAMENT_USED),meter);
+    strcat(tempstr1,tempstr2);
+  }
+  popupReminder(DIALOG_TYPE_INFO, LABEL_SCREEN_INFO, (u8*)tempstr1);
 }
 
 

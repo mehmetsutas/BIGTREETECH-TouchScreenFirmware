@@ -280,4 +280,7 @@
     #define STRING_LOAD_STARTED           "Filaman yüklenecek.\nİşlem tamamlanana kadar\nbaşka işlem başlatmayınız."  // translation needed
     #define STRING_UNLOAD_STARTED         "Filaman çıkartılacak.\nİşlem tamamlanana kadar\nbaşka işlem başlatmayınız."  // translation needed
 	#define STRING_LEVELLING_STARTED      "Seviyeleme başlatıldı. Isınıyor.\nİşlem tamamlanana kadar\nbaşka işlem başlatmayınız."  // translation needed
+    #define STRING_PRINT_TOTAL_TIME       "Baskı tamamlandı.\nBaskı Süresi: %02u:%02u:%02u \n"
+    #define STRING_PRINT_FILAMENT_USED    "Kullanılan Filaman: %u metre"
+
 #endif

@@ -255,10 +255,11 @@ void hostActionCommands(void)
      {
        infoPrinting.pause = true;
   } else if(ack_seen("cancel"))   //To be added to Marlin abortprint routine
-	 {
-	   infoHost.printing = false;
-	   infoPrinting.printing = false;
-       infoPrinting.cur = infoPrinting.size;
+    {
+      infoHost.printing = false;
+      infoPrinting.printing = false;
+      infoPrinting.cur = infoPrinting.size;
+      request_M27(0);
   } else if (ack_seen("resumed") || ack_seen("resume"))
 	 {
 	   infoPrinting.pause = false;
@@ -299,9 +300,7 @@ void parseACK(void)
                              // Avoid can't getting this parameter due to disabled M503 in Marlin
         storeCmd("M115\n");
         storeCmd("M211\n");  // retrieve the software endstops state
-		
-		request_M27(infoSettings.m27_refresh_time);
-		storeCmd("M413 C\n");
+        storeCmd("M413 C\n");
       }
     }
 
@@ -390,6 +389,10 @@ void parseACK(void)
           if (ack_seen("Z:"))
           {
             coordinateSetAxisActual(Z_AXIS, ack_value());
+            if (ack_seen("E:"))
+            {
+              coordinateSetAxisActual(E_AXIS, ack_value());
+            }
           }
         }
         coordinateQuerySetWait(false);
@@ -415,6 +418,10 @@ void parseACK(void)
         infoPrinting.time = 0;
         infoPrinting.cur = 0;
         infoPrinting.size = ack_value();
+        if (infoMachineSettings.autoReportSDStatus ==1)
+        {
+          request_M27(infoSettings.m27_refresh_time);                //Check if there is a SD or USB print running.
+        }
       }
       else if(infoMachineSettings.onboard_sd_support == ENABLED && infoFile.source == BOARD_SD && ack_seen("Not SD printing"))
       {
@@ -432,8 +439,8 @@ void parseACK(void)
       }
       else if(infoMachineSettings.onboard_sd_support == ENABLED && infoFile.source == BOARD_SD && ack_seen("Done printing file"))
       {
-		infoHost.printing = false;
-        infoPrinting.printing = false;
+		    infoHost.printing = false;
+        printingFinished();
         infoPrinting.cur = infoPrinting.size;
       }
 

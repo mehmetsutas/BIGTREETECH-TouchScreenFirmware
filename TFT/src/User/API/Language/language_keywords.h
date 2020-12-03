@@ -287,6 +287,8 @@ extern "C" {
 #define LANG_KEY_LOAD_STARTED				  "label_load_started:"
 #define LANG_KEY_UNLOAD_STARTED				  "label_unload_started:"
 #define LANG_KEY_LEVELLING_STARTED			  "label_levelling_started:"
+#define LANG_KEY_PRINT_TOTAL_TIME             "print_total_time:"
+#define LANG_KEY_PRINT_FILAMENT_USED          "print_filament_used:"
 #ifdef __cplusplus
 }
 #endif
