@@ -281,6 +281,6 @@
     #define STRING_UNLOAD_STARTED         "Filament unload in progress.\nNo further actions possible\nuntil it's done.\nPlease stand by."  // translation needed
 	#define STRING_LEVELLING_STARTED      "Levelling started. Heating.\nDo not start another operation\nuntil it's done."  // translation needed
     #define STRING_PRINT_TOTAL_TIME       "Print complete.\nPrint Time: %02u:%02u:%02u \n"  // translation needed
-    #define STRING_PRINT_FILAMENT_USED    "Filament Used: %u meters"  // translation needed
+    #define STRING_PRINT_FILAMENT_USED    "Filament Used: %3.2f meters"  // translation needed
 
 #endif
