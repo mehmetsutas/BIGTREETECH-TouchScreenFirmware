@@ -78,20 +78,20 @@ void menuBedLeveling(void)
     switch (key_num)
     {
       case KEY_ICON_0:
-             infoMenu.cur = 0;
-			 storeCmd("G92 E0\n");
-			 storeCmd("M109 S235 T0\n");
-			 storeCmd("G1 E6 F60\n");
-			 storeCmd("G1 E0 F4800\n");
-			 storeCmd("G1 E-100 F4800\n");
-			 storeCmd("G92 E0\n");
-			 storeCmd("G4 S5\n");
-			 storeCmd("G28\n");
-			 storeCmd("G29\n");
-			 storeCmd("G4 S5\n");
-			 storeCmd("M104 S0 T0\n");
-			 storeCmd("M140 S0\n");
-			 storeCmd("M500\n");
+        infoMenu.cur = 0;
+        storeCmd("G92 E0\n");
+        storeCmd("M109 S235 T0\n");
+        storeCmd("G1 E6 F60\n");
+        storeCmd("G1 E0 F4800\n");
+        storeCmd("G1 E-100 F4800\n");
+        storeCmd("G92 E0\n");
+        storeCmd("G4 S5\n");
+        storeCmd("G28\n");
+        storeCmd("G29\n");
+        storeCmd("G4 S5\n");
+        storeCmd("M104 S0 T0\n");
+        storeCmd("M140 S0\n");
+        storeCmd("M500\n");
         break;
 
       case KEY_ICON_1:
