@@ -6,6 +6,28 @@ PRINTING infoPrinting;
 
 static bool update_waiting = false;
 
+static float filament_used;
+static float last_E_pos;
+
+void resetFilamentUsed(void)
+{
+  filament_used = 0;
+  last_E_pos = 0;
+}
+
+void updateFilamentUsed(void)
+{
+  float E_pos = ((infoFile.source == BOARD_SD) ? coordinateGetAxisActual(E_AXIS) : coordinateGetAxisTarget(E_AXIS));
+  if (E_pos + 20 < last_E_pos) //Check whether E position reset. If retract more than 20mm, false filament used values would be calculated.
+  {
+    filament_used = filament_used + E_pos;
+    last_E_pos = E_pos;
+  } else if (E_pos > last_E_pos)
+  {
+    filament_used = filament_used + (E_pos - last_E_pos);
+    last_E_pos = E_pos;
+  }
+}
 //
 bool isPrinting(void)
 {
@@ -240,6 +262,7 @@ void endPrinting(void)
       break;
   }
   infoPrinting.printing = infoPrinting.pause = false;
+  infoMenu.cur = 0;
   request_M27(0);
   powerFailedClose();
   powerFailedDelete();
@@ -251,11 +274,10 @@ void endPrinting(void)
   u8  hour = infoPrinting.time/3600,
       min = infoPrinting.time%3600/60,
       sec = infoPrinting.time%60;
-  float meter = ((infoFile.source == BOARD_SD) ? coordinateGetAxisActual(E_AXIS) : coordinateGetAxisTarget(E_AXIS)) / 1000;
   sprintf(tempstr1, (char *)textSelect(LABEL_PRINT_TOTAL_TIME), hour,min,sec);
-  if (meter >0 )
+  if (filament_used > 0 )
   {
-    sprintf(tempstr2,(char *)textSelect(LABEL_PRINT_FILAMENT_USED),meter);
+    sprintf(tempstr2,(char *)textSelect(LABEL_PRINT_FILAMENT_USED),filament_used / 1000);
     strcat(tempstr1,tempstr2);
   }
   popupReminder(DIALOG_TYPE_INFO, LABEL_SCREEN_INFO, (u8*)tempstr1);
@@ -278,10 +300,10 @@ void abortPrinting(void)
   {
     case BOARD_SD:
       infoHost.printing = false;
-	  breakAndContinue();		//Several M108 is sent to Marlin because consecutive blocking oprations such as heat bed, heat extruder may defer processing of M524
-	  breakAndContinue();
-	  breakAndContinue();
-	  breakAndContinue();
+      breakAndContinue();		//Several M108 is sent to Marlin because consecutive blocking oprations such as heat bed, heat extruder may defer processing of M524
+      breakAndContinue();
+      breakAndContinue();
+      breakAndContinue();
       request_M524();
       break;
 
@@ -428,14 +450,19 @@ void loopCheckPrinting(void)
     if(infoMenu.menu[infoMenu.cur] == menuMarlinMode) return;
   #endif
 
-  if (infoHost.printing && !infoPrinting.printing) {
+  if (infoHost.printing && !infoPrinting.printing)
+  {
     infoPrinting.printing = true;
     if (!hasPrintingMenu())
+    {
       infoMenu.menu[++infoMenu.cur] = menuPrinting;
+    }
   }
-  
-  if (!infoPrinting.printing && (infoMenu.menu[infoMenu.cur] == menuPrinting)) 
+
+  if (!infoPrinting.printing && (infoMenu.menu[infoMenu.cur] == menuPrinting))
+  {
     infoMenu.cur = 0;
+  }
 
   if (infoFile.source != BOARD_SD) return;
   if (infoMachineSettings.autoReportSDStatus == ENABLED) return;
@@ -444,7 +471,7 @@ void loopCheckPrinting(void)
   static uint32_t  nextTime=0;
   uint32_t update_time = infoSettings.m27_refresh_time * 1000;
   do
-  {  // WAIT FOR M27  
+  {  // WAIT FOR M27
     if(update_waiting == true) {nextTime = OS_GetTimeMs() + update_time; break;}
     if(OS_GetTimeMs() < nextTime) break;
 

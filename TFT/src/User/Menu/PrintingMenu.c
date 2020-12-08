@@ -124,7 +124,8 @@ void menuBeforePrinting(void)
   }
   infoPrinting.printing = true;
   infoPrinting.time = 0;
-  infoMenu.menu[infoMenu.cur] = menuPrinting;
+  resetFilamentUsed();
+  infoMenu.menu[++infoMenu.cur] = menuPrinting;
 }
 
 const GUI_RECT progressRect = {1*SPACE_X_PER_ICON, 0*ICON_HEIGHT+0*SPACE_Y+ICON_START_Y + ICON_HEIGHT/4,
@@ -267,7 +268,8 @@ void toggleinfo(void)
     rapid_serial_loop();   //perform backend printing loop before drawing to avoid printer idling
     reDrawSpeed(SPD_ICON_POS);
     speedQuery();
-	if (infoFile.source == BOARD_SD) coordinateQuery();
+    if (infoFile.source == BOARD_SD) coordinateQuery();
+    updateFilamentUsed();
   }
 }
 
@@ -287,7 +289,6 @@ void printingDrawPage(void)
 void stopConfirm(void)
 {
   abortPrinting();
-  infoMenu.cur = 0;  //infoMenu.cur--;
 }
 
 void menuPrinting(void)
@@ -429,7 +430,7 @@ void menuPrinting(void)
         else
         {
           exitPrinting();
-          infoMenu.cur--;
+          infoMenu.cur = 0;
         }
         break;
 

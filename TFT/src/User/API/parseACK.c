@@ -190,7 +190,7 @@ void hostActionCommands(void)
   char *find = strchr(dmaL2Cache + ack_index, '\n');
   *find = '\0';
 
-  
+
   if(ack_seen("prompt_begin "))
   {
     hostAction.button = 0;
@@ -245,15 +245,15 @@ void hostActionCommands(void)
             break;
         }
   } else if(ack_seen("prompt_end"))
-     {  
-       hostAction.button = 0;
+    {
+      hostAction.button = 0;
   } else if(ack_seen("notification "))
-     {
-       strcpy(hostAction.prompt_begin, dmaL2Cache + ack_index);
-       statusScreen_setMsg((u8 *)echomagic, (u8 *)dmaL2Cache + ack_index);
+    {
+      strcpy(hostAction.prompt_begin, dmaL2Cache + ack_index);
+      statusScreen_setMsg((u8 *)echomagic, (u8 *)dmaL2Cache + ack_index);
   } else if(ack_seen("paused") || ack_seen("pause"))
-     {
-       infoPrinting.pause = true;
+    {
+      infoPrinting.pause = true;
   } else if(ack_seen("cancel"))   //To be added to Marlin abortprint routine
     {
       infoHost.printing = false;
@@ -261,9 +261,9 @@ void hostActionCommands(void)
       infoPrinting.cur = infoPrinting.size;
       request_M27(0);
   } else if (ack_seen("resumed") || ack_seen("resume"))
-	 {
-	   infoPrinting.pause = false;
-	 }
+    {
+      infoPrinting.pause = false;
+    }
 }
 
 void parseACK(void)
@@ -415,10 +415,11 @@ void parseACK(void)
 
         infoPrinting.pause = false;
         infoHost.printing = true;
+        resetFilamentUsed();
         infoPrinting.time = 0;
         infoPrinting.cur = 0;
         infoPrinting.size = ack_value();
-        if (infoMachineSettings.autoReportSDStatus ==1)
+        if (infoMachineSettings.autoReportSDStatus == 1)
         {
           request_M27(infoSettings.m27_refresh_time);                //Check if there is a SD or USB print running.
         }
