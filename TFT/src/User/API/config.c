@@ -600,6 +600,9 @@ void parseConfigKey(u16 index)
         infoSettings.ack_notification = i;
       break;
     }
+  case C_INDEX_PRINT_SUMMARY:
+      infoSettings.print_summary = getOnOff();
+    break;
 
   //---------------------------------------------------------Marlin Mode Settings (Only for TFT35_V3.0/TFT24_V1.1/TFT28V3.0)
 

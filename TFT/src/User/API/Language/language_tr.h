@@ -282,5 +282,6 @@
 	#define STRING_LEVELLING_STARTED      "Seviyeleme başlatıldı. Isınıyor.\nİşlem tamamlanana kadar\nbaşka işlem başlatmayınız."  // translation needed
     #define STRING_PRINT_TOTAL_TIME       "Baskı tamamlandı.\nBaskı Süresi: %02u:%02u:%02u \n"
     #define STRING_PRINT_FILAMENT_USED    "Kullanılan Filaman: %3.2f metre"
+    #define STRING_PRINT_SUMMARY          "Baskı Özeti"
 
 #endif

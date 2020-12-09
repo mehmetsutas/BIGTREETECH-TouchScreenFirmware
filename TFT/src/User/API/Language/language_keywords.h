@@ -289,6 +289,7 @@ extern "C" {
 #define LANG_KEY_LEVELLING_STARTED			  "label_levelling_started:"
 #define LANG_KEY_PRINT_TOTAL_TIME             "print_total_time:"
 #define LANG_KEY_PRINT_FILAMENT_USED          "print_filament_used:"
+#define LANG_KEY_PRINT_SUMMARY                "print_summary:"
 #ifdef __cplusplus
 }
 #endif
