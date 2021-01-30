@@ -9,9 +9,9 @@ bool portSeen[_UART_CNT] = {false, false, false, false, false, false};
 
 struct HOST_ACTION
 {
-  char prompt_begin[20];
-  char prompt_button1[20];
-  char prompt_button2[20];
+  uint8_t prompt_begin[25];
+  uint8_t prompt_button1[20];
+  uint8_t prompt_button2[20];
   bool prompt_show;         //Show popup reminder or not
   uint8_t button;           //Number of buttons
 } hostAction;
@@ -185,17 +185,27 @@ void syncL2CacheFromL1(uint8_t port)
   dmaL2Cache[i] = 0; // End character
 }
 
+void actionSet(uint8_t *param, uint8_t stat[], uint8_t len)
+{
+  uint8_t i;
+  for (i = 0; ((i < 30) && (param[i] != '\0') && (param[i] != '\n') && (i < len)); i++) {
+    stat[i] = param[i];
+  }
+  stat[i] = '\0';
+}
+
 void hostActionCommands(void)
 {
-  char *find = strchr(dmaL2Cache + ack_index, '\n');
-  *find = '\0';
+//  char *find = strchr(dmaL2Cache + ack_index, '\n');
+//  *find = '\0';
 
 
   if(ack_seen("prompt_begin "))
   {
     hostAction.button = 0;
     hostAction.prompt_show = 1;
-    strcpy(hostAction.prompt_begin, dmaL2Cache + ack_index);
+    actionSet((uint8_t *)&dmaL2Cache[ack_index], hostAction.prompt_begin, 30);
+  //  strcpy(hostAction.prompt_begin, dmaL2Cache + ack_index);
 /*    if(ack_seen("Resuming SD"))
     {
       hostAction.prompt_show = 0;
@@ -219,15 +229,17 @@ void hostActionCommands(void)
     hostAction.button++;
     if(hostAction.button == 1)
     {
-      strcpy(hostAction.prompt_button1, dmaL2Cache + ack_index);
+      actionSet((uint8_t *)&dmaL2Cache[ack_index], hostAction.prompt_button1, 21);
+    //  strcpy(hostAction.prompt_button1, dmaL2Cache + ack_index);
     }
     else
     {
-      strcpy(hostAction.prompt_button2, dmaL2Cache + ack_index);
+      actionSet((uint8_t *)&dmaL2Cache[ack_index], hostAction.prompt_button2, 21);
+    //  strcpy(hostAction.prompt_button2, dmaL2Cache + ack_index);
     }
   } else if(ack_seen("prompt_show")) // && hostAction.prompt_show)
 	 {
-       switch(hostAction.button)
+      switch(hostAction.button)
         {
           case 0:
             BUZZER_PLAY(sound_notify);
@@ -249,7 +261,7 @@ void hostActionCommands(void)
       hostAction.button = 0;
   } else if(ack_seen("notification "))
     {
-      strcpy(hostAction.prompt_begin, dmaL2Cache + ack_index);
+      //strcpy(hostAction.prompt_begin, dmaL2Cache + ack_index);
       statusScreen_setMsg((u8 *)echomagic, (u8 *)dmaL2Cache + ack_index);
   } else if(ack_seen("paused") || ack_seen("pause"))
     {
@@ -300,6 +312,9 @@ void parseACK(void)
                              // Avoid can't getting this parameter due to disabled M503 in Marlin
         storeCmd("M115\n");
         storeCmd("M211\n");  // retrieve the software endstops state
+      #ifdef PRINT_COUNTER
+        storeCmd("M78\n");
+      #endif
         storeCmd("M413 C\n");
       }
     }
@@ -447,7 +462,37 @@ void parseACK(void)
         printingFinished();
         infoPrinting.cur = infoPrinting.size;
       }
-
+    #ifdef PRINT_COUNTER
+    //parse print statistics
+      else if(ack_seen("Stats:"))
+      {
+        if(ack_seen("Prints:")) printCounter.prints = ack_value();
+        if(ack_seen("Finished:")) printCounter.finished = ack_value();
+        if(ack_seen("Failed:")) printCounter.failed = ack_value();
+        if(ack_seen("Total time: "))
+        {
+          uint8_t *counter_string = (uint8_t *)&dmaL2Cache[ack_index];
+          uint8_t counter_string_start = ack_index;
+          if(ack_seen(", Longest job: "))
+          {
+            uint8_t counter_string_size = ack_index - sizeof(", Longest job: ") - counter_string_start +1;
+            counterSet(counter_string, printCounter.total_time, counter_string_size);
+            counterSet((uint8_t *)&dmaL2Cache[ack_index], printCounter.longest_job, 21); //max length of string sent from Marlin is 21
+          }
+        }
+        if(ack_seen("Filament used: ")) counterSet((uint8_t *)&dmaL2Cache[ack_index], printCounter.filament_used, 21);
+      #ifdef SERVICE1
+        if(ack_seen(SERVICE1 " in ")) counterSet((uint8_t *)&dmaL2Cache[ack_index], printCounter.service1, 21);
+      #endif
+      #ifdef SERVICE2
+        if(ack_seen(SERVICE2 " in ")) counterSet((uint8_t *)&dmaL2Cache[ack_index], printCounter.service2, 21);
+      #endif
+      #ifdef SERVICE3
+        if(ack_seen(SERVICE3 " in ")) counterSet((uint8_t *)&dmaL2Cache[ack_index], printCounter.service3, 21);
+      #endif
+        m78_waiting = false;
+      }
+    #endif
     //parse and store stepper steps/mm values
       else if(ack_seen("M92 X"))
       {

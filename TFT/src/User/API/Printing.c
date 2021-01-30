@@ -285,6 +285,7 @@ void endPrinting(void)
     }
     popupReminder(DIALOG_TYPE_INFO, LABEL_SCREEN_INFO, (u8*)tempstr1);
   }
+ // storeCmd("M78\n");
 }
 
 

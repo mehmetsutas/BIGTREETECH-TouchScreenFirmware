@@ -4,6 +4,19 @@
 static uint8_t firmare_name[64] = "Unknow system"; // Marlin firmware version
 uint8_t machine_type[64] = "3D Printer"; // Marlin machine type
 
+bool m78_waiting;
+
+PRINTSTATS printCounter;
+
+void counterSet(uint8_t *param, uint8_t stat[], uint8_t len)
+{
+  uint8_t i;
+  for (i = 0; ((i < 20) && (param[i] != '\0') && (param[i] != '\n') && (i < len)); i++) {
+    stat[i] = param[i];
+  }
+  stat[i] = '\0';
+}
+
 void infoSetFirmwareName(uint8_t *name, uint8_t name_len)
 {
   if (name_len > sizeof(firmare_name) - 1)
@@ -28,6 +41,85 @@ void infoSetMachineType(uint8_t *machine, uint8_t type_len)
 }
 
 // Version infomation
+void drawMenuService(void)
+{
+  char buf[128];
+
+  GUI_Clear(infoSettings.bg_color);
+  
+  GUI_SetColor(0xDB40);
+
+  const uint16_t top_y = 0;
+  uint8_t start_x = 18 * BYTE_WIDTH +10; //sizeof("1200 Saat Bakımı:") * BYTE_WIDTH;
+  const GUI_RECT version[7] = {
+    {start_x, top_y + 1.5*BYTE_HEIGHT +3 , LCD_WIDTH, top_y + 3*BYTE_HEIGHT},
+    {start_x, top_y + 3*BYTE_HEIGHT +3, LCD_WIDTH, top_y + 4.5*BYTE_HEIGHT},
+    {start_x, top_y + 4.5*BYTE_HEIGHT +3, LCD_WIDTH, top_y + 6*BYTE_HEIGHT},
+    {start_x, top_y + 6*BYTE_HEIGHT +3, LCD_WIDTH, top_y + 7.5*BYTE_HEIGHT},
+    {start_x, top_y + 7.5*BYTE_HEIGHT +3, LCD_WIDTH, top_y + 9*BYTE_HEIGHT},
+    {start_x, top_y + 9*BYTE_HEIGHT +3, LCD_WIDTH, top_y + 10.5*BYTE_HEIGHT},
+    {start_x, top_y + 10.5*BYTE_HEIGHT +3, LCD_WIDTH, top_y + 12*BYTE_HEIGHT}
+    };
+  //draw titles
+  GUI_DispString(10, version[0].y0, (uint8_t *)"Toplam Baskı    :");
+  GUI_DispString(10, version[1].y0, (uint8_t *)"Toplam Süre     :");
+  GUI_DispString(10, version[2].y0, (uint8_t *)"En Uzun Baskı   :");
+  GUI_DispString(10, version[3].y0, (uint8_t *)"Toplam Filaman  :");
+#ifdef SERVICE1
+  sprintf(buf, "%-17s : ", SERVICE1);
+  GUI_DispString(10, version[4].y0, (uint8_t *)buf);
+#endif
+#ifdef SERVICE2
+  sprintf(buf, "%-17s: ", SERVICE2);
+  GUI_DispString(10, version[5].y0, (uint8_t *)buf);
+#endif
+#ifdef SERVICE3
+  sprintf(buf, "%-17s: ", SERVICE3);
+  GUI_DispString(10, version[6].y0, (uint8_t *)buf);
+#endif
+  //draw info
+  GUI_SetColor(GRAY);
+  GUI_HLine(0, version[0].y0 - 1, LCD_WIDTH);
+  GUI_HLine(0, version[4].y0 - 3, LCD_WIDTH);
+  GUI_HLine(0, (LCD_HEIGHT - 1.5 * BYTE_HEIGHT -4), LCD_WIDTH);
+  
+  GUI_DispLenString(10, (TITLE_END_Y - BYTE_HEIGHT) / 2, LABEL_INFO, LCD_WIDTH - 20, true);
+
+  sprintf(buf, "%u", printCounter.prints);
+  GUI_DispStringInPrectEOL(&version[0], (uint8_t *)buf);
+  GUI_DispStringInPrectEOL(&version[1], (uint8_t *)printCounter.total_time);
+  GUI_DispStringInPrectEOL(&version[2], (uint8_t *)printCounter.longest_job);
+  GUI_DispStringInPrectEOL(&version[3], (uint8_t *)printCounter.filament_used);
+
+#ifdef SERVICE1
+  GUI_DispStringInPrectEOL(&version[4], (uint8_t *)printCounter.service1);
+#endif
+#ifdef SERVICE2
+  GUI_DispStringInPrectEOL(&version[5], (uint8_t *)printCounter.service2);
+#endif
+#ifdef SERVICE3
+  GUI_DispStringInPrectEOL(&version[6], (uint8_t *)printCounter.service3);
+#endif
+  
+  GUI_DispStringCenter((LCD_WIDTH / 2), (LCD_HEIGHT - 1.5 * BYTE_HEIGHT + 4), LABEL_TOUCH_TO_EXIT);
+}
+
+void menuService(void)
+{
+  uint32_t m78_refresh_wait = OS_GetTimeMs() + 5000;
+  
+  while (m78_waiting && (m78_refresh_wait > OS_GetTimeMs())) loopBackEnd();
+
+  drawMenuService();
+  
+  while(!isPress()) loopBackEnd();
+
+  while(isPress())  loopBackEnd();
+
+  GUI_RestoreColorDefault();
+  infoMenu.cur--;
+}
+
 void menuInfo(void)
 {
   char buf[128];
@@ -108,21 +200,26 @@ void menuInfo(void)
 void menuSettings(void)
 {
   // 1 title, ITEM_PER_PAGE items (icon + label)
-  const MENUITEMS settingsItems = {
+  MENUITEMS settingsItems = {
     // title
     LABEL_SETTINGS,
     // icon                         label
-    {{ICON_SCREEN_SETTINGS,         LABEL_SCREEN_SETTINGS},
-     {ICON_PARAMETER,               LABEL_PARAMETER_SETTING},
-     {ICON_FEATURE_SETTINGS,        LABEL_FEATURE_SETTINGS},
-     {ICON_GCODE,                   LABEL_TERMINAL},
-     {ICON_CONNECTION_SETTINGS,     LABEL_CONNECTION_SETTINGS},
-     {ICON_PID,                     LABEL_PID},
-     {ICON_EEPROM_SAVE,             LABEL_EEPROM_SETTINGS},
-	 {ICON_BACK,                    LABEL_BACK},}
+     {{ICON_SCREEN_SETTINGS,         LABEL_SCREEN_SETTINGS},
+      {ICON_PARAMETER,               LABEL_PARAMETER_SETTING},
+      {ICON_FEATURE_SETTINGS,        LABEL_FEATURE_SETTINGS},
+      {ICON_GCODE,                   LABEL_TERMINAL},
+      {ICON_CONNECTION_SETTINGS,     LABEL_CONNECTION_SETTINGS},
+      {ICON_PID,                     LABEL_PID},
+      {ICON_EEPROM_SAVE,             LABEL_EEPROM_SETTINGS},
+      {ICON_BACK,                    LABEL_BACK}}
   };
 
   KEY_VALUES key_num = KEY_IDLE;
+  
+  #ifdef PRINT_COUNTER
+    settingsItems.items[3].icon = ICON_SCREEN_INFO;
+    settingsItems.items[3].label.index = LABEL_SCREEN_INFO;
+  #endif
 
   menuDrawPage(&settingsItems);
 
@@ -145,7 +242,14 @@ void menuSettings(void)
         break;
 
       case KEY_ICON_3:
-        infoMenu.menu[++infoMenu.cur] = menuSendGcode;
+        #ifdef PRINT_COUNTER
+          storeCmd("M78\n");
+          m78_waiting = true;
+          infoMenu.menu[++infoMenu.cur] = menuService;
+        #else
+          infoMenu.menu[++infoMenu.cur] = menuSendGcode;
+        #endif
+        
         break;
 
       case KEY_ICON_4:

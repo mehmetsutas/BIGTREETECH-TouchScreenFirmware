@@ -48,7 +48,8 @@ void menuUnifiedMove(void)
       case KEY_ICON_3:
         if (infoMachineSettings.leveling != BL_DISABLED)
         {
-          infoMenu.cur = 0;
+          infoMenu.menu[++infoMenu.cur] = menuBedLeveling;
+          /*infoMenu.cur = 0;
           popupReminder(DIALOG_TYPE_INFO, LABEL_BUSY, LABEL_LEVELLING_STARTED);
           storeCmd("G92 E0\n");
           storeCmd("M109 S235 T0\n");
@@ -62,7 +63,7 @@ void menuUnifiedMove(void)
           storeCmd("G4 S5\n");
           storeCmd("M104 S0 T0\n");
           storeCmd("M140 S0\n");
-          storeCmd("M500\n");
+          storeCmd("M500\n");*/
         }
         break;
 
