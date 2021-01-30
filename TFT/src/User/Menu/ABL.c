@@ -161,7 +161,7 @@ void menuABL(void)
      {ICON_BACKGROUND,              LABEL_BACKGROUND},
      {ICON_BACKGROUND,              LABEL_BACKGROUND},
      {ICON_BACKGROUND,              LABEL_BACKGROUND},
-     {ICON_BLTOUCH,                 LABEL_BLTOUCH},
+     {ICON_BACKGROUND,              LABEL_BACKGROUND},
      {ICON_BACKGROUND,              LABEL_BACKGROUND},
      {ICON_BACKGROUND,              LABEL_BACKGROUND},
      {ICON_BACK,                    LABEL_BACK}}
@@ -169,6 +169,16 @@ void menuABL(void)
 
   KEY_VALUES key_num = KEY_IDLE;
 
+  #ifdef ENABLE_BLTOUCH_MENU
+    autoLevelingItems.items[6].icon = ICON_BLTOUCH;
+    autoLevelingItems.items[6].label.index = LABEL_BLTOUCH;
+  #endif
+  
+  #ifdef ENABLE_G26_VALIDATION
+    autoLevelingItems.items[1].icon = ICON_BABYSTEP;
+    autoLevelingItems.items[1].label.index = LABEL_BLTOUCH_TEST;
+  #endif
+  
   switch (infoMachineSettings.leveling)
   {
     case BL_BBL:
@@ -177,10 +187,10 @@ void menuABL(void)
 
     case BL_UBL:
       autoLevelingItems.title.index = LABEL_ABL_SETTINGS_UBL;
-      autoLevelingItems.items[1].icon = ICON_EEPROM_SAVE;
-      autoLevelingItems.items[1].label.index = LABEL_SAVE;
-      autoLevelingItems.items[2].icon = ICON_EEPROM_RESTORE;
-      autoLevelingItems.items[2].label.index = LABEL_LOAD;
+      autoLevelingItems.items[4].icon = ICON_EEPROM_SAVE;
+      autoLevelingItems.items[4].label.index = LABEL_SAVE;
+      autoLevelingItems.items[5].icon = ICON_EEPROM_RESTORE;
+      autoLevelingItems.items[5].label.index = LABEL_LOAD;
       break;
 
     default:
@@ -195,7 +205,17 @@ void menuABL(void)
     switch (key_num)
     {
       case KEY_ICON_0:
+        popupReminder(DIALOG_TYPE_INFO, LABEL_BUSY, LABEL_LEVELLING_STARTED);
+        storeCmd("M851 Z0\n");
+        storeCmd("M420 S0\n");        
         storeCmd("G28\n");
+        storeCmd("M420 S0\n");
+        storeCmd("M140 S60\n");
+        storeCmd("M104 S235 T0\n");
+        storeCmd("M190 S60\n");
+        storeCmd("M109 S235 T0\n");
+        storeCmd("M702\n");
+        storeCmd("G4 S5\n");
 
         switch (infoMachineSettings.leveling)
         {
@@ -215,21 +235,35 @@ void menuABL(void)
             storeCmd("M118 A1 ABL Complete\n");
             break;
         }
+
+        storeCmd("G4 S5\n");
+        storeCmd("M104 S0 T0\n");
+        storeCmd("M140 S0\n");
+//        storeCmd("M500\n");
         break;
 
+  #ifdef ENABLE_G26_VALIDATION
       case KEY_ICON_1:
+        storeCmd("G28\n");
+        storeCmd("G26 C P5\n");
+        break;
+  #endif
+
+      case KEY_ICON_4:
         if (infoMachineSettings.leveling == BL_UBL)
           menuUBLSave();
         break;
 
-      case KEY_ICON_2:
+      case KEY_ICON_5:
         if (infoMachineSettings.leveling == BL_UBL)
           menuUBLLoad();
         break;
 
-      case KEY_ICON_4:
+  #ifdef ENABLE_BLTOUCH_MENU
+      case KEY_ICON_6:
         infoMenu.menu[++infoMenu.cur] = menuBLTouch;
         break;
+  #endif
 
       case KEY_ICON_7:
         infoMenu.cur--;
