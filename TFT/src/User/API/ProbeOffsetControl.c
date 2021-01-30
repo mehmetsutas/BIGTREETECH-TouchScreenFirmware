@@ -13,16 +13,31 @@ void probeOffsetEnable(void)
 
   // Z offset gcode sequence start
   mustStoreCmd("G28\n");                                   // home printer
+  
+  mustStoreCmd("G1 Z%.2f F%d\n",
+    infoSettings.level_z_raise,
+    infoSettings.level_feedrate[Z_AXIS]);
 
-  probeHeightStop();                                       // raise nozzle
+  //probeHeightStop();                                       // raise nozzle
+  
+  mustStoreCmd("G1 X%.2f Y%.2f F%d\n",
+    infoSettings.machine_size_max[X_AXIS] / 2,
+    infoSettings.machine_size_max[Y_AXIS] / 2,
+    infoSettings.level_feedrate[X_AXIS]);
 
   mustStoreCmd("G91\n");                                   // set relative position mode
   mustStoreCmd("G1 X%.2f Y%.2f F%d\n",
     getParameter(P_PROBE_OFFSET, X_STEPPER),
     getParameter(P_PROBE_OFFSET, Y_STEPPER),
-    infoSettings.axis_speed[infoSettings.move_speed]);     // move nozzle to X and Y probing coordinates and set feedrate
+    infoSettings.level_feedrate[X_AXIS]);     // move nozzle to X and Y probing coordinates and set feedrate
 
-  probeHeightStart();                                      // lower nozzle to Z0 point
+  //probeHeightStart();                                      // lower nozzle to Z0 point
+  mustStoreCmd("G90\n");                                   // set absolute position mode
+  mustStoreCmd("G1 Z%.2f F%d\n",
+    z_offset_value,
+    infoSettings.level_feedrate[Z_AXIS]);
+
+  mustStoreCmd("G91\n");                                   // set relative position mode
 }
 
 /* Disable probe offset */
@@ -31,9 +46,9 @@ void probeOffsetDisable(void)
   probe_offset_enabled = false;
 
   // Z offset gcode sequence stop
-  mustStoreCmd("G28\n");                                   // home printer
+  //mustStoreCmd("G28\n");                                   // home printer
 
-  probeHeightStop();                                       // raise nozzle
+  //probeHeightStop();                                       // raise nozzle
 
   probeHeightDisable();                                    // restore original software endstops state
 }

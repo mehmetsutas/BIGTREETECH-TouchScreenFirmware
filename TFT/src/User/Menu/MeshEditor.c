@@ -849,16 +849,18 @@ void menuMeshEditor(void)
   bool oldStatus, curStatus;
   uint16_t oldIndex, curIndex;
   float origValue, curValue;
-  bool forceHoming;
+//  bool forceHoming;
   bool forceExit;
 
   meshAllocData();                                         // allocates and initialize mesh data if not already allocated and initialized
 
   mustStoreCmd("M420 V1 T1\n");                            // retrieve the mesh data
+  
+  mustStoreCmd("G28\n");
 
   oldStatus = curStatus = meshGetStatus();
   oldIndex = curIndex = meshGetIndex();
-  forceHoming = true;
+//  forceHoming = true;
   forceExit = false;
 
   setMenuTypeCustom(&meshDrawMenu);
@@ -896,12 +898,12 @@ void menuMeshEditor(void)
       case ME_KEY_EDIT:
         if (meshGetStatus())
         {
-          if (forceHoming)
+         /* if (forceHoming)
           {
             forceHoming = false;
 
             mustStoreCmd("G28\n");                         // only the first time, home the printer
-          }
+          }*/
 
           curValue = menuMeshTuner(meshGetCol(), meshGetJ(), meshGetValue(meshGetIndex()));
           meshSetValue(curValue);
@@ -924,7 +926,7 @@ void menuMeshEditor(void)
         break;
 
       case ME_KEY_HOME:
-        forceHoming = false;
+//        forceHoming = false;
 
         mustStoreCmd("G28\n");                             // force homing (e.g. if steppers are disarmed)
         break;

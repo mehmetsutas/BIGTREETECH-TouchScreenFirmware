@@ -37,19 +37,24 @@ void probeHeightStart(void)
 /* Stop probe height */
 void probeHeightStop(void)
 {
-  mustStoreCmd("G91\n");                                   // set relative position mode
-  mustStoreCmd("G1 Z%.2f F%d\n",
-    infoSettings.pause_z_raise,
-    infoSettings.axis_speed[infoSettings.move_speed]);     // raise Z and set feedrate
+  coordinateQuery();
+  if (infoSettings.machine_size_max[Z_AXIS] > (coordinateGetAxisActual(Z_AXIS) + infoSettings.pause_z_raise))
+  {
+    mustStoreCmd("G91\n");                                   // set relative position mode
+    mustStoreCmd("G1 Z%.2f F%d\n",
+      infoSettings.pause_z_raise,
+      infoSettings.level_feedrate[Z_AXIS]);     // raise Z and set feedrate
 
-  mustStoreCmd("G90\n");                                   // set absolute position mode
+    mustStoreCmd("G90\n");                                   // set absolute position mode
+  }
 }
 
 /* Change probe height */
 void probeHeightMove(float unit, int8_t direction)
 {
   // if invert is true, 'direction' multiplied by -1
-  storeCmd("G1 Z%.2f F%d\n", (infoSettings.invert_axis[Z_AXIS] ? -direction : direction) * unit, infoSettings.axis_speed[infoSettings.move_speed]);
+  //storeCmd("G1 Z%.2f F%d\n", (infoSettings.invert_axis[Z_AXIS] ? -direction : direction) * unit, infoSettings.axis_speed[infoSettings.move_speed]);
+  storeCmd("G1 Z%.2f F%d\n", direction * unit, infoSettings.axis_speed[infoSettings.move_speed]);
 }
 
 /* Query for new coordinates */

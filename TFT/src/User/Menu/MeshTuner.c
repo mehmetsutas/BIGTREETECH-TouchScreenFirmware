@@ -14,9 +14,14 @@ void meshInitPoint(uint16_t col, uint16_t row, float value)
 
   mustStoreCmd("G42 I%d J%d\n", col, row);                 // move nozzle to X and Y coordinates corresponding
                                                            // to the column and row in the bed leveling mesh grid
+/*
   probeHeightStart();                                      // lower nozzle to Z0 point
 
   probeHeightMove(value, 1);                               // move nozzle to Z height
+*/
+  mustStoreCmd("G90\n");                                   // set absolute position mode
+  storeCmd("G1 Z%.2f F%d\n", value, infoSettings.axis_speed[infoSettings.move_speed]);
+  mustStoreCmd("G91\n");                                   // set relative position mode
 }
 
 /* Reset mesh point */
@@ -130,7 +135,7 @@ float menuMeshTuner(uint16_t col, uint16_t row, float value)
 
       // reset Z height to 0
       case KEY_ICON_5:
-        probeHeightMove(curValue, -1);
+        probeHeightStart();
         break;
 
       // return new Z height
