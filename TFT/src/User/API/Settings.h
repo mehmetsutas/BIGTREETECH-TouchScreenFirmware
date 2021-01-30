@@ -226,7 +226,6 @@ typedef struct
   uint8_t softwareEndstops;
 }MACHINESETTINGS;
 
-
 extern SETTINGS infoSettings;
 extern MACHINESETTINGS infoMachineSettings;
 
