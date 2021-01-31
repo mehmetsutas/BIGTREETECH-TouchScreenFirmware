@@ -185,96 +185,72 @@ void syncL2CacheFromL1(uint8_t port)
   dmaL2Cache[i] = 0; // End character
 }
 
+void actionSet(uint8_t *param, uint8_t stat[], uint8_t len)  //SUTAS
+{
+  uint8_t i;
+  for (i = 0; ((i < 30) && (param[i] != '\0') && (param[i] != '\n') && (i < len)); i++) {
+    stat[i] = param[i];
+  }
+  stat[i] = '\0';
+}
+
 void hostActionCommands(void)
 {
-  char *find = strchr(dmaL2Cache + ack_index, '\n');
-  *find = '\0';
-  if (ack_seen("notification "))
-  {
-    strcpy(hostAction.prompt_begin, dmaL2Cache + ack_index);
-    statusScreen_setMsg((u8 *)echomagic, (u8 *)dmaL2Cache + ack_index);
-  }
-
-  if (ack_seen("prompt_begin "))
+  if(ack_seen("prompt_begin "))
   {
     hostAction.button = 0;
     hostAction.prompt_show = 1;
-    strcpy(hostAction.prompt_begin, dmaL2Cache + ack_index);
-    if (ack_seen("Resuming SD"))
-    {
-      hostAction.prompt_show = 0;
-    }
-    else if (ack_seen("Resuming"))
-    {
-      infoPrinting.pause = false;
-      hostAction.prompt_show = 0;
-    }
-    else if (ack_seen("Reheating"))
-    {
-      hostAction.prompt_show = 0;
-    }
-    else if (ack_seen("Nozzle Parked"))
-    {
-      infoPrinting.pause = true;
-    }
+    actionSet((uint8_t *)&dmaL2Cache[ack_index], hostAction.prompt_begin, 30);
   }
-  else if (ack_seen("prompt_button "))
+  else if(ack_seen("prompt_button "))
   {
     hostAction.button++;
-    if (hostAction.button == 1)
+    if(hostAction.button == 1)
     {
-      strcpy(hostAction.prompt_button1, dmaL2Cache + ack_index);
+      actionSet((uint8_t *)&dmaL2Cache[ack_index], hostAction.prompt_button1, 21);
     }
     else
     {
-      strcpy(hostAction.prompt_button2, dmaL2Cache + ack_index);
+      actionSet((uint8_t *)&dmaL2Cache[ack_index], hostAction.prompt_button2, 21);
     }
-  }
-
-  if (ack_seen("prompt_show") && hostAction.prompt_show)
-  {
-    switch(hostAction.button)
+  } else if(ack_seen("prompt_show"))
+	 {
+      switch(hostAction.button)
+        {
+          case 0:
+            BUZZER_PLAY(sound_notify);
+            popupReminder(DIALOG_TYPE_ALERT,(u8 *)"Message", (u8 *)hostAction.prompt_begin);
+            break;
+          case 1:
+            BUZZER_PLAY(sound_notify);
+            setDialogText((u8*)"Action command", (u8 *)hostAction.prompt_begin, (u8 *)hostAction.prompt_button1, LABEL_BACKGROUND);
+            showDialog(DIALOG_TYPE_ALERT, resumeAndPurge, NULL, NULL);
+            break;
+          case 2:
+            BUZZER_PLAY(sound_notify);
+            setDialogText((u8*)"Action command", (u8 *)hostAction.prompt_begin, (u8 *)hostAction.prompt_button1, (u8 *)hostAction.prompt_button2);
+            showDialog(DIALOG_TYPE_ALERT, resumeAndPurge, resumeAndContinue, NULL);
+            break;
+        }
+  } else if(ack_seen("prompt_end"))
     {
-      case 0:
-        BUZZER_PLAY(sound_notify);
-        setDialogText((uint8_t *)"Message", (uint8_t *)hostAction.prompt_begin, LABEL_CONFIRM,
-                      LABEL_BACKGROUND);
-        showDialog(DIALOG_TYPE_ALERT, setRunoutAlarmFalse, NULL, NULL);
-        break;
-      case 1:
-        BUZZER_PLAY(sound_notify);
-        setDialogText((u8 *)"Action command", (u8 *)hostAction.prompt_begin, (u8 *)hostAction.prompt_button1,
-                      LABEL_BACKGROUND);
-        showDialog(DIALOG_TYPE_ALERT, breakAndContinue, NULL, NULL);
-        break;
-      case 2:
-        BUZZER_PLAY(sound_notify);
-        setDialogText((u8 *)"Action command", (u8 *)hostAction.prompt_begin, (u8 *)hostAction.prompt_button1,
-                      (u8 *)hostAction.prompt_button2);
-        showDialog(DIALOG_TYPE_ALERT, resumeAndPurge, resumeAndContinue, NULL);
-        break;
-    }
-  }
-
-  if (ack_seen("paused") || ack_seen("pause"))
-  {
-    infoPrinting.pause = true;
-    if (ack_seen ("filament_runout"))
+      hostAction.button = 0;
+  } else if(ack_seen("notification "))
     {
-      setRunoutAlarmTrue();
-    }
-  }
-  else if (ack_seen("cancel"))  //To be added to Marlin abortprint routine
-  {
-    if (infoHost.printing == true)
+      statusScreen_setMsg((u8 *)echomagic, (u8 *)dmaL2Cache + ack_index);
+  } else if(ack_seen("paused") || ack_seen("pause"))
     {
+      infoPrinting.pause = true;
+  } else if(ack_seen("cancel"))   //To be added to Marlin abortprint routine
+    {
+      infoHost.printing = false;
+      infoPrinting.printing = false;
+      infoPrinting.cur = infoPrinting.size;
       request_M27(0);
+  } else if (ack_seen("resumed") || ack_seen("resume"))
+    {
+      infoPrinting.pause = false;
     }
-    infoHost.printing = false;
-    infoPrinting.printing = false;
-    infoPrinting.cur = infoPrinting.size;
-  }
-
 }
 
 void parseACK(void)
@@ -340,6 +316,10 @@ void parseACK(void)
                             // Avoid can't getting this parameter due to disabled M503 in Marlin
         storeCmd("M115\n");
         storeCmd("M211\n"); // retrieve the software endstops state
+      #ifdef PRINT_COUNTER
+        storeCmd("M78\n");
+      #endif
+        storeCmd("M413 C\n");
       }
       infoHost.connected = true;
     }
