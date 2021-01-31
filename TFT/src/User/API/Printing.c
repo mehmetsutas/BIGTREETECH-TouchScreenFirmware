@@ -487,6 +487,13 @@ void loopCheckPrinting(void)
     }
   }
 
+/*  SUTAS???
+  if (!infoPrinting.printing && (infoMenu.menu[infoMenu.cur] == menuPrinting) && infoSettings.print_summary)
+  {
+    infoMenu.cur = 0;
+  }
+*/
+
   if (infoFile.source < BOARD_SD) return;
   if (infoMachineSettings.autoReportSDStatus == ENABLED) return;
   if (!infoSettings.m27_active && !infoPrinting.printing) return;
