@@ -14,8 +14,9 @@ const MENUITEMS loadUnloadItems = {
    {ICON_BACKGROUND,              LABEL_BACKGROUND},
    {ICON_LOAD,                    LABEL_LOAD},
    {ICON_NOZZLE,                  LABEL_NOZZLE},
+   {ICON_HEAT,                    LABEL_PREHEAT},
    {ICON_HEAT,                    LABEL_HEAT},
-   {ICON_COOLDOWN,                LABEL_COOLDOWN},
+//   {ICON_COOLDOWN,                LABEL_COOLDOWN},
    {ICON_BACK,                    LABEL_BACK},}
 };
 
@@ -102,12 +103,13 @@ void menuLoadUnload(void)
         break;
 
       case KEY_ICON_5:
-        infoMenu.menu[++infoMenu.cur] = menuHeat;
+        infoMenu.menu[++infoMenu.cur] = menuPreheat;
         lastcmd = NONE;
         break;
 
       case KEY_ICON_6:
-        heatCoolDown();
+        infoMenu.menu[++infoMenu.cur] = menuHeat;
+        //heatCoolDown();
         lastcmd = NONE;
         break;
 
