@@ -31,13 +31,13 @@ const GUI_RECT printinfo_val_rect[6] = {
 };
 
 static uint32_t nextLayerDrawTime = 0;
-const  char *const Speed_ID[2] = {"Speed", "Flow"};
+const  char *const Speed_ID[2] = {"Hız", "Akış"};
 bool hasFilamentData;
 
 #define TOGGLE_TIME 2000 // 1 seconds is 1000
 #define LAYER_DRAW_TIME 500 // 1 seconds is 1000
 
-#define LAYER_TITLE "Layer"
+#define LAYER_TITLE "Z:"
 #define EXT_ICON_POS 0
 #define BED_ICON_POS 1
 #define FAN_ICON_POS 2
@@ -292,7 +292,7 @@ void drawPrintInfo(void)
 void stopConfirm(void)
 {
   abortPrinting();
-  infoMenu.cur--;
+  infoMenu.cur = 0;  //infoMenu.cur--; SUTAS???
 }
 
 void printInfoPopup(void)
