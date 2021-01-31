@@ -116,6 +116,7 @@ void menuPreheat(void)
             break;
         }
         refreshPreheatIcon(key_num, key_num, &preheatItems.items[key_num]);
+        infoMenu.cur--;
         break;
 
       case KEY_ICON_6:
