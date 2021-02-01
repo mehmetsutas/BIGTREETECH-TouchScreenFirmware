@@ -11,7 +11,7 @@
  * Long press touch screen capture the current full screen to SD card
  * Only for documentation purposes, DON'T enable it when normal printing.
  */
-#define SCREEN_SHOT_TO_SD
+//#define SCREEN_SHOT_TO_SD
 
 /**
  * Smart Home
