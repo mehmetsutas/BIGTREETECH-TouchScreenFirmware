@@ -279,7 +279,7 @@
     #define STRING_ABL_SLOT3              "Yuva 3"
     #define STRING_ABL_SLOT_EEPROM        "Yuvayı hafızaya al?\n(EEPROM a kaydet)"
     #define STRING_ABL_Z                  "Z Etki"
-    #define STRING_P_OFFSET               "P Offset"
+    #define STRING_P_OFFSET               "Z Offset"
     #define STRING_H_OFFSET               "H Offset"
     #define STRING_DISTANCE               "Mesafe"
     #define STRING_LOAD_UNLOAD            "Yükle/Çıkar"
