@@ -200,18 +200,18 @@ void hostActionCommands(void)
   {
     hostAction.button = 0;
     hostAction.prompt_show = 1;
-    actionSet((uint8_t *)&dmaL2Cache[ack_index], hostAction.prompt_begin, 30);
+    actionSet((uint8_t *)&dmaL2Cache[ack_index], (uint8_t *)hostAction.prompt_begin, 30);
   }
   else if(ack_seen("prompt_button "))
   {
     hostAction.button++;
     if(hostAction.button == 1)
     {
-      actionSet((uint8_t *)&dmaL2Cache[ack_index], hostAction.prompt_button1, 21);
+      actionSet((uint8_t *)&dmaL2Cache[ack_index], (uint8_t *)hostAction.prompt_button1, 21);
     }
     else
     {
-      actionSet((uint8_t *)&dmaL2Cache[ack_index], hostAction.prompt_button2, 21);
+      actionSet((uint8_t *)&dmaL2Cache[ack_index], (uint8_t *)hostAction.prompt_button2, 21);
     }
   } else if(ack_seen("prompt_show"))
 	 {
