@@ -351,5 +351,6 @@
     #define STRING_EXT_TEMPLOW            "Ekstruder sıcaklığı minimum\nsıcaklığın altında (%d℃)."
     #define STRING_HEAT_HOTEND            "Ekstruderi %d℃ ye ısıt?"
     #define STRING_Z_ALIGN                "Z Hizala"
+    #define STRING_LEVELLING_STARTED      "Seviyeleme başlatıldı.\nIsınıyor.\nİşlem tamamlanana kadar\nbaşka işlem başlatmayınız."
 
 #endif
