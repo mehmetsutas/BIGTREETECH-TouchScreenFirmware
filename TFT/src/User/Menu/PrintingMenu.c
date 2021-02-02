@@ -292,7 +292,7 @@ void drawPrintInfo(void)
 void stopConfirm(void)
 {
   abortPrinting();
-  infoMenu.cur = 0;  //infoMenu.cur--; SUTAS???
+  infoMenu.cur--;
 }
 
 void printInfoPopup(void)
