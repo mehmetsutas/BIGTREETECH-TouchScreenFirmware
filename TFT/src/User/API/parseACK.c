@@ -474,7 +474,37 @@ void parseACK(void)
         printingFinished();
         infoPrinting.cur = infoPrinting.size;
       }
-
+    #ifdef PRINT_COUNTER
+    //parse print statistics
+      else if(ack_seen("Stats:"))
+      {
+        if(ack_seen("Prints:")) printCounter.prints = ack_value();
+        if(ack_seen("Finished:")) printCounter.finished = ack_value();
+        if(ack_seen("Failed:")) printCounter.failed = ack_value();
+        if(ack_seen("Total time: "))
+        {
+          uint8_t *counter_string = (uint8_t *)&dmaL2Cache[ack_index];
+          uint8_t counter_string_start = ack_index;
+          if(ack_seen(", Longest job: "))
+          {
+            uint8_t counter_string_size = ack_index - sizeof(", Longest job: ") - counter_string_start +1;
+            counterSet(counter_string, printCounter.total_time, counter_string_size);
+            counterSet((uint8_t *)&dmaL2Cache[ack_index], printCounter.longest_job, 21); //max length of string sent from Marlin is 21
+          }
+        }
+        if(ack_seen("Filament used: ")) counterSet((uint8_t *)&dmaL2Cache[ack_index], printCounter.filament_used, 21);
+      #ifdef SERVICE1
+        if(ack_seen(SERVICE1 " in ")) counterSet((uint8_t *)&dmaL2Cache[ack_index], printCounter.service1, 21);
+      #endif
+      #ifdef SERVICE2
+        if(ack_seen(SERVICE2 " in ")) counterSet((uint8_t *)&dmaL2Cache[ack_index], printCounter.service2, 21);
+      #endif
+      #ifdef SERVICE3
+        if(ack_seen(SERVICE3 " in ")) counterSet((uint8_t *)&dmaL2Cache[ack_index], printCounter.service3, 21);
+      #endif
+        m78_waiting = false;
+      }
+    #endif
     // parse and store stepper steps/mm values
       else if (ack_seen("M92 X"))
       {
