@@ -10,6 +10,7 @@ extern "C" {
 void menuRGBSettings(void);
 void menuMachineSettings(void);
 void menuCustom(void);
+void menuEepromSettings(void);
 
 #ifdef __cplusplus
 }
