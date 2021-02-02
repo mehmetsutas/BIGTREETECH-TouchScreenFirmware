@@ -351,5 +351,6 @@
     #define STRING_EXT_TEMPLOW            "Teplota hotendu je pod\nminimální teplotou (%d℃)."
     #define STRING_HEAT_HOTEND            "Zahřát hotend na %d℃?"
     #define STRING_Z_ALIGN                "Z Align"
+    #define STRING_LEVELLING_STARTED      "Levelling started. Heating.\nDo not start another operation\nuntil it's done." 
 
 #endif

@@ -351,5 +351,6 @@
     #define STRING_EXT_TEMPLOW            "喷头温度低于最小挤出问题 (%d℃)."
     #define STRING_HEAT_HOTEND            "加热喷头到%d℃?"
     #define STRING_Z_ALIGN                "Z Align"
+    #define STRING_LEVELLING_STARTED      "Levelling started. Heating.\nDo not start another operation\nuntil it's done." 
 
 #endif

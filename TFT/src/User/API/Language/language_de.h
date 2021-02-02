@@ -351,5 +351,6 @@
     #define STRING_EXT_TEMPLOW            "Hotend Temperatur ist unter\nminimum Temperatur (%d℃)."
     #define STRING_HEAT_HOTEND            "Heize Hotend auf %d℃?"
     #define STRING_Z_ALIGN                "Z Align"
+    #define STRING_LEVELLING_STARTED      "Levelling started. Heating.\nDo not start another operation\nuntil it's done." 
 
 #endif
