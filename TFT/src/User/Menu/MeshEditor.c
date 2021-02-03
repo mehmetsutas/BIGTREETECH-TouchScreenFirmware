@@ -847,7 +847,10 @@ void menuMeshEditor(void)
 
   oldStatus = curStatus = meshGetStatus();                 // after allocation, we acces data status etc...
   oldIndex = curIndex = meshGetIndex();
-  forceHoming = true;
+  //forceHoming = true;                                    //SUTAS
+  mustStoreCmd("G28\n");                                   //SUTAS
+  coordinateQuery();
+  
   forceExit = false;
 
   mustStoreCmd("M420 V1 T1\n");                            // retrieve the mesh data
@@ -886,12 +889,12 @@ void menuMeshEditor(void)
       case ME_KEY_EDIT:
         if (meshGetStatus())
         {
-          if (forceHoming)
+          /*if (forceHoming)
           {
             forceHoming = false;
 
             mustStoreCmd("G28\n");                         // only the first time, home the printer
-          }
+          }*/       //SUTAS
 
           curValue = menuMeshTuner(meshGetCol(), meshGetJ(), meshGetValue(meshGetIndex()));
           meshSetValue(curValue);
@@ -915,7 +918,7 @@ void menuMeshEditor(void)
         break;
 
       case ME_KEY_HOME:
-        forceHoming = false;
+        //forceHoming = false;    //SUTAS
 
         mustStoreCmd("G28\n");                             // force homing (e.g. if steppers are disarmed)
         break;

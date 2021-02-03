@@ -40,7 +40,9 @@ void probeHeightDisable(void)
 void probeHeightStart(float initialHeight)
 {
   mustStoreCmd("G90\n");                      // set absolute position mode
-  mustStoreCmd("G1 Z%.2f\n", initialHeight);  // move nozzle to provided absolute Z point
+  mustStoreCmd("G1 Z%.3f\n F%d\n",
+    initialHeight,
+    infoSettings.level_feedrate[FEEDRATE_Z]);  // move nozzle to provided absolute Z point
   mustStoreCmd("G91\n");                      // set relative position mode
 }
 
@@ -51,7 +53,7 @@ void probeHeightStop(void)
   if (infoSettings.machine_size_max[Z_AXIS] > (coordinateGetAxisActual(Z_AXIS) + infoSettings.level_z_raise))
   {
     mustStoreCmd("G91\n");                                   // set relative position mode
-    mustStoreCmd("G1 Z%.2f F%d\n",
+    mustStoreCmd("G1 Z%.3f F%d\n",
       infoSettings.level_z_raise,
       infoSettings.level_feedrate[FEEDRATE_Z]);     // raise Z and set feedrate
     mustStoreCmd("G90\n");  // set absolute position mode
@@ -74,7 +76,7 @@ void probeHeightAbsolute(void)
 void probeHeightMove(float unit, int8_t direction)
 {
   // if invert is true, 'direction' multiplied by -1
-  storeCmd("G1 Z%.2f F%d\n", direction * unit, infoSettings.level_feedrate[FEEDRATE_Z]);
+  storeCmd("G1 Z%.3f F%d\n", direction * unit, infoSettings.level_feedrate[FEEDRATE_Z]);
 }
 
 /* Query for new coordinates */
