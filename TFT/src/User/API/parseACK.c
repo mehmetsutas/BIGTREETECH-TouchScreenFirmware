@@ -250,6 +250,7 @@ void hostActionCommands(void)
   } else if (ack_seen("resumed") || ack_seen("resume"))
     {
       infoPrinting.pause = false;
+      infoHost.printing = true;
     }
 }
 
