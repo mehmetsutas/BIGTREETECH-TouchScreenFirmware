@@ -24,11 +24,13 @@ typedef struct
 extern PRINTSTATS printCounter;
 
 extern uint8_t machine_type[64];
+extern bool m78_waiting;
 
 void menuInfo(void);
 void menuSettings(void);
 void infoSetFirmwareName(uint8_t *name, uint8_t name_len);
 void infoSetMachineType(uint8_t *machine, uint8_t type_len);
+void counterSet(uint8_t *param, uint8_t stat[], uint8_t len);
 
 #ifdef __cplusplus
 }
