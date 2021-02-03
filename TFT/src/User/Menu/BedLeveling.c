@@ -5,13 +5,13 @@ static inline void blUpdateState(MENUITEMS *menu)
 {
   if (getParameter(P_ABL_STATE, 0) == ENABLED)
   {
-    menu->items[3].icon = ICON_LEVELING_ON;
-    menu->items[3].label.index = LABEL_BL_ENABLE;
+    menu->items[5].icon = ICON_LEVELING_ON;
+    menu->items[5].label.index = LABEL_BL_ENABLE;
   }
   else
   {
-    menu->items[3].icon = ICON_LEVELING_OFF;
-    menu->items[3].label.index = LABEL_BL_DISABLE;
+    menu->items[5].icon = ICON_LEVELING_OFF;
+    menu->items[5].label.index = LABEL_BL_DISABLE;
   }
   menuDrawItem(&menu->items[3], 3);
 }
