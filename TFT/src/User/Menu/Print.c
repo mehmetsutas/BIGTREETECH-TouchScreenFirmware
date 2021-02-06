@@ -332,7 +332,7 @@ void menuPrint(void)
     {ICON_BACKGROUND,           LABEL_BACKGROUND},
     {ICON_BACKGROUND,           LABEL_BACKGROUND},
     {ICON_SCREEN_INFO,          LABEL_PREVIOUS_PRINT_DATA},
-    {ICON_BACKGROUND,           LABEL_BACKGROUND},
+    {ICON_RESET_VALUE,          LABEL_RESUME},
     {ICON_BACKGROUND,           LABEL_BACKGROUND},
     {ICON_BACK,                 LABEL_BACK}}
   };
@@ -376,6 +376,11 @@ void menuPrint(void)
       case KEY_ICON_4:
         if (infoPrintSummary.name[0] != 0)
           printInfoPopup();
+        break;
+        
+      case KEY_ICON_5:
+        infoMenu.cur--;
+        storeCmd("M413 C\n");
         break;
 
       case KEY_ICON_7:

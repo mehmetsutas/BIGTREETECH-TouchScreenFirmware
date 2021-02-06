@@ -13,6 +13,8 @@ void probeOffsetEnable(bool skipZOffset)
 
   // Z offset gcode sequence start
   mustStoreCmd("G28\n");  // home printer
+  
+  mustStoreCmd("M420 S1\n");
 
   mustStoreCmd("G1 Z%.3f F%d\n",
     infoSettings.level_z_raise,
@@ -31,7 +33,7 @@ void probeOffsetEnable(bool skipZOffset)
 
   mustStoreCmd("G90\n");                                   // set absolute position mode
   mustStoreCmd("G1 Z%.3f F%d\n",
-    z_offset_value,
+    0.0f,                              //z_offset_value,
     infoSettings.level_feedrate[FEEDRATE_Z]);
 
   mustStoreCmd("G91\n");                                   // set relative position mode

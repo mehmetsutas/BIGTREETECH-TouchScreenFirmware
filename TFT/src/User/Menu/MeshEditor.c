@@ -840,7 +840,7 @@ void menuMeshEditor(void)
   bool oldStatus, curStatus;
   uint16_t oldIndex, curIndex;
   float origValue, curValue;
-  bool forceHoming;
+  //bool forceHoming;
   bool forceExit;
 
   meshAllocData();                                         // allocates and initialize mesh data if not already allocated and initialized
@@ -848,8 +848,6 @@ void menuMeshEditor(void)
   oldStatus = curStatus = meshGetStatus();                 // after allocation, we acces data status etc...
   oldIndex = curIndex = meshGetIndex();
   //forceHoming = true;                                    //SUTAS
-  mustStoreCmd("G28\n");                                   //SUTAS
-  coordinateQuery();
   
   forceExit = false;
 
@@ -861,6 +859,10 @@ void menuMeshEditor(void)
   #if LCD_ENCODER_SUPPORT
     encoderPosition = 0;
   #endif
+  
+  mustStoreCmd("G28\n");                                   //SUTAS
+  mustStoreCmd("M420 S0\n");                                   //SUTAS
+  coordinateQuery();
 
   while (infoMenu.menu[infoMenu.cur] == menuMeshEditor)
   {

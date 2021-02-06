@@ -72,7 +72,7 @@ void menuLoadUnload(void)
       {
       case KEY_ICON_0: // Unload
       case KEY_ICON_3: // Load
-        if (heatGetCurrentTemp(curExt_index) < infoSettings.min_ext_temp)
+        if (heatGetTargetTemp(curExt_index) < infoSettings.min_ext_temp)
         { // low temperature warning
           char tempMsg[120];
           LABELCHAR(tempStr, LABEL_EXT_TEMPLOW);

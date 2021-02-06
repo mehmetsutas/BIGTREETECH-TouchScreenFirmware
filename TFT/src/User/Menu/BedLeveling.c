@@ -13,7 +13,7 @@ static inline void blUpdateState(MENUITEMS *menu)
     menu->items[5].icon = ICON_LEVELING_OFF;
     menu->items[5].label.index = LABEL_BL_DISABLE;
   }
-  menuDrawItem(&menu->items[3], 3);
+  menuDrawItem(&menu->items[5], 5);
 }
 
 void menuBedLeveling(void)
