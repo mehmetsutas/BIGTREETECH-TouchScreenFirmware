@@ -27,7 +27,8 @@ void menuBedLeveling(void)
      {ICON_BACKGROUND,              LABEL_BACKGROUND},
      {ICON_BACKGROUND,              LABEL_BACKGROUND},
 //     {ICON_Z_FADE,                  LABEL_ABL_Z}, //SUTAS
-     {ICON_PROBE_OFFSET,            LABEL_P_OFFSET},
+//     {ICON_PROBE_OFFSET,            LABEL_P_OFFSET},
+     {ICON_BACKGROUND,              LABEL_BACKGROUND},
      {ICON_BACKGROUND,              LABEL_BACKGROUND},
      {ICON_BACKGROUND,              LABEL_BACKGROUND}, //SUTAS
      {ICON_BACK,                    LABEL_BACK},}
@@ -65,7 +66,7 @@ void menuBedLeveling(void)
     bedLevelingItems.items[2].icon = ICON_Z_ALIGN;
     bedLevelingItems.items[2].label.index = LABEL_Z_ALIGN;
   }*/  //SUTAS
-
+/*
   if (getParameter(P_ABL_STATE, 0) == ENABLED)
   {
     bedLevelingItems.items[5].icon = ICON_LEVELING_ON;          //SUTAS
@@ -75,7 +76,7 @@ void menuBedLeveling(void)
   {
     bedLevelingItems.items[5].icon = ICON_LEVELING_OFF;         //SUTAS
     bedLevelingItems.items[5].label.index = LABEL_BL_DISABLE;   //SUTAS
-  }
+  }*/
 
 /*  if (infoMachineSettings.zProbe == ENABLED)
   {
@@ -168,7 +169,7 @@ void menuBedLeveling(void)
         break;
   #endif
 
-      case KEY_ICON_5:
+/*      case KEY_ICON_5:
         if (getParameter(P_ABL_STATE, 0) == ENABLED)
           storeCmd("M420 S0\n");
         else
@@ -187,11 +188,11 @@ void menuBedLeveling(void)
         break;
       }
 
-/*      case KEY_ICON_5:
+      case KEY_ICON_5:
         storeCmd("M206\n");
         zOffsetSetMenu(false);  // use Home Offset menu
         infoMenu.menu[++infoMenu.cur] = menuZOffset;
-        break;*/    //SUTAS
+        break;    //SUTAS
 
       case KEY_ICON_4:
         if (infoMachineSettings.zProbe == ENABLED)
@@ -201,7 +202,7 @@ void menuBedLeveling(void)
           infoMenu.menu[++infoMenu.cur] = menuZOffset;
         }
         break;
-
+*/
       case KEY_ICON_7:
         infoMenu.cur--;
         break;
@@ -213,7 +214,7 @@ void menuBedLeveling(void)
     if (levelStateOld != getParameter(P_ABL_STATE, 0))
     {
       levelStateOld = getParameter(P_ABL_STATE, 0);
-      blUpdateState(&bedLevelingItems);
+//      blUpdateState(&bedLevelingItems);
     }
 
     loopProcess();
