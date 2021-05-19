@@ -6,15 +6,13 @@ const MENUITEMS settingsItems = {
   LABEL_SETTINGS,
   // icon                         label
   {{ICON_SCREEN_SETTINGS,         LABEL_SCREEN_SETTINGS},
-   {ICON_PID,                     LABEL_PID},
-   {ICON_EEPROM_SAVE,             LABEL_EEPROM_SETTINGS},
 //   {ICON_MACHINE_SETTINGS,        LABEL_MACHINE_SETTINGS},    //SUTAS
-//   {ICON_PARAMETER,               LABEL_PARAMETER_SETTING},
-//   {ICON_FEATURE_SETTINGS,        LABEL_FEATURE_SETTINGS},
+   {ICON_PARAMETER,               LABEL_PARAMETER_SETTING},
+   {ICON_FEATURE_SETTINGS,        LABEL_FEATURE_SETTINGS},
    {ICON_SCREEN_INFO,             LABEL_SCREEN_INFO},
 //   {ICON_CONNECTION_SETTINGS,     LABEL_CONNECTION_SETTINGS},
-   {ICON_BACKGROUND,              LABEL_BACKGROUND},
-   {ICON_BACKGROUND,              LABEL_BACKGROUND},
+   {ICON_PID,                     LABEL_PID},
+   {ICON_EEPROM_SAVE,             LABEL_EEPROM_SETTINGS},
    {ICON_BACKGROUND,              LABEL_BACKGROUND},
    {ICON_BACK,                    LABEL_BACK},}
 };
@@ -234,14 +232,14 @@ void menuSettings(void)
         infoMenu.menu[++infoMenu.cur] = menuScreenSettings;
         break;
 
-/*      case KEY_ICON_1:
+      case KEY_ICON_1:
         mustStoreCmd("M503 S0\n");
         infoMenu.menu[++infoMenu.cur] = menuParameterSettings;    //SUTAS
         break;
 
       case KEY_ICON_2:
         infoMenu.menu[++infoMenu.cur] = menuFeatureSettings;
-        break;*/
+        break;
 
       case KEY_ICON_3:
         #ifdef PRINT_COUNTER      //SUTAS
@@ -257,11 +255,11 @@ void menuSettings(void)
         infoMenu.menu[++infoMenu.cur] = menuConnectionSettings;
         break;*/
         
-      case KEY_ICON_1:
+      case KEY_ICON_4:
         infoMenu.menu[++infoMenu.cur] = menuPid;
         break;
 		
-      case KEY_ICON_2:
+      case KEY_ICON_5:
         infoMenu.menu[++infoMenu.cur] = menuEepromSettings;
         break;
 
