@@ -15,6 +15,8 @@ uint8_t caseLightGetBrightness(void);
 uint8_t caseLightGetBrightnessPercent(void);
 bool caseLightGetState(void);
 void loopCaseLight(void);
+void loopCaseLightToggle(void);
+void caseLightToggleState(void);
 void caseLightSendWaiting(bool isWaiting);
 void caseLightChangeBrightness(int8_t brightness_delta);
 void caseLightChangeBrightnessPrecent(int8_t brightness_delta_percent);

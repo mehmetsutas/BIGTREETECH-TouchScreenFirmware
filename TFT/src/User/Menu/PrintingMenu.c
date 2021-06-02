@@ -30,16 +30,17 @@ const GUI_RECT printinfo_val_rect[6] = {
    START_X + PICON_LG_WIDTH * 2 + PICON_SPACE_X * 2 + PICON_VAL_SM_EX, PICON_START_Y + PICON_HEIGHT * 1 + PICON_SPACE_Y * 1 + PICON_VAL_Y + BYTE_HEIGHT},
 };
 
+
 const GUI_RECT ProgressBar = {START_X + 1,                                PICON_START_Y + PICON_HEIGHT * 2 + PICON_SPACE_Y * 2 + 1,
                               START_X + 4 * ICON_WIDTH + 3 * SPACE_X - 1, ICON_START_Y + ICON_HEIGHT + SPACE_Y - PICON_SPACE_Y - 1};
 
-const  char *const Speed_ID[2] = {"Speed", "Flow"};
+const  char *const Speed_ID[2] = {"Hız", "Akış"};
 bool hasFilamentData;
 
 #define TOGGLE_TIME  2000  // 1 seconds is 1000
 #define LAYER_DELTA  0.1   // minimal layer height change to update the layer display (avoid congestion in vase mode)
 
-#define LAYER_TITLE "Layer"
+#define LAYER_TITLE "Z:"
 #define EXT_ICON_POS 0
 #define BED_ICON_POS 1
 #define FAN_ICON_POS 2
@@ -298,7 +299,8 @@ void drawPrintInfo(void)
 void stopConfirm(void)
 {
   printAbort();
-  infoMenu.cur--;
+//  infoMenu.cur--;
+  infoMenu.cur = 0;
 }
 
 void printInfoPopup(void)

@@ -349,5 +349,5 @@
     #define STRING_Z_ALIGN                "Z Align"
     #define STRING_MACROS                 "Makro"
     #define STRING_MESH_VALID             "Test sítě"
-
+    #define STRING_LEVELLING_STARTED      "Levelling started. Heating.\nDo not start another operation\nuntil it's done."
 #endif

@@ -235,13 +235,60 @@ void syncL2CacheFromL1(uint8_t port)
   dmaL2Cache[i] = 0;  // End character
 }
 
+void actionSet(uint8_t *param, uint8_t stat[], uint8_t len)  //SUTAS
+{
+  uint8_t i;
+  for (i = 0; ((i < 30) && (param[i] != '\0') && (param[i] != '\n') && (i < len)); i++) {
+    stat[i] = param[i];
+  }
+  stat[i] = '\0';
+}
 void hostActionCommands(void)
 {
-  char *find = strchr(dmaL2Cache + ack_index, '\n');
-  *find = '\0';
-
-  if (ack_seen(":notification "))
+  if(ack_seen(":prompt_begin "))
   {
+    hostAction.button = 0;
+    hostAction.prompt_show = 1;
+    actionSet((uint8_t *)&dmaL2Cache[ack_index], (uint8_t *)hostAction.prompt_begin, 30);
+  }
+  else if(ack_seen(":prompt_button "))
+  {
+    hostAction.button++;
+    if(hostAction.button == 1)
+    {
+      actionSet((uint8_t *)&dmaL2Cache[ack_index], (uint8_t *)hostAction.prompt_button1, 21);
+    }
+    else
+    {
+      actionSet((uint8_t *)&dmaL2Cache[ack_index], (uint8_t *)hostAction.prompt_button2, 21);
+    }
+  } 
+  else if(ack_seen(":prompt_show"))
+	 {
+      switch(hostAction.button)
+        {
+          case 0:
+            BUZZER_PLAY(sound_notify);
+            popupReminder(DIALOG_TYPE_ALERT,(uint8_t *)"Message", (uint8_t *)hostAction.prompt_begin);
+            break;
+          case 1:
+            BUZZER_PLAY(sound_notify);
+            setDialogText((uint8_t*)"Action command", (uint8_t *)hostAction.prompt_begin, (uint8_t *)hostAction.prompt_button1, LABEL_BACKGROUND);
+            showDialog(DIALOG_TYPE_ALERT, resumeAndPurge, NULL, NULL);
+            break;
+          case 2:
+            BUZZER_PLAY(sound_notify);
+            setDialogText((uint8_t*)"Action command", (uint8_t *)hostAction.prompt_begin, (uint8_t *)hostAction.prompt_button1, (uint8_t *)hostAction.prompt_button2);
+            showDialog(DIALOG_TYPE_ALERT, resumeAndPurge, resumeAndContinue, NULL);
+            break;
+        }
+  } 
+  else if(ack_seen("prompt_end"))
+    {
+      hostAction.button = 0;
+  }
+  else if(ack_seen(":notification "))
+    {
     statusScreen_setMsg((uint8_t *)echomagic, (uint8_t *)dmaL2Cache + ack_index);  // always display the notification on status screen
 
     if (infoSettings.notification_m117 == ENABLED)
@@ -257,10 +304,10 @@ void hostActionCommands(void)
         addToast(DIALOG_TYPE_INFO, dmaL2Cache + index);
     }
   }
-  else if (ack_seen(":paused") || ack_seen(":pause"))
-  {
-    if (ack_seen(":paused"))  // if paused with ADVANCED_PAUSE_FEATURE enabled in Marlin (:paused),
-      hostDialog = true;      // disable Resume/Pause button in the Printing menu
+  else if(ack_seen(":paused") || ack_seen(":pause"))
+    {
+//SUTAS    if (ack_seen(":paused"))  // if paused with ADVANCED_PAUSE_FEATURE enabled in Marlin (:paused),
+//SUTAS      hostDialog = true;      // disable Resume/Pause button in the Printing menu
     //else                      // otherwise, if ADVANCED_PAUSE_FEATURE is disabled in Marlin (:pause),
     //  hostDialog = false;     // enable Resume/Pause button in the Printing menu
 
@@ -268,91 +315,23 @@ void hostActionCommands(void)
     // printing (when notification ack "Not SD printing" is caught)
     setPrintPause(false, PAUSE_EXTERNAL);
 
-    if (ack_seen("filament_runout"))
-    {
-      setRunoutAlarmTrue();
-    }
+//SUTAS    if (ack_seen("filament_runout"))
+//SUTAS    {
+//SUTAS      setRunoutAlarmTrue();
+//SUTAS    }
   }
-  else if (ack_seen(":resumed") || ack_seen(":resume"))
-  {
+  else if (ack_seen("resumed") || ack_seen("resume"))
+    {
     hostDialog = false;  // enable Resume/Pause button in the Printing menu
 
     // pass value "true" to report the host is printing without waiting
     // from Marlin (when notification ack "SD printing byte" is caught)
     setPrintResume(true);
   }
-  else if (ack_seen(":cancel"))  // To be added to Marlin abortprint routine
-  {
+  else if(ack_seen(":cancel"))   //To be added to Marlin abortprint routine
+    {
     setPrintAbort();
-  }
-  else if (ack_seen(":prompt_begin "))
-  {
-    strcpy(hostAction.prompt_begin, dmaL2Cache + ack_index);
-    hostAction.button = 0;
-    hostAction.prompt_show = true;
-
-    if (ack_seen("Nozzle Parked"))
-    {
-      // pass value "false" to let Marlin report when the host is not
-      // printing (when notification ack "Not SD printing" is caught)
-      setPrintPause(false, PAUSE_EXTERNAL);
-    }
-    else if (ack_seen("Resuming"))  // resuming from onboard SD or TFT
-    {
-      // pass value "true" to report the host is printing without waiting
-      // from Marlin (when notification ack "SD printing byte" is caught)
-      setPrintResume(true);
-
-      if (infoMachineSettings.firmwareType != FW_REPRAPFW)
-      {
-        hostAction.prompt_show = false;
-        Serial_Puts(SERIAL_PORT, "M876 S0\n");  // auto-respond to a prompt request that is not shown on the TFT
-      }
-    }
-    else if (ack_seen("Reheating"))
-    {
-      hostAction.prompt_show = false;
-      Serial_Puts(SERIAL_PORT, "M876 S0\n");  // auto-respond to a prompt request that is not shown on the TFT
-    }
-  }
-  else if (ack_seen(":prompt_button "))
-  {
-    hostAction.button++;
-    if (hostAction.button == 1)
-    {
-      strcpy(hostAction.prompt_button1, dmaL2Cache + ack_index);
-    }
-    else
-    {
-      strcpy(hostAction.prompt_button2, dmaL2Cache + ack_index);
-    }
-  }
-  else if (ack_seen(":prompt_show") && hostAction.prompt_show)
-  {
-    switch (hostAction.button)
-    {
-      case 0:
-        BUZZER_PLAY(sound_notify);
-        setDialogText((uint8_t *)"Message", (uint8_t *)hostAction.prompt_begin, LABEL_CONFIRM,
-                      LABEL_BACKGROUND);
-        showDialog(DIALOG_TYPE_ALERT, setRunoutAlarmFalse, NULL, NULL);
-        break;
-
-      case 1:
-        BUZZER_PLAY(sound_notify);
-        setDialogText((uint8_t *)"Action command", (uint8_t *)hostAction.prompt_begin, (uint8_t *)hostAction.prompt_button1,
-                      LABEL_BACKGROUND);
-        showDialog(DIALOG_TYPE_ALERT, breakAndContinue, NULL, NULL);
-        break;
-
-      case 2:
-        BUZZER_PLAY(sound_notify);
-        setDialogText((uint8_t *)"Action command", (uint8_t *)hostAction.prompt_begin, (uint8_t *)hostAction.prompt_button1,
-                      (uint8_t *)hostAction.prompt_button2);
-        showDialog(DIALOG_TYPE_ALERT, resumeAndPurge, resumeAndContinue, NULL);
-        break;
-    }
-  }
+  } 
 }
 
 void parseACK(void)
@@ -407,6 +386,10 @@ void parseACK(void)
                              // Avoid can't getting this parameter due to disabled M503 in Marlin
         storeCmd("M115\n");
         storeCmd("M211\n");  // retrieve the software endstops state
+      #ifdef PRINT_COUNTER
+        storeCmd("M78\n");
+      #endif
+        storeCmd("M413 C\n");
       }
       infoHost.connected = true;
     }
@@ -641,6 +624,37 @@ void parseACK(void)
         setPrintHost(false);
         printComplete();
       }
+    #ifdef PRINT_COUNTER
+    //parse print statistics
+      else if(ack_seen("Stats:"))
+      {
+        if(ack_seen("Prints:")) printCounter.prints = ack_value();
+        if(ack_seen("Finished:")) printCounter.finished = ack_value();
+        if(ack_seen("Failed:")) printCounter.failed = ack_value();
+        if(ack_seen("Total time: "))
+        {
+          uint8_t *counter_string = (uint8_t *)&dmaL2Cache[ack_index];
+          uint8_t counter_string_start = ack_index;
+          if(ack_seen(", Longest job: "))
+          {
+            uint8_t counter_string_size = ack_index - sizeof(", Longest job: ") - counter_string_start +1;
+            counterSet(counter_string, printCounter.total_time, counter_string_size);
+            counterSet((uint8_t *)&dmaL2Cache[ack_index], printCounter.longest_job, 21); //max length of string sent from Marlin is 21
+          }
+        }
+        if(ack_seen("Filament used: ")) counterSet((uint8_t *)&dmaL2Cache[ack_index], printCounter.filament_used, 21);
+      #ifdef SERVICE1
+        if(ack_seen(SERVICE1 " in ")) counterSet((uint8_t *)&dmaL2Cache[ack_index], printCounter.service1, 21);
+      #endif
+      #ifdef SERVICE2
+        if(ack_seen(SERVICE2 " in ")) counterSet((uint8_t *)&dmaL2Cache[ack_index], printCounter.service2, 21);
+      #endif
+      #ifdef SERVICE3
+        if(ack_seen(SERVICE3 " in ")) counterSet((uint8_t *)&dmaL2Cache[ack_index], printCounter.service3, 21);
+      #endif
+        m78_waiting = false;
+      }
+    #endif
 
       //----------------------------------------
       // Tuning parsed responses

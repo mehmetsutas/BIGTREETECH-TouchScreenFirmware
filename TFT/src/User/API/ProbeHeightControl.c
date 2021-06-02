@@ -51,11 +51,15 @@ void probeHeightStart(float initialHeight, bool relativeHeight)
 // Stop probe height
 void probeHeightStop(float raisedHeight)
 {
-  probeHeightRelative();                                  // set relative position mode
-  mustStoreCmd("G1 Z%.2f F%d\n",
-               raisedHeight,
-               infoSettings.level_feedrate[FEEDRATE_Z]);  // raise Z and set feedrate
-  probeHeightAbsolute();                                  // set absolute position mode
+  coordinateQuery();
+  if (infoSettings.machine_size_max[Z_AXIS] > (coordinateGetAxisActual(Z_AXIS) + infoSettings.z_raise_probing))
+  {
+    probeHeightRelative();                                  // set relative position mode
+    mustStoreCmd("G1 Z%.2f F%d\n",
+                raisedHeight,
+                infoSettings.level_feedrate[FEEDRATE_Z]);  // raise Z and set feedrate
+    probeHeightAbsolute();                                  // set absolute position mode
+  }
 }
 
 // Set probe height to relative position mode

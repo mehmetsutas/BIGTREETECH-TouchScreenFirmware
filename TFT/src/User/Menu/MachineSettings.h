@@ -7,6 +7,7 @@ extern "C" {
 
 void menuMachineSettings(void);
 void menuCustom(void);
+void menuEepromSettings(void);
 
 #ifdef __cplusplus
 }

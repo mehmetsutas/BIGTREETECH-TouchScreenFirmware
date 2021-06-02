@@ -120,3 +120,12 @@ cmake-build-*
 .pydevproject
 .settings
 .classpath
+*.bin
+Copy to SD Card root directory to update/Language Packs/language_cz.ini
+Copy to SD Card root directory to update/Language Packs/language_de.ini
+Copy to SD Card root directory to update/Language Packs/language_fr.ini
+Copy to SD Card root directory to update/Language Packs/language_hu.ini
+Copy to SD Card root directory to update/Language Packs/language_it.ini
+Copy to SD Card root directory to update/Language Packs/language_tr.ini
+Copy to SD Card root directory to update/Language Packs/language_tr.ini
+Copy to SD Card root directory to update/Language Packs/language_de.ini

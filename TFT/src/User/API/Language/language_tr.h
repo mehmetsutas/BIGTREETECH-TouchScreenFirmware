@@ -274,8 +274,8 @@
     #define STRING_ABL_SLOT3              "Yuva 3"
     #define STRING_ABL_SLOT_EEPROM        "Yuvayı hafızaya al?\n(EEPROM a kaydet)"
     #define STRING_ABL_Z                  "Z Etki"
-    #define STRING_LEVEL_CORNER           "L corner"
-    #define STRING_P_OFFSET               "P Offset"
+    #define STRING_LEVEL_CORNER           "Köşe Sev."
+    #define STRING_P_OFFSET               "Z Offset"
     #define STRING_H_OFFSET               "H Offset"
     #define STRING_DISTANCE               "Mesafe"
     #define STRING_LOAD_UNLOAD            "Yükle/Çıkar"
@@ -283,8 +283,8 @@
     #define STRING_TOUCHSCREEN_ADJUST     "Kalibre"
     #define STRING_MORE                   "Ayar"
     #define STRING_SCREEN_INFO            "Bilgi"
-    #define STRING_BG_COLOR               "arkaplan renk"
-    #define STRING_FONT_COLOR             font renk"
+    #define STRING_BG_COLOR               "Arkaplan"
+    #define STRING_FONT_COLOR             "Yazı Renk"
     #define STRING_PERCENTAGE             "Yüzde"
     #define STRING_PERCENTAGE_SPEED       "Hız"
     #define STRING_PERCENTAGE_FLOW        "Akış"
@@ -349,5 +349,5 @@
     #define STRING_Z_ALIGN                "Z Hizala"
     #define STRING_MACROS                 "Macros"
     #define STRING_MESH_VALID             "Mesh Validation"
-
+    #define STRING_LEVELLING_STARTED      "Seviyeleme başlatıldı.\nIsınıyor.\nİşlem tamamlanana kadar\nbaşka işlem başlatmayınız."
 #endif

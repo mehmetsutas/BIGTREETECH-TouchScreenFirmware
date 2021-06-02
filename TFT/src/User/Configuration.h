@@ -58,7 +58,7 @@
  *          SPANISH,    FRENCH,   PORTUGUESE,  ITALIAN,    POLISH,    SLOVAK,        DUTCH,
  *          HUNGARIAN,  TURKISH,  GREEK,       SLOVENIAN,  CATALAN,   TRAD_CHINESE,  UKRAINIAN
  */
-#define DEFAULT_LANGUAGE ENGLISH  // Default: ENGLISH
+#define DEFAULT_LANGUAGE TURKISH  // Default: ENGLISH
 
 /**
  * Default Touch Mode Color Options
@@ -106,10 +106,10 @@
 #define MARLIN_FNCOLOR 0  // Default: 0
 
 // Text displayed at the top of the TFT in Marlin Mode
-#define MARLIN_BANNER_TEXT "Marlin Mode"  // Default: "Marlin Mode"
+#define MARLIN_BANNER_TEXT "Text Menu"  // Default: "Marlin Mode"
 
 // Show banner text at the top of the TFT in Marlin Mode
-#define MARLIN_SHOW_BANNER true  // To enabled: true | To disabled: false (Default: true)
+#define MARLIN_SHOW_BANNER false  // To enabled: true | To disabled: false (Default: true)
 
 /**
  * Run Marlin Mode in Fullscreen
@@ -127,7 +127,7 @@
  *
  * Options: [0: Disabled, 1: Enabled]
  */
-#define SERIAL_ALWAYS_ON 0  // Default: 0
+#define SERIAL_ALWAYS_ON 1  // Default: 0
 
 /**
  * LCD/Touch Encoder
@@ -149,12 +149,12 @@
                            // cooling if marlin supports ontroller fan (M710).
 
 #define PREHEAT_LABELS {"PLA", "PETG", "ABS", "WOOD", "TPU", "NYLON"}
-#define PREHEAT_HOTEND {200,   240,    230,   170,    220,   250}
-#define PREHEAT_BED    { 60,    70,     90,    50,     50,    90}
+#define PREHEAT_HOTEND {205,   240,    235,   205,    240,   250}
+#define PREHEAT_BED    { 60,    70,    100,    60,     70,    90}
 
-#define HEAT_MAX_TEMP   {275,       275,       275,       275,       275,       275,       150,    60}
+#define HEAT_MAX_TEMP   {260,       275,       275,       275,       275,       275,       110,    60}
 #define HEAT_SIGN_ID    {"T0:",     "T1:",     "T2:",     "T3:",     "T4:",     "T5:",     "B:",   "C:"}
-#define HEAT_DISPLAY_ID {"T0",      "T1",      "T2",      "T3",      "T4",      "T5",      "Bed",  "Chamber"}
+#define HEAT_DISPLAY_ID {"T0",      "T1",      "T2",      "T3",      "T4",      "T5",      "Tbl",  "Chamber"}
 #define HEAT_CMD        {"M104 T0", "M104 T1", "M104 T2", "M104 T3", "M104 T4", "M104 T5", "M140", "M141"}
 #define HEAT_WAIT_CMD   {"M109 T0", "M109 T1", "M109 T2", "M109 T3", "M109 T4", "M109 T5", "M190", "M191"}
 
@@ -162,7 +162,7 @@
 #define EXTRUDER_ID {"E0", "E1", "E2", "E3", "E4", "E5"}
 
 // Prevent extrusion if the temperature is below set temperature
-#define PREVENT_COLD_EXTRUSION_MINTEMP 180
+#define PREVENT_COLD_EXTRUSION_MINTEMP 170
 
 /**
  * Cooling Fan & Controller Fan
@@ -175,34 +175,34 @@
                         "M710 S%d\n",    "M710 I%d\n" }
 
 // Speed/flow rate names displayed in status screen
-#define SPEED_ID {"Sp.", "Fr."}  // (speed, flow rate)
+#define SPEED_ID {"Hız", "Akş"}  // (speed, flow rate)
 
 // Axes names displayed in Parameter Settings menu
 #define AXIS_DISPLAY_ID    {"X", "Y", "Z", "E0", "E1"}  // (X, Y, Z, E0, E1)
 #define STEPPER_DISPLAY_ID {"X", "X2", "Y", "Y2", "Z", "Z2", "E0", "E1"}  // (X, X2, Y, Y2, Z, Z2, E0, E1)
 
 // Default X & Y speed (mm/min)
-#define SPEED_XY_SLOW   1000
+#define SPEED_XY_SLOW   1200
 #define SPEED_XY_NORMAL 3000
-#define SPEED_XY_FAST   5000
+#define SPEED_XY_FAST   6000
 
 // Default Z speed (mm/min)
-#define SPEED_Z_SLOW   500
-#define SPEED_Z_NORMAL 1000
-#define SPEED_Z_FAST   2000
+#define SPEED_Z_SLOW   240
+#define SPEED_Z_NORMAL 480
+#define SPEED_Z_FAST   720
 
 // Extrude speed (mm/min)
 #define EXTRUDE_SLOW_SPEED     60
-#define EXTRUDE_NORMAL_SPEED  600
-#define EXTRUDE_FAST_SPEED   1200
+#define EXTRUDE_NORMAL_SPEED  120
+#define EXTRUDE_FAST_SPEED    180
 
 // Size of machine
 #define X_MIN_POS   0
 #define Y_MIN_POS   0
 #define Z_MIN_POS   0
-#define X_MAX_POS 235
-#define Y_MAX_POS 235
-#define Z_MAX_POS 250
+#define X_MAX_POS 150
+#define Y_MAX_POS 150
+#define Z_MAX_POS 150
 
 /**
  * Raised Z height for probing
@@ -213,28 +213,28 @@
 #define PROBING_Z_RAISE 20.0f
 
 // Pause Settings
-#define NOZZLE_PAUSE_RETRACT_LENGTH               15  // (mm)
-#define NOZZLE_RESUME_PURGE_LENGTH                16  // (mm)
+#define NOZZLE_PAUSE_RETRACT_LENGTH                3  // (mm)
+#define NOZZLE_RESUME_PURGE_LENGTH                 5  // (mm)
 #define NOZZLE_PAUSE_X_POSITION     (X_MIN_POS + 10)  // (mm) Must be an integer
-#define NOZZLE_PAUSE_Y_POSITION     (Y_MIN_POS + 10)  // (mm) Must be an integer
-#define NOZZLE_PAUSE_Z_RAISE                      20  // (mm)
-#define NOZZLE_PAUSE_E_FEEDRATE                  600  // (mm/min) retract & purge feedrate
+#define NOZZLE_PAUSE_Y_POSITION     (Y_MAX_POS - 10)  // (mm) Must be an integer
+#define NOZZLE_PAUSE_Z_RAISE                      10  // (mm)
+#define NOZZLE_PAUSE_E_FEEDRATE                  120  // (mm/min) retract & purge feedrate
 #define NOZZLE_PAUSE_XY_FEEDRATE                6000  // (mm/min) X and Y axes feedrate
-#define NOZZLE_PAUSE_Z_FEEDRATE                  600  // (mm/min) Z axis feedrate
+#define NOZZLE_PAUSE_Z_FEEDRATE                  480  // (mm/min) Z axis feedrate
 
 /**
  * Manual Leveling
  * Move to four corner points to Leveling manually (Point 1, Point 2, Point 3, Point 4).
  */
-#define LEVELING_EDGE_DISTANCE        20  // Inset distance from bed's edge for calculating leveling point location
+#define LEVELING_EDGE_DISTANCE        35  // Inset distance from bed's edge for calculating leveling point location
 #define LEVELING_POINT_Z            0.2f  // Z-axis position when nozzle stays for leveling
 #define LEVELING_POINT_MOVE_Z      10.0f  // Z-axis position when nozzle move to next point
-#define LEVELING_POINT_XY_FEEDRATE  6000  // (mm/min) X and Y axes move feedrate
-#define LEVELING_POINT_Z_FEEDRATE    600  // (mm/min) Z axis move feedrate
+#define LEVELING_POINT_XY_FEEDRATE  3000  // (mm/min) X and Y axes move feedrate
+#define LEVELING_POINT_Z_FEEDRATE    480  // (mm/min) Z axis move feedrate
 
 #define LEVELING_EDGE_DISTANCE_DISPLAY_ID "X/Y"
 #define LEVELING_EDGE_DISTANCE_MIN           0
-#define LEVELING_EDGE_DISTANCE_MAX         100
+#define LEVELING_EDGE_DISTANCE_MAX          50
 #define LEVELING_EDGE_DISTANCE_DEFAULT    LEVELING_EDGE_DISTANCE
 
 // Z Fade limits
@@ -264,7 +264,7 @@
  * On-Board SD Card and auto-configure M27 AutoReport with M115 command.
  * Set the time interval to poll SD Printing status if Marlin reports M27 AutoReport as disabled.
  */
-#define M27_REFRESH             3     // Time in sec for M27 command
+#define M27_REFRESH             5     // Time in sec for M27 command
 #define M27_WATCH_OTHER_SOURCES true  // if true the polling on M27 report is always active. Case: SD print
                                       // started not from TFT35
 
@@ -279,7 +279,7 @@
  *
  * Options: [0: Disabled, 1: Auto-detect, 2: ABL, 3: BBL, 4: UBL, 5: MBL]
  */
-#define ENABLE_BL_VALUE 1  // Default: 1
+#define ENABLE_BL_VALUE 3  // Default: 1
 
 /**
  * TouchMI settings (on ABL menu)
@@ -300,8 +300,8 @@
 
 // Mesh Leveling Max Grid points
 // Set the maximum number of grid points per dimension.
-#define MESH_GRID_MAX_POINTS_X 15  // (Minimum 1, Maximum 15)
-#define MESH_GRID_MAX_POINTS_Y 15  // (Minimum 1, Maximum 15)
+#define MESH_GRID_MAX_POINTS_X 3  // (Minimum 1, Maximum 15)
+#define MESH_GRID_MAX_POINTS_Y 3  // (Minimum 1, Maximum 15)
 
 /**
  * Auto save/load Bed Leveling data
@@ -311,7 +311,7 @@
  *
  * Options: [0: Disabled, 1: Enabled]
  */
-#define AUTO_SAVE_LOAD_BL_VALUE 1  // Default: 1
+#define AUTO_SAVE_LOAD_BL_VALUE 0  // Default: 1
 
 // PID autotune
 #define PID_CMD {"M303 U1 C8 E0", "M303 U1 C8 E1", "M303 U1 C8 E2", "M303 U1 C8 E3", "M303 U1 C8 E4", "M303 U1 C8 E5", "M303 U1 C8 E-1", ""}
@@ -323,14 +323,14 @@
  *
  * NOTE: Enable it, in case Marlin firmware does not properly support M600 on the mainboard.
  */
-#define EMULATE_M600 true  // To enabled: true | To disabled: false (Default: true)
+#define EMULATE_M600 false  // To enabled: true | To disabled: false (Default: true)
 
 /**
  * M601: Pause Print
  * PrusaSlicer can add M601 on certain height.
  * Acts here like manual pause.
  */
-#define NOZZLE_PAUSE_M601
+//#define NOZZLE_PAUSE_M601
 
 /**
  * M701, M702: Marlin filament load unload gcodes support
@@ -339,6 +339,14 @@
  */
 #define LOAD_UNLOAD_M701_M702
 
+/**
+ * Advanced Print Counter Support
+ * Enable service warnings. On Marlin configuration_adv.h, related service intervals should be defined.
+ */
+#define PRINT_COUNTER
+#define SERVICE1 "100 Saat Bakımı"
+#define SERVICE2 "1200 Saat Bakımı"
+//#define SERVICE3 "Service 3"
 
 //===========================================================================
 //========================== Other UI Settings ==============================
@@ -389,7 +397,7 @@
  *          9: 80 Percent,  10: 90 Percent,  11: 100 Percent
  */
 #define DEFAULT_LCD_BRIGHTNESS       11  // Default: 11
-#define DEFAULT_LCD_IDLE_BRIGHTNESS   3  // Default: 3
+#define DEFAULT_LCD_IDLE_BRIGHTNESS   2  // Default: 3
 
 /**
  * Idle LCD diming Timer (TFT28 V3.0, TFT35 E3.0, TFT43 V3.0, TFT50 V3.0 & TFT70 V3.0)
@@ -400,7 +408,7 @@
  *          3: 30 Seconds,   4: 60 Seconds,     5: 120 Seconds,
  *          6: 300 Seconds,  7: CUSTOM Seconds
  */
-#define DEFAULT_LCD_IDLE_TIMER  0  // Default: 0
+#define DEFAULT_LCD_IDLE_TIMER  4  // Default: 0
 #define LCD_DIM_CUSTOM_SECONDS (10 * 60)  // Custom value in seconds. This will be used if DEFAULT_LCD_IDLE_TIMER
                                           // is set to 7 (CUSTOM Seconds).
 
@@ -427,7 +435,7 @@
  * Toast notification duration (in MilliSeconds)
  * Set the duration for displaying toast notification on top of the screen.
  */
-#define TOAST_DURATION (3 * 1000)  // (MilliSeconds)  1000 MilliSeconds = 1 Second
+#define TOAST_DURATION (5 * 1000)  // (MilliSeconds)  1000 MilliSeconds = 1 Second
 
 /**
  * Notification style for ACK messages
@@ -441,7 +449,7 @@
  *  POPUP: Display a popup window for user confirmation.
  *  TOAST: A Toast notification is displayed for few seconds. No user interaction is needed.
  */
-#define ACK_NOTIFICATION_STYLE 1  // Default: 1
+#define ACK_NOTIFICATION_STYLE 2  // Default: 1
 
 // Fan speed as a percentage instead of PWM value
 #define SHOW_FAN_PERCENTAGE true  // To enabled: true | To disabled: false (Default: true)
@@ -530,7 +538,7 @@
 //
 
 // Home before power loss recovery
-#define HOME_BEFORE_PLR false  // To enabled: true | To disabled: false (Default: false)
+#define HOME_BEFORE_PLR true  // To enabled: true | To disabled: false (Default: false)
 
 // Backup power / UPS to move Z axis on power loss
 #define BTT_MINI_UPS false  // To enabled: true | To disabled: false (Default: false)
@@ -555,20 +563,20 @@
  * CUSTOM_X_LABEL is the name of the custom button, CUSTOM_X_GCODE is the G-code to be sent by the custom button,
  * this should always end with a New-Line character '\n'.
  */
-#define CUSTOM_0_LABEL "Disable Steppers"
-#define CUSTOM_0_GCODE "M84\n"
-#define CUSTOM_1_LABEL "Init SD Card"
-#define CUSTOM_1_GCODE "M21\n"
-#define CUSTOM_2_LABEL "Release SD Card"
-#define CUSTOM_2_GCODE "M22\n"
-#define CUSTOM_3_LABEL "Enable Leveling State"
-#define CUSTOM_3_GCODE "M420 S1\n"
-#define CUSTOM_4_LABEL "Save to EEPROM"
-#define CUSTOM_4_GCODE "M500\n"
-#define CUSTOM_5_LABEL "Restore from EEPROM"
-#define CUSTOM_5_GCODE "M501\n"
-#define CUSTOM_6_LABEL "EEPROM Defaults"
-#define CUSTOM_6_GCODE "M502\n"
+//#define CUSTOM_0_LABEL "Disable Steppers"
+//#define CUSTOM_0_GCODE "M84\n"
+//#define CUSTOM_1_LABEL "Init SD Card"
+//#define CUSTOM_1_GCODE "M21\n"
+//#define CUSTOM_2_LABEL "Release SD Card"
+//#define CUSTOM_2_GCODE "M22\n"
+//#define CUSTOM_3_LABEL "Enable Leveling State"
+//#define CUSTOM_3_GCODE "M420 S1\n"
+//#define CUSTOM_4_LABEL "Save to EEPROM"
+//#define CUSTOM_4_GCODE "M500\n"
+//#define CUSTOM_5_LABEL "Restore from EEPROM"
+//#define CUSTOM_5_GCODE "M501\n"
+//#define CUSTOM_6_LABEL "EEPROM Defaults"
+//#define CUSTOM_6_GCODE "M502\n"
 //#define CUSTOM_7_LABEL "Custom7"
 //#define CUSTOM_7_GCODE "M105\n"
 //#define CUSTOM_8_LABEL "Custom8"
@@ -593,13 +601,13 @@
  * Enable Start & End G-code in SETTINGS -> FEATURE menu.
  */
 // Start G-code - run this G-code before starting print
-#define PRINT_START_GCODE "G28 XY R10\n"  // Raise Z 10mm before homing X & Y
+#define PRINT_START_GCODE "G28\nM420 S1\nM107\nG90\nM82\nG92 E0\n" //"G28 XY R10\n"  // Raise Z 10mm before homing X & Y
 
 // End G-code - run this G-code after finishing print
-#define PRINT_END_GCODE "G90\nG1 E-4\nG92 E0\nM18\n"  // Switch to absolute positioning, reduce filament pressure by
+#define PRINT_END_GCODE "G27 P2\nM107\nM104 S0\nM140 S0\nM18\n" //"G90\nG1 E-4\nG92 E0\nM18\n"  // Switch to absolute positioning, reduce filament pressure by
                                                       // performing small retract, reset extruder position, disable steppers
 
 // Cancel G-code - run this G-code after canceling print
-#define PRINT_CANCEL_GCODE "M104 S0\nM140 S0\nG28 XY R10\nM107\nM18\n"  // Home XY and raise Z 10mm
+#define PRINT_CANCEL_GCODE "G27 P2\nM107\nM104 S0\nM140 S0\nM18\n" //"M104 S0\nM140 S0\nG28 XY R10\nM107\nM18\n"  // Home XY and raise Z 10mm
 
 #endif

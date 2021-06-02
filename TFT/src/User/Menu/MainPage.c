@@ -7,21 +7,20 @@ void menuMain(void)
   MENUITEMS mainPageItems = {
     // title
     LABEL_MAINMENU,
-    // icon                          label
-    {
-      {ICON_HEAT_FAN,                LABEL_UNIFIEDHEAT},
-      {ICON_HOME_MOVE,               LABEL_UNIFIEDMOVE},
-      #ifdef LOAD_UNLOAD_M701_M702
-        {ICON_EXTRUDE,                 LABEL_LOAD_UNLOAD_SHORT},
-      #else
-        {ICON_EXTRUDE,                 LABEL_EXTRUDE},
-      #endif
-      {ICON_STOP,                    LABEL_EMERGENCYSTOP},
-      {ICON_GCODE,                   LABEL_TERMINAL},
-      {ICON_CUSTOM,                  LABEL_CUSTOM},
-      {ICON_SETTINGS,                LABEL_SETTINGS},
-      {ICON_BACK,                    LABEL_BACK},
-    }
+    // icon              label
+    {{ICON_HEAT_FAN,     LABEL_UNIFIEDHEAT},
+     {ICON_HOME_MOVE,    LABEL_UNIFIEDMOVE},
+    #ifdef LOAD_UNLOAD_M701_M702
+      {ICON_EXTRUDE,     LABEL_LOAD_UNLOAD_SHORT},
+    #else
+      {ICON_EXTRUDE,     LABEL_EXTRUDE},
+    #endif
+     {ICON_STOP,         LABEL_EMERGENCYSTOP},
+     {ICON_GCODE,        LABEL_TERMINAL},
+//     {ICON_CUSTOM,       LABEL_CUSTOM},   //SUTAS
+     {ICON_CASE_LIGHT,   LABEL_CASE_LIGHT},
+     {ICON_SETTINGS,     LABEL_SETTINGS},
+     {ICON_BACK,         LABEL_BACK},}
   };
 
   KEY_VALUES key_num = KEY_IDLE;
@@ -72,6 +71,7 @@ void menuMain(void)
         break;
 
       case KEY_ICON_5:
+/*
         if (infoSettings.rrf_macros_enable)
         {
           strcpy(infoFile.title, "Macros");
@@ -81,6 +81,8 @@ void menuMain(void)
         {
           infoMenu.menu[++infoMenu.cur] = menuCustom;
         }
+*/
+        caseLightToggleState();
         break;
 
       case KEY_ICON_6:

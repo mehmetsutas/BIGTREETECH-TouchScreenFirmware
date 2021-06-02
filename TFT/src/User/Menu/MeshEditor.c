@@ -842,14 +842,15 @@ void menuMeshEditor(void)
   bool oldStatus, curStatus;
   uint16_t oldIndex, curIndex;
   float origValue, curValue;
-  bool forceHoming;
+  //bool forceHoming;
   bool forceExit;
 
   meshAllocData();                                         // allocates and initialize mesh data if not already allocated and initialized
 
   oldStatus = curStatus = meshGetStatus();                 // after allocation, we acces data status etc...
   oldIndex = curIndex = meshGetIndex();
-  forceHoming = true;
+  //forceHoming = true;                                    //SUTAS
+  
   forceExit = false;
 
   mustStoreCmd("M420 V1 T1\n");                            // retrieve the mesh data
@@ -859,6 +860,10 @@ void menuMeshEditor(void)
   #if LCD_ENCODER_SUPPORT
     encoderPosition = 0;
   #endif
+  
+  mustStoreCmd("G28\n");                                   //SUTAS
+  mustStoreCmd("M420 S0\n");                                   //SUTAS
+  coordinateQuery();
 
   while (infoMenu.menu[infoMenu.cur] == menuMeshEditor)
   {
@@ -887,13 +892,13 @@ void menuMeshEditor(void)
       case ME_KEY_EDIT:
         if (meshGetStatus())
         {
-          if (forceHoming)
+          /*if (forceHoming)
           {
             forceHoming = false;
 
             mustStoreCmd("G28\n");                         // only the first time, home the printer
             probeHeightStop(infoSettings.z_raise_probing); // raise nozzle
-          }
+          }*/       //SUTAS
 
           curValue = menuMeshTuner(meshGetCol(), meshGetJ(), meshGetValue(meshGetIndex()));
           meshSetValue(curValue);
@@ -916,7 +921,7 @@ void menuMeshEditor(void)
         break;
 
       case ME_KEY_HOME:
-        forceHoming = false;
+        //forceHoming = false;    //SUTAS
 
         mustStoreCmd("G28\n");                             // force homing (e.g. if steppers are disarmed)
         probeHeightStop(infoSettings.z_raise_probing);     // raise nozzle

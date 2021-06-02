@@ -349,5 +349,5 @@
     #define STRING_Z_ALIGN                "Z Выравнивание"
     #define STRING_MACROS                 "Макросы"
     #define STRING_MESH_VALID             "Проверка сетки"
-
+    #define STRING_LEVELLING_STARTED      "Levelling started. Heating.\nDo not start another operation\nuntil it's done."
 #endif

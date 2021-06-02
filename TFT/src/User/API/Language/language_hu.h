@@ -349,5 +349,5 @@
     #define STRING_Z_ALIGN                "Z Igazítás"
     #define STRING_MACROS                 "Makrók"
     #define STRING_MESH_VALID             "Háló ellenőrzése"
-
+    #define STRING_LEVELLING_STARTED      "Levelling started. Heating.\nDo not start another operation\nuntil it's done."
 #endif

@@ -316,23 +316,22 @@ void menuPrint(void)
   MENUITEMS sourceSelItems = {
     // title
     LABEL_PRINT,
-    // icon                          label
-    {
-      {ICON_ONTFT_SD,                LABEL_TFTSD},
-      #ifdef U_DISK_SUPPORT
-        {ICON_U_DISK,                  LABEL_U_DISK},
-        #define ONBOARD_SD_INDEX 2
-      #else
-        {ICON_BACKGROUND,              LABEL_BACKGROUND},
-        #define ONBOARD_SD_INDEX 1
-      #endif
-      {ICON_BACKGROUND,              LABEL_BACKGROUND},
-      {ICON_BACKGROUND,              LABEL_BACKGROUND},
-      {ICON_SCREEN_INFO,             LABEL_PREVIOUS_PRINT_DATA},
-      {ICON_BACKGROUND,              LABEL_BACKGROUND},
-      {ICON_BACKGROUND,              LABEL_BACKGROUND},
-      {ICON_BACK,                    LABEL_BACK},
-    }
+    // icon                         label
+    {//{ICON_ONTFT_SD,                LABEL_TFTSD},   //SUTAS
+  #ifdef U_DISK_SUPPORT
+     {ICON_U_DISK,                  LABEL_U_DISK},
+    #define ONBOARD_SD_INDEX 1                        //SUTAS
+  #else
+    #define ONBOARD_SD_INDEX 0                        //SUTAS
+     {ICON_BACKGROUND,              LABEL_BACKGROUND},
+  #endif
+    {ICON_BACKGROUND,           LABEL_BACKGROUND},    //SUTAS
+    {ICON_BACKGROUND,           LABEL_BACKGROUND},
+    {ICON_BACKGROUND,           LABEL_BACKGROUND},
+    {ICON_SCREEN_INFO,          LABEL_PREVIOUS_PRINT_DATA},
+    {ICON_RESET_VALUE,          LABEL_RESUME},
+    {ICON_BACKGROUND,           LABEL_BACKGROUND},
+    {ICON_BACK,                 LABEL_BACK}}
   };
 
   KEY_VALUES key_num = KEY_IDLE;
@@ -347,24 +346,24 @@ void menuPrint(void)
     key_num = menuKeyGetValue();
     switch (key_num)
     {
-      case KEY_ICON_0:
+/*      case KEY_ICON_0:
         list_mode = infoSettings.file_listmode;  // follow list mode setting in TFT sd card
         infoFile.source = TFT_SD;
         infoMenu.menu[++infoMenu.cur] = menuPrintFromSource;
         infoMenu.menu[++infoMenu.cur] = menuPowerOff;
-        goto selectEnd;
+        goto selectEnd;*/     //SUTAS
 
-      #ifdef U_DISK_SUPPORT
-        case KEY_ICON_1:
-          list_mode = infoSettings.file_listmode;  // follow list mode setting in usb disk
-          infoFile.source = TFT_UDISK;
-          infoMenu.menu[++infoMenu.cur] = menuPrintFromSource;
-          infoMenu.menu[++infoMenu.cur] = menuPowerOff;
-          goto selectEnd;
-        case KEY_ICON_2:
-      #else
-        case KEY_ICON_1:
-      #endif
+    #ifdef U_DISK_SUPPORT
+      case KEY_ICON_0:
+        list_mode = infoSettings.file_listmode; //follow list mode setting in usb disk
+        infoFile.source = TFT_UDISK;
+        infoMenu.menu[++infoMenu.cur] = menuPrintFromSource;
+        infoMenu.menu[++infoMenu.cur] = menuPowerOff;
+        goto selectEnd;
+      case KEY_ICON_1:
+    #else
+      case KEY_ICON_0:
+    #endif
         if (infoMachineSettings.onboard_sd_support == ENABLED)
         {
           list_mode = true;  // force list mode in Onboard sd card
@@ -377,6 +376,11 @@ void menuPrint(void)
       case KEY_ICON_4:
         if (infoPrintSummary.name[0] != 0)
           printInfoPopup();
+        break;
+        
+      case KEY_ICON_5:
+        infoMenu.cur--;
+        storeCmd("M413 C\n");
         break;
 
       case KEY_ICON_7:

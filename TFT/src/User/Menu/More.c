@@ -4,21 +4,22 @@
 const MENUITEMS moreItems = {
   // title
   LABEL_MORE,
-  // icon                          label
-  {
-    {ICON_HEAT,                    LABEL_HEAT},
-    {ICON_FAN,                     LABEL_FAN},
-    {ICON_EXTRUDE,                 LABEL_EXTRUDE},
-    {ICON_PERCENTAGE,              LABEL_PERCENTAGE},
-    {ICON_FEATURE_SETTINGS,        LABEL_FEATURE_SETTINGS},
-    {ICON_MACHINE_SETTINGS,        LABEL_MACHINE_SETTINGS},
-    #ifdef LOAD_UNLOAD_M701_M702
-      {ICON_EXTRUDE,                 LABEL_LOAD_UNLOAD_SHORT},
-    #else
-      {ICON_GCODE,                   LABEL_TERMINAL},
-    #endif
-    {ICON_BACK,                    LABEL_BACK},
-  }
+  // icon                         label
+  {{ICON_HEAT,                    LABEL_HEAT},
+   {ICON_FAN,                     LABEL_FAN},
+   {ICON_EXTRUDE,                 LABEL_LOAD_UNLOAD_SHORT},
+   {ICON_PERCENTAGE,              LABEL_PERCENTAGE},
+   {ICON_PARAMETER,               LABEL_PARAMETER_SETTING},
+   {ICON_CASE_LIGHT,              LABEL_CASE_LIGHT},
+   {ICON_GCODE,                   LABEL_TERMINAL},
+/*   {ICON_FEATURE_SETTINGS,        LABEL_FEATURE_SETTINGS},
+   {ICON_MACHINE_SETTINGS,        LABEL_MACHINE_SETTINGS},
+#ifdef LOAD_UNLOAD_M701_M702
+   {ICON_EXTRUDE,                 LABEL_LOAD_UNLOAD_SHORT},
+#else
+   {ICON_GCODE,                   LABEL_TERMINAL},
+#endif*/    //SUTAS
+   {ICON_BACK,                    LABEL_BACK},}
 };
 
 void isPauseExtrude(void)
@@ -53,7 +54,7 @@ void menuMore(void)
         break;
 
       case KEY_ICON_2:
-        if (isPrinting() && !isPaused())  // need paused before extrude
+/*        if (isPrinting() && !isPaused()) // need paused before extrude
         {
           setDialogText(LABEL_WARNING, LABEL_IS_PAUSE, LABEL_CONFIRM, LABEL_CANCEL);
           showDialog(DIALOG_TYPE_ALERT, isPauseExtrude, NULL, NULL);
@@ -61,7 +62,9 @@ void menuMore(void)
         else
         {
           infoMenu.menu[++infoMenu.cur] = menuExtrude;
-        }
+        }*/     //SUTAS
+        mustStoreCmd("M600\n");
+        infoMenu.cur--;
         break;
 
       case KEY_ICON_3:
@@ -69,16 +72,19 @@ void menuMore(void)
         break;
 
       case KEY_ICON_4:
-        infoMenu.menu[++infoMenu.cur] = menuFeatureSettings;
+//        infoMenu.menu[++infoMenu.cur] = menuFeatureSettings;    //SUTAS
+        mustStoreCmd("M503 S0\n");
+        infoMenu.menu[++infoMenu.cur] = menuParameterSettings;
         break;
 
       case KEY_ICON_5:
-        infoMenu.menu[++infoMenu.cur] = menuMachineSettings;
+//        infoMenu.menu[++infoMenu.cur] = menuMachineSettings;    //SUTAS
+        caseLightToggleState();
         break;
 
       case KEY_ICON_6:
-        #ifdef LOAD_UNLOAD_M701_M702
-          if (isPrinting() && !isPaused())  // need paused before extrude
+/*        #ifdef LOAD_UNLOAD_M701_M702
+          if (isPrinting() && !isPause()) // need paused before extrude
           {
             setDialogText(LABEL_WARNING, LABEL_IS_PAUSE, LABEL_CONFIRM, LABEL_CANCEL);
             showDialog(DIALOG_TYPE_ALERT, isPauseLoadUnload, NULL, NULL);
@@ -88,8 +94,9 @@ void menuMore(void)
             infoMenu.menu[++infoMenu.cur] = menuLoadUnload;
           }
         #else
-          infoMenu.menu[++infoMenu.cur] = menuTerminal;
-        #endif
+          infoMenu.menu[++infoMenu.cur] = menuSendGcode;
+        #endif*/    //SUTAS
+        infoMenu.menu[++infoMenu.cur] = menuSendGcode;
         break;
 
       case KEY_ICON_7:

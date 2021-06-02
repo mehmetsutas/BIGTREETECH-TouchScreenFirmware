@@ -77,3 +77,16 @@ void loopCaseLight(void)
     }
   }
 }
+
+void loopCaseLightToggle(void)
+{
+  if (lastCaseLightState != caseLightState)
+  {
+    lastCaseLightState = caseLightState;
+    if (caseLight_send_waiting == false)
+    {
+      caseLight_send_waiting = true;
+      storeCmd("M355 S%d\n", caseLightState ? 1 : 0, 1);
+    }
+  }
+}

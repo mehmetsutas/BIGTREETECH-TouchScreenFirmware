@@ -349,5 +349,5 @@
     #define STRING_Z_ALIGN                "Allinea Z"
     #define STRING_MACROS                 "Macro"
     #define STRING_MESH_VALID             "Validazione mesh"
-
+    #define STRING_LEVELLING_STARTED      "Levelling started. Heating.\nDo not start another operation\nuntil it's done."
 #endif

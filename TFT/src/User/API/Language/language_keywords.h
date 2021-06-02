@@ -356,7 +356,7 @@ extern "C" {
 #define LANG_KEY_Z_ALIGN                      "label_z_align:"
 #define LANG_KEY_MACROS                       "label_macros:"
 #define LANG_KEY_MESH_VALID                   "label_mesh_valid:"
-
+#define LANG_KEY_LEVELLING_STARTED			  "label_levelling_started:"
 #ifdef __cplusplus
 }
 #endif
